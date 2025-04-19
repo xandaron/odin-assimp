@@ -1,0 +1,2 @@
+odin-assimp/libassimp-linux.a filter=lfs diff=lfs merge=lfs -text
+odin-assimp/libassimp-windows.lib filter=lfs diff=lfs merge=lfs -text
