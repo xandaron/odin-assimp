@@ -23,7 +23,7 @@ With these bindings, you can:
 
 ## Building
 
-### 1. Build Assimp Library
+### Build Assimp Library
 
 First, you need to build the Assimp library using the provided build scripts:
 
@@ -32,54 +32,19 @@ First, you need to build the Assimp library using the provided build scripts:
 git clone https://github.com/your-username/odin-assimp.git
 cd odin-assimp
 
-# To build assimp lib and update the bindings
+# To build libassimp and update the bindings
 # Windows:
 ./build-binding.bat
 
 # Linux:
 ./build-binding.sh
 
-# To just build assimp lib
+# To just build libassimp
 # Windows:
 ./build-lib.bat
 
 #Linux:
 ./build-lib.sh
-```
-
-This will automatically configure and build Assimp with the appropriate settings.
-
-## Usage Example
-
-```odin
-package main
-
-import "core:fmt"
-import assimp "../"
-
-main :: proc() {
-    // Create an Assimp importer
-    scene := assimp.import_file("models/example.obj", {
-        .triangulate,
-        .gen_smooth_normals,
-        .flip_uvs,
-    })
-    defer assimp.release_scene(scene)
-
-    if scene == nil {
-        fmt.println("Failed to load model")
-        return
-    }
-
-    fmt.printf("Model loaded with %d meshes\n", scene.num_meshes)
-    
-    // Access mesh data
-    for i in 0..<scene.num_meshes {
-        mesh := scene.meshes[i]
-        fmt.printf("Mesh %d has %d vertices and %d faces\n", 
-                  i, mesh.num_vertices, mesh.num_faces)
-    }
-}
 ```
 
 ## Supported 3D Formats
@@ -109,4 +74,4 @@ The bindings support all Assimp post-processing flags, allowing you to:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. The Assimp library is also licensed under the BSD 3-Clause License.
+This project is licensed under the MIT License - see the LICENSE file for details. The Assimp library is licensed under a modified, 3-clause BSD-License.

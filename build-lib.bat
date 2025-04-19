@@ -21,7 +21,8 @@ if "%VSCMD_ARG_TGT_ARCH%" neq "x64" (
 	)
 )
 
-cmake ./assimp/CMakeLists.txt -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -B build
+REM I'm pretty sure we actually want ASSIMP_BUILD_ZLIB to be OFF but doing so causes the build to fail. Seems CMake requires zlib to be available for compilation.
+cmake ./assimp/CMakeLists.txt -DASSIMP_BUILD_ZLIB=ON -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -B build
 cmake --build build
 
 copy /y .\build\lib\Debug\assimp-vc143-mtd.lib .\odin-assimp\libassimp-windows.lib

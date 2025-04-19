@@ -62,11 +62,11 @@ clang_defines = {
 //    "ASSIMP_WARNINGS_AS_ERRORS" = "OFF"
 //    "ASSIMP_ASAN" = "OFF"
 //    "ASSIMP_UBSAN" = "OFF"
-    "ASSIMP_BUILD_DOCS" = "ON"
+//    "ASSIMP_BUILD_DOCS" = "OFF"
     "ASSIMP_INJECT_DEBUG_POSTFIX" = "ON"
 //    "ASSIMP_IGNORE_GIT_HASH" = "OFF"
     "ASSIMP_BUILD_ZLIB" = "ON"
-    "SWIG" = "1"
+    "SWIG" = "1" // I'm not really sure what this is but setting is is required in-order to generate bindings properly.
 }
 
 rename_types = {
