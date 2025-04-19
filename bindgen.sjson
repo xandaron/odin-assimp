@@ -47,6 +47,7 @@ clang_include_paths = [
     "./build/include/"
 ]
 
+// A lot of these likely have nothing to do with the files were generating bindings for but I can't be bothered to figure out which do and don't matter.
 clang_defines = {
 //    "BUILD_SHARED_LIBS" = "OFF" Don't define macros that should be off. I thought you defined it the same way CMake does but that seems to be a misunderstanding on my end.
 //    "ASSIMP_BUILD_FRAMEWORK" = "OFF" 
