@@ -1,0 +1,77 @@
+inputs = [
+    "./assimp/include/assimp/aabb.h"
+    "./assimp/include/assimp/anim.h"
+    "./assimp/include/assimp/camera.h"
+    "./assimp/include/assimp/cexport.h"
+    "./assimp/include/assimp/cfileio.h"
+    "./assimp/include/assimp/cimport.h"
+    "./assimp/include/assimp/color4.h"
+    "./assimp/include/assimp/defs.h"
+    "./assimp/include/assimp/importerdesc.h"
+    "./assimp/include/assimp/light.h"
+    "./assimp/include/assimp/material.h"
+    "./assimp/include/assimp/matrix3x3.h"
+    "./assimp/include/assimp/matrix4x4.h"
+    "./assimp/include/assimp/mesh.h"
+    "./assimp/include/assimp/metadata.h"
+//    "./assimp/include/assimp/pbrmaterial.h" Depricated file
+    "./assimp/include/assimp/postprocess.h"
+//   "./assimp/include/assimp/qnan.h" Causes compile issues and file doesn't seem essential
+    "./assimp/include/assimp/quaternion.h"
+    "./assimp/include/assimp/scene.h"
+    "./assimp/include/assimp/texture.h"
+    "./assimp/include/assimp/types.h"
+    "./assimp/include/assimp/vector2.h"
+    "./assimp/include/assimp/vector3.h"
+    "./assimp/include/assimp/version.h"
+]
+
+remove_type_prefix = "ai"
+
+remove_function_prefix = "ai"
+
+imports_file = "import.odin"
+
+package_name = "assimp"
+
+output_folder = "odin-assimp"
+
+force_ada_case_types = true
+
+type_overrides = {
+//    "real" = "Real" Doesn't seem to work the way I want it to
+}
+
+clang_include_paths = [
+    "./assimp/include/"
+    "./build/include/"
+]
+
+clang_defines = {
+//    "BUILD_SHARED_LIBS" = "OFF" Don't define macros that should be off. I thought you defined it the same way CMake does but that seems to be a misunderstanding on my end.
+//    "ASSIMP_BUILD_FRAMEWORK" = "OFF" 
+//    "ASSIMP_DOUBLE_PRECISION" = "OFF"
+//    "ASSIMP_OPT_BUILD_PACKAGES" = "OFF"
+//    "ASSIMP_ANDROID_JNIIOSYSTEM" = "OFF"
+//    "ASSIMP_NO_EXPORT" = "OFF"
+//    "ASSIMP_BUILD_ASSIMP_TOOLS" = "OFF"
+//    "ASSIMP_BUILD_SAMPLES" = "OFF"
+    "ASSIMP_BUILD_TESTS" = "ON"
+//    "ASSIMP_COVERALLS" = "OFF"
+//    "ASSIMP_INSTALL" = "OFF"
+//    "ASSIMP_WARNINGS_AS_ERRORS" = "OFF"
+//    "ASSIMP_ASAN" = "OFF"
+//    "ASSIMP_UBSAN" = "OFF"
+    "ASSIMP_BUILD_DOCS" = "ON"
+    "ASSIMP_INJECT_DEBUG_POSTFIX" = "ON"
+//    "ASSIMP_IGNORE_GIT_HASH" = "OFF"
+    "ASSIMP_BUILD_ZLIB" = "ON"
+    "SWIG" = "1"
+}
+
+rename_types = {
+//    "real" = "Real" Doesn't work the way i want it to
+//    "Vector2d" = "Vector2D"
+//    "Vector3d" = "Vector3D"
+}
+
