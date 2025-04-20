@@ -25,6 +25,11 @@ REM I'm pretty sure we actually want ASSIMP_BUILD_ZLIB to be OFF but doing so ca
 cmake ./assimp/CMakeLists.txt -DASSIMP_BUILD_ZLIB=ON -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -B build
 cmake --build build
 
+if not exist ".\odin-assimp" mkdir ".\odin-assimp"
+
+move /y .\build\lib\Debug\assimp-vc143-mtd.lib .\odin-assimp\libassimp-windows.lib
+copy /y .\assimp\LICENSE .\odin-assimp\LICENSE
+
 where /Q bindgen.exe
 if %ERRORLEVEL% == 0 (
     bindgen .
@@ -34,5 +39,24 @@ if %ERRORLEVEL% == 0 (
     exit /b 1
 )
 
-copy /y .\build\lib\Debug\assimp-vc143-mtd.lib .\odin-assimp\libassimp-windows.lib
-copy /y .\assimp\LICENSE .\odin-assimp\LICENSE
+set PYTHON_CMD=
+
+REM Try python command first (most common on Windows)
+where /Q python.exe
+if %ERRORLEVEL% == 0 (
+    set PYTHON_CMD=python
+) else (
+    REM Try python3 command if python doesn't exist
+    where /Q python3.exe
+    if %ERRORLEVEL% == 0 (
+        set PYTHON_CMD=python3
+    )
+)
+
+REM If we found a valid Python command, use it
+if "!PYTHON_CMD!" NEQ "" (
+    !PYTHON_CMD! cleanup.py
+) else (
+    echo ERROR: No Python installation found in PATH.
+    exit /b 1
+)
