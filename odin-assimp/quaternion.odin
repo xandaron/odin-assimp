@@ -55,6 +55,6 @@ else when ODIN_OS == .Linux {
 }
 
 Quaternion :: struct {
-	w, x, y, z: real,
+	w, x, y, z: Real,
 }
 

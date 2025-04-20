@@ -114,7 +114,7 @@ Camera :: struct {
 	*
 	*  The default value is 0|0|0.
 	*/
-	mPosition: Vector3D,
+	mPosition: Vector3d,
 
 	/** 'Up' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -124,7 +124,7 @@ Camera :: struct {
 	*  The default value is 0|1|0. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp: Vector3D,
+	mUp: Vector3d,
 
 	/** 'LookAt' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -133,7 +133,7 @@ Camera :: struct {
 	*  The default value is 0|0|1. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mLookAt: Vector3D,
+	mLookAt: Vector3d,
 
 	/** Horizontal field of view angle, in radians.
 	*

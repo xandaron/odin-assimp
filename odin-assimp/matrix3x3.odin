@@ -56,8 +56,8 @@ else when ODIN_OS == .Linux {
 }
 
 Matrix3x3 :: struct {
-	a1, a2, a3: real,
-	b1, b2, b3: real,
-	c1, c2, c3: real,
+	a1, a2, a3: Real,
+	b1, b2, b3: Real,
+	c1, c2, c3: Real,
 }
 

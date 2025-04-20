@@ -125,7 +125,7 @@ Light :: struct {
 	*
 	*  The position is undefined for directional lights.
 	*/
-	mPosition: Vector3D,
+	mPosition: Vector3d,
 
 	/** Direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -133,7 +133,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mDirection: Vector3D,
+	mDirection: Vector3d,
 
 	/** Up direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -141,7 +141,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp: Vector3D,
+	mUp: Vector3d,
 
 	/** Constant light attenuation factor.
 	*
@@ -185,7 +185,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the diffuse shading term.
 	*/
-	mColorDiffuse: Color3D,
+	mColorDiffuse: Color3d,
 
 	/** Specular color of the light source
 	*
@@ -193,7 +193,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the specular shading term.
 	*/
-	mColorSpecular: Color3D,
+	mColorSpecular: Color3d,
 
 	/** Ambient color of the light source
 	*
@@ -203,7 +203,7 @@ Light :: struct {
 	*  this value it, is just a remaining of the fixed-function pipeline
 	*  that is still supported by quite many file formats.
 	*/
-	mColorAmbient: Color3D,
+	mColorAmbient: Color3d,
 
 	/** Inner angle of a spot light's light cone.
 	*
@@ -226,6 +226,6 @@ Light :: struct {
 	mAngleOuterCone: f32,
 
 	/** Size of area light source. */
-	mSize: Vector2D,
+	mSize: Vector2d,
 }
 

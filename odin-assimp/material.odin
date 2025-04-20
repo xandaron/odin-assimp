@@ -543,13 +543,13 @@ Uvtransform :: struct {
 	*
 	*  The default value is (0|0).
 	*/
-	mTranslation: Vector2D,
+	mTranslation: Vector2d,
 
 	/** Scaling on the u and v axes.
 	*
 	*  The default value is (1|1).
 	*/
-	mScaling: Vector2D,
+	mScaling: Vector2d,
 
 	/** Rotation - in counter-clockwise direction.
 	*
@@ -557,7 +557,7 @@ Uvtransform :: struct {
 	*  rotation center is 0.5f|0.5f. The default value
 	*  0.f.
 	*/
-	mRotation: real,
+	mRotation: Real,
 }
 
 //! @cond AI_DOX_INCLUDE_INTERNAL
@@ -722,7 +722,7 @@ foreign lib {
 	* @return Specifies whether the key has been found. If not, the output
 	*   arrays remains unmodified and pMax is set to 0.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialFloatArray :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^real, pMax: ^u32) -> Return ---
+	GetMaterialFloatArray :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Real, pMax: ^u32) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a single float property with a specific key from the material.
@@ -743,7 +743,7 @@ foreign lib {
 	* @return Specifies whether the key has been found. If not, the output
 	*   float remains unmodified.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialFloat :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^real) -> Return ---
+	GetMaterialFloat :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Real) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve an array of integer values with a specific key
@@ -764,7 +764,7 @@ foreign lib {
 	*
 	* See the sample for aiGetMaterialFloat for more information*/
 	// ---------------------------------------------------------------------------
-	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Color4D) -> Return ---
+	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Color4d) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a aiUVTransform value from the material property table
@@ -788,5 +788,5 @@ foreign lib {
 	*  @note A texture can be easily queried using #aiGetMaterialTexture() */
 	// ---------------------------------------------------------------------------
 	GetMaterialTextureCount :: proc(pMat: ^Material, type: Texture_Type) -> u32 ---
-	GetMaterialTexture      :: proc(mat: ^Material, type: Texture_Type, index: u32, path: ^String, mapping: ^Texture_Mapping, uvindex: ^u32, blend: ^real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^u32) -> Return ---
+	GetMaterialTexture      :: proc(mat: ^Material, type: Texture_Type, index: u32, path: ^String, mapping: ^Texture_Mapping, uvindex: ^u32, blend: ^Real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^u32) -> Return ---
 }

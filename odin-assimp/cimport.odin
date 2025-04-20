@@ -57,14 +57,11 @@ else when ODIN_OS == .Linux {
     foreign import lib "libassimp-linux.a"
 }
 
-Scene :: struct {
-}
 
-Texture :: struct {
-}
 
-File_Io :: struct {
-}
+
+
+
 
 Log_Stream_Callback :: proc "c" (cstring, cstring)
 
@@ -263,7 +260,7 @@ foreign lib {
 	*    Pass NULL for all other flags.
 	*  @return The log stream. callback is set to NULL if something went wrong.
 	*/
-	GetPredefinedLogStream :: proc(pStreams: DefaultLogStream, file: cstring) -> Log_Stream ---
+	GetPredefinedLogStream :: proc(pStreams: Default_Log_Stream, file: cstring) -> Log_Stream ---
 
 	// --------------------------------------------------------------------------------
 	/** Attach a custom log stream to the libraries' logging system.
@@ -284,7 +281,7 @@ foreign lib {
 	*  didn't read correctly.
 	*  @param d AI_TRUE or AI_FALSE, your decision.
 	*/
-	EnableVerboseLogging :: proc(d: Bool) ---
+	EnableVerboseLogging :: proc(d: bool) ---
 
 	// --------------------------------------------------------------------------------
 	/** Detach a custom log stream from the libraries' logging system.
@@ -331,7 +328,7 @@ foreign lib {
 	* Must include a leading dot '.'. Example: ".3ds", ".md3"
 	* @return AI_TRUE if the file extension is supported.
 	*/
-	IsExtensionSupported :: proc(szExtension: cstring) -> Bool ---
+	IsExtensionSupported :: proc(szExtension: cstring) -> bool ---
 
 	// --------------------------------------------------------------------------------
 	/** Get a list of all file extensions supported by ASSIMP.
@@ -348,7 +345,7 @@ foreign lib {
 	* @param pIn Input asset.
 	* @param in Data structure to be filled.
 	*/
-	GetMemoryRequirements :: proc(pIn: ^Scene, _in: ^MemoryInfo) ---
+	GetMemoryRequirements :: proc(pIn: ^Scene, _in: ^Memory_Info) ---
 
 	// --------------------------------------------------------------------------------
 	/** Returns an embedded texture, or nullptr.
@@ -397,7 +394,7 @@ foreign lib {
 	*   public properties are defined in the config.h header file (AI_CONFIG_XXX).
 	* @param value New value for the property
 	*/
-	SetImportPropertyFloat :: proc(store: ^Property_Store, szName: cstring, value: real) ---
+	SetImportPropertyFloat :: proc(store: ^Property_Store, szName: cstring, value: Real) ---
 
 	// --------------------------------------------------------------------------------
 	/** Set a string property.
@@ -445,7 +442,7 @@ foreign lib {
 	* @param position Receives the translational component.
 	* @see aiMatrix4x4::Decompose (aiVector3D&, aiQuaternion&, aiVector3D&) const;
 	*/
-	DecomposeMatrix :: proc(mat: ^Matrix4x4, scaling: ^Vector3D, rotation: ^Quaternion, position: ^Vector3D) ---
+	DecomposeMatrix :: proc(mat: ^Matrix4x4, scaling: ^Vector3d, rotation: ^Quaternion, position: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Transpose a 4x4 matrix.
@@ -464,14 +461,14 @@ foreign lib {
 	*  @param vec Vector to be transformed.
 	*  @param mat Matrix to transform the vector with.
 	*/
-	TransformVecByMatrix3 :: proc(vec: ^Vector3D, mat: ^Matrix3x3) ---
+	TransformVecByMatrix3 :: proc(vec: ^Vector3d, mat: ^Matrix3x3) ---
 
 	// --------------------------------------------------------------------------------
 	/** Transform a vector by a 4x4 matrix
 	*  @param vec Vector to be transformed.
 	*  @param mat Matrix to transform the vector with.
 	*/
-	TransformVecByMatrix4 :: proc(vec: ^Vector3D, mat: ^Matrix4x4) ---
+	TransformVecByMatrix4 :: proc(vec: ^Vector3d, mat: ^Matrix4x4) ---
 
 	// --------------------------------------------------------------------------------
 	/** Multiply two 4x4 matrices.
@@ -512,7 +509,7 @@ foreign lib {
 	*    0 to #aiGetImportFormatCount()
 	* @return A description of that specific import format. NULL if pIndex is out of range.
 	*/
-	GetImportFormatDescription :: proc(pIndex: uint) -> ^ImporterDesc ---
+	GetImportFormatDescription :: proc(pIndex: uint) -> ^Importer_Desc ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 2D vectors are equal.
@@ -521,7 +518,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector2AreEqual :: proc(a: ^Vector2D, b: ^Vector2D) -> i32 ---
+	Vector2AreEqual :: proc(a: ^Vector2d, b: ^Vector2d) -> i32 ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 2D vectors are equal using epsilon.
@@ -531,28 +528,28 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector2AreEqualEpsilon :: proc(a: ^Vector2D, b: ^Vector2D, epsilon: f32) -> i32 ---
+	Vector2AreEqualEpsilon :: proc(a: ^Vector2d, b: ^Vector2d, epsilon: f32) -> i32 ---
 
 	// --------------------------------------------------------------------------------
 	/** Add 2D vectors.
 	*  @param dst First addend, receives result.
 	*  @param src Vector to be added to 'dst'.
 	*/
-	Vector2Add :: proc(dst: ^Vector2D, src: ^Vector2D) ---
+	Vector2Add :: proc(dst: ^Vector2d, src: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Subtract 2D vectors.
 	*  @param dst Minuend, receives result.
 	*  @param src Vector to be subtracted from 'dst'.
 	*/
-	Vector2Subtract :: proc(dst: ^Vector2D, src: ^Vector2D) ---
+	Vector2Subtract :: proc(dst: ^Vector2d, src: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Multiply a 2D vector by a scalar.
 	*  @param dst Vector to be scaled by \p s
 	*  @param s Scale factor
 	*/
-	Vector2Scale :: proc(dst: ^Vector2D, s: f32) ---
+	Vector2Scale :: proc(dst: ^Vector2d, s: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Multiply each component of a 2D vector with
@@ -560,14 +557,14 @@ foreign lib {
 	*  @param dst First vector, receives result
 	*  @param other Second vector
 	*/
-	Vector2SymMul :: proc(dst: ^Vector2D, other: ^Vector2D) ---
+	Vector2SymMul :: proc(dst: ^Vector2d, other: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Divide a 2D vector by a scalar.
 	*  @param dst Vector to be divided by \p s
 	*  @param s Scalar divisor
 	*/
-	Vector2DivideByScalar :: proc(dst: ^Vector2D, s: f32) ---
+	Vector2DivideByScalar :: proc(dst: ^Vector2d, s: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Divide each component of a 2D vector by
@@ -575,25 +572,25 @@ foreign lib {
 	*  @param dst Vector as the dividend
 	*  @param v Vector as the divisor
 	*/
-	Vector2DivideByVector :: proc(dst: ^Vector2D, v: ^Vector2D) ---
+	Vector2DivideByVector :: proc(dst: ^Vector2d, v: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the length of a 2D vector.
 	*  @return v Vector to evaluate
 	*/
-	Vector2Length :: proc(v: ^Vector2D) -> real ---
+	Vector2Length :: proc(v: ^Vector2d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the squared length of a 2D vector.
 	*  @return v Vector to evaluate
 	*/
-	Vector2SquareLength :: proc(v: ^Vector2D) -> real ---
+	Vector2SquareLength :: proc(v: ^Vector2d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Negate a 2D vector.
 	*  @param dst Vector to be negated
 	*/
-	Vector2Negate :: proc(dst: ^Vector2D) ---
+	Vector2Negate :: proc(dst: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the dot product of 2D vectors.
@@ -601,13 +598,13 @@ foreign lib {
 	*  @param b Second vector
 	*  @return The dot product of vectors
 	*/
-	Vector2DotProduct :: proc(a: ^Vector2D, b: ^Vector2D) -> real ---
+	Vector2DotProduct :: proc(a: ^Vector2d, b: ^Vector2d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Normalize a 2D vector.
 	*  @param v Vector to normalize
 	*/
-	Vector2Normalize :: proc(v: ^Vector2D) ---
+	Vector2Normalize :: proc(v: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 3D vectors are equal.
@@ -616,7 +613,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector3AreEqual :: proc(a: ^Vector3D, b: ^Vector3D) -> i32 ---
+	Vector3AreEqual :: proc(a: ^Vector3d, b: ^Vector3d) -> i32 ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 3D vectors are equal using epsilon.
@@ -626,7 +623,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector3AreEqualEpsilon :: proc(a: ^Vector3D, b: ^Vector3D, epsilon: f32) -> i32 ---
+	Vector3AreEqualEpsilon :: proc(a: ^Vector3d, b: ^Vector3d, epsilon: f32) -> i32 ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if vector \p a is less than vector \p b.
@@ -636,28 +633,28 @@ foreign lib {
 	*  @return 1 if \p a is less than \p b
 	*  @return 0 if \p a is equal or greater than \p b
 	*/
-	Vector3LessThan :: proc(a: ^Vector3D, b: ^Vector3D) -> i32 ---
+	Vector3LessThan :: proc(a: ^Vector3d, b: ^Vector3d) -> i32 ---
 
 	// --------------------------------------------------------------------------------
 	/** Add 3D vectors.
 	*  @param dst First addend, receives result.
 	*  @param src Vector to be added to 'dst'.
 	*/
-	Vector3Add :: proc(dst: ^Vector3D, src: ^Vector3D) ---
+	Vector3Add :: proc(dst: ^Vector3d, src: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Subtract 3D vectors.
 	*  @param dst Minuend, receives result.
 	*  @param src Vector to be subtracted from 'dst'.
 	*/
-	Vector3Subtract :: proc(dst: ^Vector3D, src: ^Vector3D) ---
+	Vector3Subtract :: proc(dst: ^Vector3d, src: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Multiply a 3D vector by a scalar.
 	*  @param dst Vector to be scaled by \p s
 	*  @param s Scale factor
 	*/
-	Vector3Scale :: proc(dst: ^Vector3D, s: f32) ---
+	Vector3Scale :: proc(dst: ^Vector3d, s: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Multiply each component of a 3D vector with
@@ -665,14 +662,14 @@ foreign lib {
 	*  @param dst First vector, receives result
 	*  @param other Second vector
 	*/
-	Vector3SymMul :: proc(dst: ^Vector3D, other: ^Vector3D) ---
+	Vector3SymMul :: proc(dst: ^Vector3d, other: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Divide a 3D vector by a scalar.
 	*  @param dst Vector to be divided by \p s
 	*  @param s Scalar divisor
 	*/
-	Vector3DivideByScalar :: proc(dst: ^Vector3D, s: f32) ---
+	Vector3DivideByScalar :: proc(dst: ^Vector3d, s: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Divide each component of a 3D vector by
@@ -680,25 +677,25 @@ foreign lib {
 	*  @param dst Vector as the dividend
 	*  @param v Vector as the divisor
 	*/
-	Vector3DivideByVector :: proc(dst: ^Vector3D, v: ^Vector3D) ---
+	Vector3DivideByVector :: proc(dst: ^Vector3d, v: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the length of a 3D vector.
 	*  @return v Vector to evaluate
 	*/
-	Vector3Length :: proc(v: ^Vector3D) -> real ---
+	Vector3Length :: proc(v: ^Vector3d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the squared length of a 3D vector.
 	*  @return v Vector to evaluate
 	*/
-	Vector3SquareLength :: proc(v: ^Vector3D) -> real ---
+	Vector3SquareLength :: proc(v: ^Vector3d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Negate a 3D vector.
 	*  @param dst Vector to be negated
 	*/
-	Vector3Negate :: proc(dst: ^Vector3D) ---
+	Vector3Negate :: proc(dst: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get the dot product of 3D vectors.
@@ -706,7 +703,7 @@ foreign lib {
 	*  @param b Second vector
 	*  @return The dot product of vectors
 	*/
-	Vector3DotProduct :: proc(a: ^Vector3D, b: ^Vector3D) -> real ---
+	Vector3DotProduct :: proc(a: ^Vector3d, b: ^Vector3d) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Get cross product of 3D vectors.
@@ -715,26 +712,26 @@ foreign lib {
 	*  @param b Second vector
 	*  @return The dot product of vectors
 	*/
-	Vector3CrossProduct :: proc(dst: ^Vector3D, a: ^Vector3D, b: ^Vector3D) ---
+	Vector3CrossProduct :: proc(dst: ^Vector3d, a: ^Vector3d, b: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Normalize a 3D vector.
 	*  @param v Vector to normalize
 	*/
-	Vector3Normalize :: proc(v: ^Vector3D) ---
+	Vector3Normalize :: proc(v: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Check for division by zero and normalize a 3D vector.
 	*  @param v Vector to normalize
 	*/
-	Vector3NormalizeSafe :: proc(v: ^Vector3D) ---
+	Vector3NormalizeSafe :: proc(v: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Rotate a 3D vector by a quaternion.
 	*  @param v The vector to rotate by \p q
 	*  @param q Quaternion to use to rotate \p v
 	*/
-	Vector3RotateByQuaternion :: proc(v: ^Vector3D, q: ^Quaternion) ---
+	Vector3RotateByQuaternion :: proc(v: ^Vector3d, q: ^Quaternion) ---
 
 	// --------------------------------------------------------------------------------
 	/** Construct a 3x3 matrix from a 4x4 matrix.
@@ -779,7 +776,7 @@ foreign lib {
 	/** Get the determinant of a 3x3 matrix.
 	*  @param mat Matrix to get the determinant from
 	*/
-	Matrix3Determinant :: proc(mat: ^Matrix3x3) -> real ---
+	Matrix3Determinant :: proc(mat: ^Matrix3x3) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Get a 3x3 rotation matrix around the Z axis.
@@ -794,14 +791,14 @@ foreign lib {
 	*  @param axis Rotation axis, should be a normalized vector
 	*  @param angle Rotation angle, in radians
 	*/
-	Matrix3FromRotationAroundAxis :: proc(mat: ^Matrix3x3, axis: ^Vector3D, angle: f32) ---
+	Matrix3FromRotationAroundAxis :: proc(mat: ^Matrix3x3, axis: ^Vector3d, angle: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get a 3x3 translation matrix.
 	*  @param mat Receives the output matrix
 	*  @param translation The translation vector
 	*/
-	Matrix3Translation :: proc(mat: ^Matrix3x3, translation: ^Vector2D) ---
+	Matrix3Translation :: proc(mat: ^Matrix3x3, translation: ^Vector2d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Create a 3x3 matrix that rotates one vector to another vector.
@@ -809,7 +806,7 @@ foreign lib {
 	*  @param from Vector to rotate from
 	*  @param to Vector to rotate to
 	*/
-	Matrix3FromTo :: proc(mat: ^Matrix3x3, from: ^Vector3D, to: ^Vector3D) ---
+	Matrix3FromTo :: proc(mat: ^Matrix3x3, from: ^Vector3d, to: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Construct a 4x4 matrix from a 3x3 matrix.
@@ -825,7 +822,7 @@ foreign lib {
 	*  @param rotation The rotation as a hamilton quaternion
 	*  @param position The position for the x,y,z axes
 	*/
-	Matrix4FromScalingQuaternionPosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3D, rotation: ^Quaternion, position: ^Vector3D) ---
+	Matrix4FromScalingQuaternionPosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3d, rotation: ^Quaternion, position: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Add 4x4 matrices.
@@ -864,7 +861,7 @@ foreign lib {
 	*  @param mat Matrix to get the determinant from
 	*  @return The determinant of the matrix
 	*/
-	Matrix4Determinant :: proc(mat: ^Matrix4x4) -> real ---
+	Matrix4Determinant :: proc(mat: ^Matrix4x4) -> Real ---
 
 	// --------------------------------------------------------------------------------
 	/** Returns true of the matrix is the identity matrix.
@@ -883,7 +880,7 @@ foreign lib {
 	* @param rotation Receives the output rotation as a Euler angles
 	* @param position Receives the output position for the x,y,z axes
 	*/
-	Matrix4DecomposeIntoScalingEulerAnglesPosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3D, rotation: ^Vector3D, position: ^Vector3D) ---
+	Matrix4DecomposeIntoScalingEulerAnglesPosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3d, rotation: ^Vector3d, position: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Decompose a transformation matrix into its scaling,
@@ -896,7 +893,7 @@ foreign lib {
 	* @param angle Receives the output rotation angle
 	* @param position Receives the output position for the x,y,z axes.
 	*/
-	Matrix4DecomposeIntoScalingAxisAnglePosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3D, axis: ^Vector3D, angle: ^real, position: ^Vector3D) ---
+	Matrix4DecomposeIntoScalingAxisAnglePosition :: proc(mat: ^Matrix4x4, scaling: ^Vector3d, axis: ^Vector3d, angle: ^Real, position: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Decompose a transformation matrix into its rotational and
@@ -906,7 +903,7 @@ foreign lib {
 	* @param rotation Receives the rotational component
 	* @param position Receives the translational component.
 	*/
-	Matrix4DecomposeNoScaling :: proc(mat: ^Matrix4x4, rotation: ^Quaternion, position: ^Vector3D) ---
+	Matrix4DecomposeNoScaling :: proc(mat: ^Matrix4x4, rotation: ^Quaternion, position: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Creates a 4x4 matrix from a set of euler angles.
@@ -944,21 +941,21 @@ foreign lib {
 	*  @param axis Rotation axis, should be a normalized vector
 	*  @param angle Rotation angle, in radians
 	*/
-	Matrix4FromRotationAroundAxis :: proc(mat: ^Matrix4x4, axis: ^Vector3D, angle: f32) ---
+	Matrix4FromRotationAroundAxis :: proc(mat: ^Matrix4x4, axis: ^Vector3d, angle: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get a 4x4 translation matrix.
 	*  @param mat Receives the output matrix
 	*  @param translation The translation vector
 	*/
-	Matrix4Translation :: proc(mat: ^Matrix4x4, translation: ^Vector3D) ---
+	Matrix4Translation :: proc(mat: ^Matrix4x4, translation: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Get a 4x4 scaling matrix.
 	*  @param mat Receives the output matrix
 	*  @param scaling The scaling vector
 	*/
-	Matrix4Scaling :: proc(mat: ^Matrix4x4, scaling: ^Vector3D) ---
+	Matrix4Scaling :: proc(mat: ^Matrix4x4, scaling: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Create a 4x4 matrix that rotates one vector to another vector.
@@ -966,7 +963,7 @@ foreign lib {
 	*  @param from Vector to rotate from
 	*  @param to Vector to rotate to
 	*/
-	Matrix4FromTo :: proc(mat: ^Matrix4x4, from: ^Vector3D, to: ^Vector3D) ---
+	Matrix4FromTo :: proc(mat: ^Matrix4x4, from: ^Vector3d, to: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Create a Quaternion from euler angles.
@@ -983,7 +980,7 @@ foreign lib {
 	*  @param axis The orientation axis
 	*  @param angle The rotation angle, in radians
 	*/
-	QuaternionFromAxisAngle :: proc(q: ^Quaternion, axis: ^Vector3D, angle: f32) ---
+	QuaternionFromAxisAngle :: proc(q: ^Quaternion, axis: ^Vector3d, angle: f32) ---
 
 	// --------------------------------------------------------------------------------
 	/** Create a Quaternion from a normalized quaternion stored
@@ -991,7 +988,7 @@ foreign lib {
 	*  @param q Receives the output quaternion
 	*  @param normalized The vector that stores the quaternion
 	*/
-	QuaternionFromNormalizedQuaternion :: proc(q: ^Quaternion, normalized: ^Vector3D) ---
+	QuaternionFromNormalizedQuaternion :: proc(q: ^Quaternion, normalized: ^Vector3d) ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if quaternions are equal.

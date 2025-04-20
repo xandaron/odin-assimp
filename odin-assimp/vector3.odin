@@ -55,7 +55,7 @@ else when ODIN_OS == .Linux {
     foreign import lib "libassimp-linux.a"
 }
 
-Vector3D :: struct {
-	x, y, z: real,
+Vector3d :: struct {
+	x, y, z: Real,
 }
 

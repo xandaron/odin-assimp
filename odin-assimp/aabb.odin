@@ -57,7 +57,7 @@ else when ODIN_OS == .Linux {
 *  An axis-aligned bounding box.
 */
 Aabb :: struct {
-	mMin: Vector3D,
-	mMax: Vector3D,
+	mMin: Vector3d,
+	mMax: Vector3d,
 }
 

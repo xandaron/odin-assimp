@@ -66,7 +66,7 @@ Uint32 :: u32
 */
 Plane :: struct {
 	//! Plane equation
-	a, b, _c, d: real,
+	a, b, _c, d: Real,
 }
 
 // ----------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ Plane :: struct {
 */
 Ray :: struct {
 	//! Position and direction of the ray
-	pos, dir: Vector3D,
+	pos, dir: Vector3d,
 }
 
 // ----------------------------------------------------------------------------------

@@ -83,7 +83,7 @@ Vector_Key :: struct {
 	mTime: f64,
 
 	/** The value of this key */
-	mValue: Vector3D,
+	mValue: Vector3d,
 
 	/** The interpolation setting of this key */
 	mInterpolation: Anim_Interpolation,

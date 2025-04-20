@@ -99,12 +99,11 @@ Vertex_Weight :: struct {
 
 	//! The strength of the influence in the range (0...1).
 	//! The influence from all bones at one vertex amounts to 1.
-	mWeight: real,
+	mWeight: Real,
 }
 
 // Forward declare aiNode (pointer use only)
-Node :: struct {
-}
+
 
 // ---------------------------------------------------------------------------
 /** @brief A single bone of a mesh.
@@ -240,22 +239,22 @@ Anim_Mesh :: struct {
 	*  meshes may neither add or nor remove vertex components (if
 	*  a replacement array is nullptr and the corresponding source
 	*  array is not, the source data is taken instead)*/
-	mVertices: ^Vector3D,
+	mVertices: ^Vector3d,
 
 	/** Replacement for aiMesh::mNormals.  */
-	mNormals: ^Vector3D,
+	mNormals: ^Vector3d,
 
 	/** Replacement for aiMesh::mTangents. */
-	mTangents: ^Vector3D,
+	mTangents: ^Vector3d,
 
 	/** Replacement for aiMesh::mBitangents. */
-	mBitangents: ^Vector3D,
+	mBitangents: ^Vector3d,
 
 	/** Replacement for aiMesh::mColors */
-	mColors: ^[8]Color4D,
+	mColors: ^[8]Color4d,
 
 	/** Replacement for aiMesh::mTextureCoords */
-	mTextureCoords: ^[8]Vector3D,
+	mTextureCoords: ^[8]Vector3d,
 
 	/** The number of vertices in the aiAnimMesh, and thus the length of all
 	* the member arrays.
@@ -338,7 +337,7 @@ Mesh :: struct {
 	* This array is always present in a mesh. The array is
 	* mNumVertices in size.
 	*/
-	mVertices: ^Vector3D,
+	mVertices: ^Vector3d,
 
 	/**
 	* @brief Vertex normals.
@@ -362,7 +361,7 @@ Mesh :: struct {
 	* However, this needn't apply for normals that have been taken
 	* directly from the model file.
 	*/
-	mNormals: ^Vector3D,
+	mNormals: ^Vector3d,
 
 	/**
 	* @brief Vertex tangents.
@@ -378,7 +377,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also
 	* contains bitangents.
 	*/
-	mTangents: ^Vector3D,
+	mTangents: ^Vector3d,
 
 	/**
 	* @brief Vertex bitangents.
@@ -389,7 +388,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also contains
 	* bitangents.
 	*/
-	mBitangents: ^Vector3D,
+	mBitangents: ^Vector3d,
 
 	/**
 	* @brief Vertex color sets.
@@ -398,7 +397,7 @@ Mesh :: struct {
 	* colors per vertex. nullptr if not present. Each array is
 	* mNumVertices in size if present.
 	*/
-	mColors: ^[8]Color4D,
+	mColors: ^[8]Color4d,
 
 	/**
 	* @brief Vertex texture coordinates, also known as UV channels.
@@ -407,7 +406,7 @@ Mesh :: struct {
 	* vertex. Used and unused (nullptr) channels may go in any order.
 	* The array is mNumVertices in size.
 	*/
-	mTextureCoords: ^[8]Vector3D,
+	mTextureCoords: ^[8]Vector3d,
 
 	/**
 	* @brief Specifies the number of components for a given UV channel.
@@ -493,7 +492,7 @@ Mesh :: struct {
 	/**
 	*  The bounding box.
 	*/
-	mAABB: AABB,
+	mAABB: Aabb,
 
 	/**
 	* Vertex UV stream names. Pointer to array of size AI_MAX_NUMBER_OF_TEXTURECOORDS

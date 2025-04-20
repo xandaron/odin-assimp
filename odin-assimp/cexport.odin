@@ -57,11 +57,9 @@ else when ODIN_OS == .Linux {
     foreign import lib "libassimp-linux.a"
 }
 
-Scene :: struct {
-}
 
-File_Io :: struct {
-}
+
+
 
 // --------------------------------------------------------------------------------
 /**

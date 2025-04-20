@@ -58,9 +58,9 @@ else when ODIN_OS == .Linux {
 }
 
 Matrix4x4 :: struct {
-	a1, a2, a3, a4: real,
-	b1, b2, b3, b4: real,
-	c1, c2, c3, c4: real,
-	d1, d2, d3, d4: real,
+	a1, a2, a3, a4: Real,
+	b1, b2, b3, b4: Real,
+	c1, c2, c3, c4: Real,
+	d1, d2, d3, d4: Real,
 }
 

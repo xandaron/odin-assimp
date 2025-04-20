@@ -43,7 +43,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
 
+_ :: c
 
 // I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
 import "vendor:zlib"
