@@ -42,22 +42,25 @@ package assimp
 
 
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+
 
 // ---------------------------------------------------------------------------
 /**
 *  An axis-aligned bounding box.
 */
 Aabb :: struct {
-	mMin: Vector3d,
-	mMax: Vector3d,
+	mMin: Vector3D,
+	mMax: Vector3D,
 }
 

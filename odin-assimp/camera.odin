@@ -47,15 +47,18 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+
 
 // ---------------------------------------------------------------------------
 /** Helper structure to describe a virtual camera.
@@ -114,7 +117,7 @@ Camera :: struct {
 	*
 	*  The default value is 0|0|0.
 	*/
-	mPosition: Vector3d,
+	mPosition: Vector3D,
 
 	/** 'Up' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -124,7 +127,7 @@ Camera :: struct {
 	*  The default value is 0|1|0. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp: Vector3d,
+	mUp: Vector3D,
 
 	/** 'LookAt' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -133,7 +136,7 @@ Camera :: struct {
 	*  The default value is 0|0|1. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mLookAt: Vector3d,
+	mLookAt: Vector3D,
 
 	/** Horizontal field of view angle, in radians.
 	*

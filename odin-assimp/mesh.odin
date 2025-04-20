@@ -48,15 +48,24 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+AI_MAX_NUMBER_OF_TEXTURECOORDS :: 0x8
+AI_MAX_BONE_WEIGHTS :: 0x7fffffff
+AI_MAX_FACES :: 0x7fffffff
+AI_MAX_FACE_INDICES :: 0x7fff
+AI_MAX_VERTICES :: 0x7fffffff
+AI_MAX_NUMBER_OF_COLOR_SETS :: 0x8
+
 
 // ---------------------------------------------------------------------------
 /**
@@ -87,7 +96,7 @@ Face :: struct {
 	mNumIndices: u32,
 
 	//! Pointer to the indices array. Size of the array is given in numIndices.
-	mIndices: ^u32,
+	mIndices: ^[]u32,
 }
 
 // ---------------------------------------------------------------------------
@@ -140,7 +149,7 @@ Bone :: struct {
 	/**
 	* The influence weights of this bone, by vertex index.
 	*/
-	mWeights: ^Vertex_Weight,
+	mWeights: ^[]Vertex_Weight,
 
 	/**
 	* Matrix that transforms from mesh space to bone space in bind pose.
@@ -239,22 +248,22 @@ Anim_Mesh :: struct {
 	*  meshes may neither add or nor remove vertex components (if
 	*  a replacement array is nullptr and the corresponding source
 	*  array is not, the source data is taken instead)*/
-	mVertices: ^Vector3d,
+	mVertices: ^[]Vector3D,
 
 	/** Replacement for aiMesh::mNormals.  */
-	mNormals: ^Vector3d,
+	mNormals: ^[]Vector3D,
 
 	/** Replacement for aiMesh::mTangents. */
-	mTangents: ^Vector3d,
+	mTangents: ^[]Vector3D,
 
 	/** Replacement for aiMesh::mBitangents. */
-	mBitangents: ^Vector3d,
+	mBitangents: ^[]Vector3D,
 
 	/** Replacement for aiMesh::mColors */
-	mColors: ^[8]Color4d,
+	mColors: ^[8]Color4D,
 
 	/** Replacement for aiMesh::mTextureCoords */
-	mTextureCoords: ^[8]Vector3d,
+	mTextureCoords: ^[8]Vector3D,
 
 	/** The number of vertices in the aiAnimMesh, and thus the length of all
 	* the member arrays.
@@ -337,7 +346,7 @@ Mesh :: struct {
 	* This array is always present in a mesh. The array is
 	* mNumVertices in size.
 	*/
-	mVertices: ^Vector3d,
+	mVertices: ^[]Vector3D,
 
 	/**
 	* @brief Vertex normals.
@@ -361,7 +370,7 @@ Mesh :: struct {
 	* However, this needn't apply for normals that have been taken
 	* directly from the model file.
 	*/
-	mNormals: ^Vector3d,
+	mNormals: ^[]Vector3D,
 
 	/**
 	* @brief Vertex tangents.
@@ -377,7 +386,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also
 	* contains bitangents.
 	*/
-	mTangents: ^Vector3d,
+	mTangents: ^[]Vector3D,
 
 	/**
 	* @brief Vertex bitangents.
@@ -388,7 +397,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also contains
 	* bitangents.
 	*/
-	mBitangents: ^Vector3d,
+	mBitangents: ^[]Vector3D,
 
 	/**
 	* @brief Vertex color sets.
@@ -397,7 +406,7 @@ Mesh :: struct {
 	* colors per vertex. nullptr if not present. Each array is
 	* mNumVertices in size if present.
 	*/
-	mColors: ^[8]Color4d,
+	mColors: ^[8]Color4D,
 
 	/**
 	* @brief Vertex texture coordinates, also known as UV channels.
@@ -406,7 +415,7 @@ Mesh :: struct {
 	* vertex. Used and unused (nullptr) channels may go in any order.
 	* The array is mNumVertices in size.
 	*/
-	mTextureCoords: ^[8]Vector3d,
+	mTextureCoords: ^[8]Vector3D,
 
 	/**
 	* @brief Specifies the number of components for a given UV channel.
@@ -427,7 +436,7 @@ Mesh :: struct {
 	*  in mNumFaces. If the #AI_SCENE_FLAGS_NON_VERBOSE_FORMAT
 	* is NOT set each face references an unique set of vertices.
 	*/
-	mFaces: ^Face,
+	mFaces: ^[]Face,
 
 	/**
 	* The number of bones this mesh contains. Can be 0, in which case the mBones array is nullptr.
@@ -440,7 +449,7 @@ Mesh :: struct {
 	* A bone consists of a name by which it can be found in the
 	* frame hierarchy and a set of vertex weights.
 	*/
-	mBones: ^^Bone,
+	mBones: [^]^Bone,
 
 	/**
 	* @brief The material used by this mesh.
@@ -481,7 +490,7 @@ Mesh :: struct {
 	* - Collada
 	* - gltf
 	*/
-	mAnimMeshes: ^^Anim_Mesh,
+	mAnimMeshes: [^]^Anim_Mesh,
 
 	/**
 	*  Method of morphing when anim-meshes are specified.
@@ -497,7 +506,7 @@ Mesh :: struct {
 	/**
 	* Vertex UV stream names. Pointer to array of size AI_MAX_NUMBER_OF_TEXTURECOORDS
 	*/
-	mTextureCoordsNames: ^^String,
+	mTextureCoordsNames: [^]^String,
 }
 
 /**
@@ -534,7 +543,7 @@ Skeleton_Bone :: struct {
 	mMeshId: ^Mesh,
 
 	/// The influence weights of this bone, by vertex index.
-	mWeights: ^Vertex_Weight,
+	mWeights: ^[]Vertex_Weight,
 
 	/** Matrix that transforms from bone space to mesh space in bind pose.
 	*
@@ -581,6 +590,6 @@ Skeleton :: struct {
 	/**
 	*  @brief The bone instance in the skeleton.
 	*/
-	mBones: ^^Skeleton_Bone,
+	mBones: [^]^Skeleton_Bone,
 }
 

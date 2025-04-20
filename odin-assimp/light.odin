@@ -47,15 +47,18 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+
 
 // ---------------------------------------------------------------------------
 /** Enumerates all supported types of light sources.
@@ -125,7 +128,7 @@ Light :: struct {
 	*
 	*  The position is undefined for directional lights.
 	*/
-	mPosition: Vector3d,
+	mPosition: Vector3D,
 
 	/** Direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -133,7 +136,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mDirection: Vector3d,
+	mDirection: Vector3D,
 
 	/** Up direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -141,7 +144,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp: Vector3d,
+	mUp: Vector3D,
 
 	/** Constant light attenuation factor.
 	*
@@ -226,6 +229,6 @@ Light :: struct {
 	mAngleOuterCone: f32,
 
 	/** Size of area light source. */
-	mSize: Vector2d,
+	mSize: Vector2D,
 }
 

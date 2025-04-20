@@ -48,15 +48,25 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+AI_MATH_PI_F :: 3.1415926538
+ASSIMP_AI_REAL_TEXT_PRECISION :: 9
+AI_MATH_TWO_PI :: AI_MATH_PI * 2.0
+AI_MATH_HALF_PI :: AI_MATH_PI * 0.5
+AI_MATH_TWO_PI_F :: AI_MATH_PI_F * 2.0
+AI_MATH_PI :: 3.141592653589793238462643383279
+AI_MATH_HALF_PI_F :: AI_MATH_PI_F * 0.5
+
 
 Real :: f32
 

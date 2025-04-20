@@ -47,43 +47,48 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+
 
 /** Mixed set of flags for #aiImporterDesc, indicating some features
 *  common to many importers*/
-Importer_Flags :: enum c.int {
+Importer_Flag :: enum c.int {
 	/** Indicates that there is a textual encoding of the
 	*  file format; and that it is supported.*/
-	SupportTextFlavour = 1,
+	SupportTextFlavour = 0,
 
 	/** Indicates that there is a binary encoding of the
 	*  file format; and that it is supported.*/
-	SupportBinaryFlavour = 2,
+	SupportBinaryFlavour = 1,
 
 	/** Indicates that there is a compressed encoding of the
 	*  file format; and that it is supported.*/
-	SupportCompressedFlavour = 4,
+	SupportCompressedFlavour = 2,
 
 	/** Indicates that the importer reads only a very particular
 	* subset of the file format. This happens commonly for
 	* declarative or procedural formats which cannot easily
 	* be mapped to #aiScene */
-	LimitedSupport = 8,
+	LimitedSupport = 3,
 
 	/** Indicates that the importer is highly experimental and
 	* should be used with care. This only happens for trunk
 	* (i.e. SVN) versions, experimental code is not included
 	* in releases. */
-	Experimental = 16,
+	Experimental = 4,
 }
+
+Importer_Flags :: distinct bit_set[Importer_Flag; c.int]
 
 /** Meta information about a particular importer. Importers need to fill
 *  this structure, but they can freely decide how talkative they are.
@@ -108,7 +113,7 @@ Importer_Desc :: struct {
 
 	/** These flags indicate some characteristics common to many
 	importers. */
-	mFlags: u32,
+	mFlags: Importer_Flags,
 
 	/** Minimum format version that can be loaded im major.minor format,
 	both are set to 0 if there is either no version scheme

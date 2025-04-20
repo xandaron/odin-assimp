@@ -24,6 +24,7 @@ inputs = [
     "./assimp/include/assimp/vector2.h"
     "./assimp/include/assimp/vector3.h"
     "./assimp/include/assimp/version.h"
+    "./build/include/assimp/config.h"
 ]
 
 remove_type_prefix = "ai"
@@ -37,10 +38,6 @@ package_name = "assimp"
 output_folder = "odin-assimp"
 
 force_ada_case_types = true
-
-type_overrides = {
-//    "real" = "Real" Doesn't seem to work the way I want it to
-}
 
 clang_include_paths = [
     "./assimp/include/"
@@ -70,9 +67,58 @@ clang_defines = {
     "SWIG" = "1" // I'm not really sure what this is but setting is is required in-order to generate bindings properly.
 }
 
-rename_types = {
-//    "real" = "Real" Doesn't work the way i want it to
-//    "Vector2d" = "Vector2D"
-//    "Vector3d" = "Vector3D"
+struct_field_overrides = {
+    "Scene.mMeshes" = "[^]"
+    "Scene.mMaterials" = "[^]"
+    "Scene.mAnimations" = "[^]"
+    "Scene.mTextures" = "[^]"
+    "Scene.mLights" = "[^]"
+    "Scene.mCameras" = "[^]"
+    "Scene.Metadata" = "[^]"
+    "Scene.Skeleton" = "[^]"
+
+    "Face.mIndices" = "^[]u32"
+
+    "Bone.mWeights" = "^[]Vertex_Weight"
+
+    "Anim_Mesh.mVertices" = "^[]Vector3D"
+    "Anim_Mesh.mNormals" = "^[]Vector3D"
+    "Anim_Mesh.mTangents" = "^[]Vector3D"
+    "Anim_Mesh.mBitangents" = "^[]Vector3D"
+
+    "Mesh.mVertices" = "^[]Vector3D"
+    "Mesh.mNormals" = "^[]Vector3D"
+    "Mesh.mTangents" = "^[]Vector3D"
+    "Mesh.mBitangents" = "^[]Vector3D"
+    "Mesh.mFaces" = "^[]Face"
+    "Mesh.mBones" = "[^]"
+    "Mesh.mAnimMeshes" = "[^]"
+    "Mesh.mTextureCoordsNames" = "[^]"
+
+    "Skeleton_Bone.mWeights" = "^[]Vertex_Weight"
+
+    "Skeleton.mBones" = "[^]"
+
+    "Importer_Desc.mFlags" = "Importer_Flags"
 }
 
+rename_types = {
+    "Vector2d" = "Vector2D"
+    "Vector3d" = "Vector3D"
+    "Color4d" = "Color4D"
+    "Post_Process_Steps" = "Post_Process_Step_Flag"
+    "Importer_Flags" = "Importer_Flag"
+    "Component" = "Component_Flag"
+}
+
+bit_setify = {
+    "Post_Process_Step_Flag" = "Post_Process_Step_Flags"
+    "Importer_Flag" = "Importer_Flags"
+    "Component_Flag" = "Component_Flags"
+}
+
+procedure_type_overrides = {
+	"ImportFile.pFlags" = "Post_Process_Step_Flags"
+}
+
+debug_dump_json_ast = false

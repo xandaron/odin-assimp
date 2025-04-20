@@ -47,14 +47,15 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
 
 // ---------------------------------------------------------------------------
@@ -543,13 +544,13 @@ Uvtransform :: struct {
 	*
 	*  The default value is (0|0).
 	*/
-	mTranslation: Vector2d,
+	mTranslation: Vector2D,
 
 	/** Scaling on the u and v axes.
 	*
 	*  The default value is (1|1).
 	*/
-	mScaling: Vector2d,
+	mScaling: Vector2D,
 
 	/** Rotation - in counter-clockwise direction.
 	*
@@ -764,7 +765,7 @@ foreign lib {
 	*
 	* See the sample for aiGetMaterialFloat for more information*/
 	// ---------------------------------------------------------------------------
-	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Color4d) -> Return ---
+	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Color4D) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a aiUVTransform value from the material property table

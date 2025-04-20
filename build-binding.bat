@@ -22,12 +22,12 @@ if "%VSCMD_ARG_TGT_ARCH%" neq "x64" (
 )
 
 REM I'm pretty sure we actually want ASSIMP_BUILD_ZLIB to be OFF but doing so causes the build to fail. Seems CMake requires zlib to be available for compilation.
-cmake ./assimp/CMakeLists.txt -DASSIMP_BUILD_ZLIB=ON -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -B build
+cmake ./assimp/CMakeLists.txt -DASSIMP_INJECT_DEBUG_POSTFIX=OFF -DASSIMP_BUILD_ZLIB=ON -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -DUSE_STATIC_CRT=ON -B build
 cmake --build build
 
 if not exist ".\odin-assimp" mkdir ".\odin-assimp"
 
-move /y .\build\lib\Debug\assimp-vc143-mtd.lib .\odin-assimp\libassimp-windows.lib
+move /y .\build\lib\Debug\assimp-vc143-mt.lib .\odin-assimp\libassimp-windows.lib
 copy /y .\assimp\LICENSE .\odin-assimp\LICENSE
 
 where /Q bindgen.exe

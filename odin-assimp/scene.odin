@@ -47,15 +47,23 @@ import "core:c"
 
 _ :: c
 
-// I'm not 100% if this import is necessary as assimp definitely have a zlib dependency but that dependency could be build into the lib (which I think would cause it's own issues with redefinition of symbols at compile time).
-import "vendor:zlib"
+import zlib "vendor:zlib"
+
+_ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp-windows.lib"
+    foreign import lib "libassimp.lib"
 }
-else when ODIN_OS == .Linux {
-    foreign import lib "libassimp-linux.a"
+else {
+    foreign import lib "libassimp.a"
 }
+
+AI_SCENE_FLAGS_INCOMPLETE :: 0x1
+AI_SCENE_FLAGS_VALIDATED :: 0x2
+AI_SCENE_FLAGS_NON_VERBOSE_FORMAT :: 0x8
+AI_SCENE_FLAGS_VALIDATION_WARNING :: 0x4
+AI_SCENE_FLAGS_TERRAIN :: 0x10
+
 
 // -------------------------------------------------------------------------------
 /**
@@ -156,7 +164,7 @@ Scene :: struct {
 	* AI_SCENE_FLAGS_INCOMPLETE flag is not set there will always
 	* be at least ONE material.
 	*/
-	mMeshes: ^^Mesh,
+	mMeshes: [^]^Mesh,
 
 	/** The number of materials in the scene. */
 	mNumMaterials: u32,
@@ -168,7 +176,7 @@ Scene :: struct {
 	* AI_SCENE_FLAGS_INCOMPLETE flag is not set there will always
 	* be at least ONE material.
 	*/
-	mMaterials: ^^Material,
+	mMaterials: [^]^Material,
 
 	/** The number of animations in the scene. */
 	mNumAnimations: u32,
@@ -178,7 +186,7 @@ Scene :: struct {
 	* All animations imported from the given file are listed here.
 	* The array is mNumAnimations in size.
 	*/
-	mAnimations: ^^Animation,
+	mAnimations: [^]^Animation,
 
 	/** The number of textures embedded into the file */
 	mNumTextures: u32,
@@ -189,7 +197,7 @@ Scene :: struct {
 	* An example is Quake's MDL format (which is also used by
 	* some GameStudio versions)
 	*/
-	mTextures: ^^Texture,
+	mTextures: [^]^Texture,
 
 	/** The number of light sources in the scene. Light sources
 	* are fully optional, in most cases this attribute will be 0
@@ -201,7 +209,7 @@ Scene :: struct {
 	* All light sources imported from the given file are
 	* listed here. The array is mNumLights in size.
 	*/
-	mLights: ^^Light,
+	mLights: [^]^Light,
 
 	/** The number of cameras in the scene. Cameras
 	* are fully optional, in most cases this attribute will be 0
@@ -215,7 +223,7 @@ Scene :: struct {
 	* array (if existing) is the default camera view into
 	* the scene.
 	*/
-	mCameras: ^^Camera,
+	mCameras: [^]^Camera,
 
 	/**
 	*  @brief  The global metadata assigned to the scene itself.
