@@ -45,7 +45,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package assimp
 
 
-
 import zlib "vendor:zlib"
 
 _ :: zlib
@@ -57,12 +56,12 @@ else {
     foreign import lib "libassimp.a"
 }
 
-ASSIMP_CFLAGS_SHARED :: 0x1
-ASSIMP_CFLAGS_SINGLETHREADED :: 0x10
+ASSIMP_CFLAGS_DEBUG :: 0x4
 ASSIMP_CFLAGS_NOBOOST :: 0x8
 ASSIMP_CFLAGS_STLPORT :: 0x2
-ASSIMP_CFLAGS_DEBUG :: 0x4
 ASSIMP_CFLAGS_DOUBLE_SUPPORT :: 0x20
+ASSIMP_CFLAGS_SHARED :: 0x1
+ASSIMP_CFLAGS_SINGLETHREADED :: 0x10
 
 
 @(default_calling_convention="c", link_prefix="ai")

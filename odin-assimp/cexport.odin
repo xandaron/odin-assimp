@@ -43,9 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-import "core:c"
-
-_ :: c
 
 import zlib "vendor:zlib"
 
@@ -57,11 +54,6 @@ when ODIN_OS == .Windows {
 else {
     foreign import lib "libassimp.a"
 }
-
-
-
-
-
 
 
 // --------------------------------------------------------------------------------

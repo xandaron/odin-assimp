@@ -41,20 +41,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package assimp
 
 
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
-
-
 // ---------------------------------------------------------------------------
 /**
 *  An axis-aligned bounding box.
@@ -63,4 +49,3 @@ Aabb :: struct {
 	mMin: Vector3D,
 	mMax: Vector3D,
 }
-

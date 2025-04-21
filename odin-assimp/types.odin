@@ -43,24 +43,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
 
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
+AI_MAXLEN :: 1024
 
 Int32 :: i32
-
 Uint32 :: u32
+
 
 // ----------------------------------------------------------------------------------
 /** Represents a plane in a three-dimensional, euclidean space
@@ -81,7 +73,7 @@ Ray :: struct {
 // ----------------------------------------------------------------------------------
 /** Represents a color in Red-Green-Blue space.
 */
-Color3d :: struct {
+Color3D :: struct {
 	//! Red, green and blue color values
 	r, g, b: f32,
 }
@@ -165,26 +157,25 @@ Origin :: enum c.int {
 *  Logging to these streams can be enabled with a single call to
 *   #LogStream::createDefaultStream.
 */
-Default_Log_Stream :: enum c.int {
+Default_Log_Stream_Flag :: enum c.int {
 	/** Stream the log to a file */
-	aiDefaultLogStream_FILE = 1,
+	FILE = 0,
 
 	/** Stream the log to std::cout */
-	aiDefaultLogStream_STDOUT = 2,
+	STDOUT = 1,
 
 	/** Stream the log to std::cerr */
-	aiDefaultLogStream_STDERR = 4,
+	STDERR = 2,
 
 	/** MSVC only: Stream the log the the debugger
 	* (this relies on OutputDebugString from the Win32 SDK)
 	*/
-	aiDefaultLogStream_DEBUGGER = 8,
-
-	/** @cond never
-	*  Force 32-bit size enum
-	*/
-	_AI_DLS_ENFORCE_ENUM_SIZE = 2147483647,
+	DEBUGGER = 3,
 }
+
+Default_Log_Stream_Flags :: distinct bit_set[Default_Log_Stream_Flag; c.int]
+
+AI_DLS_ENFORCE_ENUM_SIZE :: Default_Log_Stream_Flags { .FILE, .STDOUT, .STDERR, .DEBUGGER }
 
 // ----------------------------------------------------------------------------------
 /** Stores the memory requirements for different components (e.g. meshes, materials,

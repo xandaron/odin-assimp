@@ -43,21 +43,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
 
 
 // -------------------------------------------------------------------------------
@@ -103,10 +92,10 @@ Metadata :: struct {
 	mNumProperties: u32,
 
 	/** Arrays of keys, may not be NULL. Entries in this array may not be NULL as well. */
-	mKeys: ^String,
+	mKeys: ^[]String,
 
 	/** Arrays of values, may not be NULL. Entries in this array may be NULL if the
 	* corresponding property key has no assigned value. */
-	mValues: ^Metadata_Entry,
+	mValues: ^[]Metadata_Entry,
 }
 

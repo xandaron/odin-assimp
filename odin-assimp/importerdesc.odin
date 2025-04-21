@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
@@ -57,7 +58,6 @@ when ODIN_OS == .Windows {
 else {
     foreign import lib "libassimp.a"
 }
-
 
 
 /** Mixed set of flags for #aiImporterDesc, indicating some features

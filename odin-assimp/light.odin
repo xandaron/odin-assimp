@@ -43,21 +43,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
 
 
 // ---------------------------------------------------------------------------
@@ -188,7 +177,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the diffuse shading term.
 	*/
-	mColorDiffuse: Color3d,
+	mColorDiffuse: Color3D,
 
 	/** Specular color of the light source
 	*
@@ -196,7 +185,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the specular shading term.
 	*/
-	mColorSpecular: Color3d,
+	mColorSpecular: Color3D,
 
 	/** Ambient color of the light source
 	*
@@ -206,7 +195,7 @@ Light :: struct {
 	*  this value it, is just a remaining of the fixed-function pipeline
 	*  that is still supported by quite many file formats.
 	*/
-	mColorAmbient: Color3d,
+	mColorAmbient: Color3D,
 
 	/** Inner angle of a spot light's light cone.
 	*

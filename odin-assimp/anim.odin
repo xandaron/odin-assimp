@@ -45,21 +45,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
 
 
 // ---------------------------------------------------------------------------
@@ -129,8 +118,8 @@ Mesh_Morph_Key :: struct {
 	*   - mValues: index of attachment mesh to apply weight at the same position in mWeights
 	*   - mWeights: weight to apply to the blend shape index at the same position in mValues
 	*/
-	mValues: ^u32,
-	mWeights: ^f64,
+	mValues: [^]u32,
+	mWeights: [^]f64,
 
 	/** The number of values and weights */
 	mNumValuesAndWeights: u32,
@@ -186,7 +175,7 @@ Node_Anim :: struct {
 	*
 	* If there are position keys, there will also be at least one
 	* scaling and one rotation key.*/
-	mPositionKeys: ^Vector_Key,
+	mPositionKeys: [^]Vector_Key,
 
 	/** The number of rotation keys */
 	mNumRotationKeys: u32,
@@ -197,7 +186,7 @@ Node_Anim :: struct {
 	*
 	* If there are rotation keys, there will also be at least one
 	* scaling and one position key. */
-	mRotationKeys: ^Quat_Key,
+	mRotationKeys: [^]Quat_Key,
 
 	/** The number of scaling keys */
 	mNumScalingKeys: u32,
@@ -207,7 +196,7 @@ Node_Anim :: struct {
 	*
 	* If there are scaling keys, there will also be at least one
 	* position and one rotation key.*/
-	mScalingKeys: ^Vector_Key,
+	mScalingKeys: [^]Vector_Key,
 
 	/** Defines how the animation behaves before the first
 	*  key is encountered.
@@ -241,7 +230,7 @@ Mesh_Anim :: struct {
 	mNumKeys: u32,
 
 	/** Key frames of the animation. May not be nullptr. */
-	mKeys: ^Mesh_Key,
+	mKeys: [^]Mesh_Key,
 }
 
 // ---------------------------------------------------------------------------
@@ -257,7 +246,7 @@ Mesh_Morph_Anim :: struct {
 	mNumKeys: u32,
 
 	/** Key frames of the animation. May not be nullptr. */
-	mKeys: ^Mesh_Morph_Key,
+	mKeys: [^]Mesh_Morph_Key,
 }
 
 // ---------------------------------------------------------------------------
@@ -281,7 +270,7 @@ Animation :: struct {
 
 	/** The node animation channels. Each channel affects a single node.
 	*  The array is mNumChannels in size. */
-	mChannels: ^^Node_Anim,
+	mChannels: [^]^Node_Anim,
 
 	/** The number of mesh animation channels. Each channel affects
 	*  a single mesh and defines vertex-based animation. */
@@ -289,7 +278,7 @@ Animation :: struct {
 
 	/** The mesh animation channels. Each channel affects a single mesh.
 	*  The array is mNumMeshChannels in size. */
-	mMeshChannels: ^^Mesh_Anim,
+	mMeshChannels: [^]^Mesh_Anim,
 
 	/** The number of mesh animation channels. Each channel affects
 	*  a single mesh and defines morphing animation. */

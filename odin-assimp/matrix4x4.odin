@@ -46,24 +46,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package assimp
 
 
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
-
-
 Matrix4x4 :: struct {
 	a1, a2, a3, a4: Real,
 	b1, b2, b3, b4: Real,
 	c1, c2, c3, c4: Real,
 	d1, d2, d3, d4: Real,
 }
-

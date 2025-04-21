@@ -44,33 +44,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
 
-import zlib "vendor:zlib"
 
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
-AI_MATH_PI_F :: 3.1415926538
-ASSIMP_AI_REAL_TEXT_PRECISION :: 9
 AI_MATH_TWO_PI :: AI_MATH_PI * 2.0
 AI_MATH_HALF_PI :: AI_MATH_PI * 0.5
 AI_MATH_TWO_PI_F :: AI_MATH_PI_F * 2.0
 AI_MATH_PI :: 3.141592653589793238462643383279
 AI_MATH_HALF_PI_F :: AI_MATH_PI_F * 0.5
+AI_MATH_PI_F: c.float : 3.1415926538
+ASSIMP_AI_REAL_TEXT_PRECISION :: 9
 
 
 Real :: f32
-
 Int :: i32
-
 Uint :: u32
-

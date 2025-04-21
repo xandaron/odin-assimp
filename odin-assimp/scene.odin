@@ -43,26 +43,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-import "core:c"
 
-_ :: c
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
-
-AI_SCENE_FLAGS_INCOMPLETE :: 0x1
 AI_SCENE_FLAGS_VALIDATED :: 0x2
-AI_SCENE_FLAGS_NON_VERBOSE_FORMAT :: 0x8
 AI_SCENE_FLAGS_VALIDATION_WARNING :: 0x4
 AI_SCENE_FLAGS_TERRAIN :: 0x10
+AI_SCENE_FLAGS_INCOMPLETE :: 0x1
+AI_SCENE_FLAGS_NON_VERBOSE_FORMAT :: 0x8
 
 
 // -------------------------------------------------------------------------------
@@ -110,7 +96,7 @@ Node :: struct {
 	mNumChildren: u32,
 
 	/** The child nodes of this node. nullptr if mNumChildren is 0. */
-	mChildren: ^^Node,
+	mChildren: [^]^Node,
 
 	/** The number of meshes of this node. */
 	mNumMeshes: u32,
@@ -118,7 +104,7 @@ Node :: struct {
 	/** The meshes of this node. Each entry is an index into the
 	* mesh list of the #aiScene.
 	*/
-	mMeshes: ^u32,
+	mMeshes: ^[]u32,
 
 	/** Metadata associated with this node or nullptr if there is no metadata.
 	*  Whether any metadata is generated depends on the source file format. See the
@@ -246,7 +232,7 @@ Scene :: struct {
 	/**
 	*
 	*/
-	mSkeletons: ^^Skeleton,
+	mSkeletons: [^]^Skeleton,
 	mPrivate: cstring,
 }
 

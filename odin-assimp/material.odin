@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
@@ -57,6 +58,10 @@ when ODIN_OS == .Windows {
 else {
     foreign import lib "libassimp.a"
 }
+
+
+AI_DEFAULT_MATERIAL_NAME :: "DefaultMaterial"
+
 
 // ---------------------------------------------------------------------------
 /** @brief Defines how the Nth texture of a specific type is combined with
@@ -468,10 +473,10 @@ Shading_Mode :: enum c.int {
 *
 *  This corresponds to the #AI_MATKEY_TEXFLAGS property.
 */
-Texture_Flags :: enum c.int {
+Texture_Flag :: enum c.int {
 	/** The texture's color values have to be inverted (component-wise 1-n)
 	*/
-	Invert = 1,
+	Invert = 0,
 
 	/** Explicit request to the application to process the alpha channel
 	*  of the texture.
@@ -482,15 +487,17 @@ Texture_Flags :: enum c.int {
 	*  define this, it is left to the application to decide whether
 	*  the texture alpha channel - if any - is evaluated or not.
 	*/
-	UseAlpha = 2,
+	UseAlpha = 1,
 
 	/** Explicit request to the application to ignore the alpha channel
 	*  of the texture.
 	*
 	*  Mutually exclusive with #aiTextureFlags_UseAlpha.
 	*/
-	IgnoreAlpha = 4,
+	IgnoreAlpha = 2,
 }
+
+Texture_Flags :: distinct bit_set[Texture_Flag; c.int]
 
 // ---------------------------------------------------------------------------
 /**
@@ -662,7 +669,7 @@ Material_Property :: struct {
 
 Material :: struct {
 	/** List of all material properties loaded. */
-	mProperties: ^^Material_Property,
+	mProperties: [^]^Material_Property,
 
 	/** Number of properties in the data base */
 	mNumProperties: u32,

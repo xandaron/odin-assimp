@@ -43,9 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-import "core:c"
-
-_ :: c
 
 import zlib "vendor:zlib"
 
@@ -60,12 +57,6 @@ else {
 
 AI_TRUE :: 1
 AI_FALSE :: 0
-
-
-
-
-
-
 
 
 Log_Stream_Callback :: proc "c" (cstring, cstring)
@@ -265,7 +256,7 @@ foreign lib {
 	*    Pass NULL for all other flags.
 	*  @return The log stream. callback is set to NULL if something went wrong.
 	*/
-	GetPredefinedLogStream :: proc(pStreams: Default_Log_Stream, file: cstring) -> Log_Stream ---
+	GetPredefinedLogStream :: proc(pStreams: Default_Log_Stream_Flag, file: cstring) -> Log_Stream ---
 
 	// --------------------------------------------------------------------------------
 	/** Attach a custom log stream to the libraries' logging system.

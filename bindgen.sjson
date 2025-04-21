@@ -64,18 +64,26 @@ clang_defines = {
     "ASSIMP_INJECT_DEBUG_POSTFIX" = "ON"
 //    "ASSIMP_IGNORE_GIT_HASH" = "OFF"
     "ASSIMP_BUILD_ZLIB" = "ON"
-    "SWIG" = "1" // I'm not really sure what this is but setting is is required in-order to generate bindings properly.
+    "SWIG" = "1" // I'm not really sure what this is but setting it's required in-order to generate bindings properly.
 }
 
 struct_field_overrides = {
-    "Scene.mMeshes" = "[^]"
-    "Scene.mMaterials" = "[^]"
-    "Scene.mAnimations" = "[^]"
-    "Scene.mTextures" = "[^]"
-    "Scene.mLights" = "[^]"
-    "Scene.mCameras" = "[^]"
-    "Scene.Metadata" = "[^]"
-    "Scene.Skeleton" = "[^]"
+    "Mesh_Morph_Key.mValues" = "[^]"
+    "Mesh_Morph_Key.mWeights" = "[^]"
+
+    "Node_Anim.mPositionKeys" = "[^]"
+    "Node_Anim.mRotationKeys" = "[^]"
+    "Node_Anim.mScalingKeys" = "[^]"
+
+    "Mesh_Anim.mKeys" = "[^]"
+
+    "Mesh_Morph_Anim.mKeys" = "[^]"
+
+    "Animation.mChannels" = "[^]"
+    "Animation.mMeshChannels" = "[^]"
+    "Animation.MorphMeshChannels" = "[^]"
+
+    "Material.mProperties" = "[^]"
 
     "Face.mIndices" = "^[]u32"
 
@@ -99,22 +107,43 @@ struct_field_overrides = {
 
     "Skeleton.mBones" = "[^]"
 
+    "Metadata.mKeys" = "^[]String"
+    "Metadata.mValues" = "^[]Metadata_Entry"
+
+    "Node.mChildren" = "[^]"
+    "Node.mMeshes" = "^[]u32"
+
+    "Scene.mMeshes" = "[^]"
+    "Scene.mMaterials" = "[^]"
+    "Scene.mAnimations" = "[^]"
+    "Scene.mTextures" = "[^]"
+    "Scene.mLights" = "[^]"
+    "Scene.mCameras" = "[^]"
+    "Scene.mSkeletons" = "[^]"
+
+    "Texture.pcData" = "^[]Texel"
+
     "Importer_Desc.mFlags" = "Importer_Flags"
 }
 
 rename_types = {
-    "Vector2d" = "Vector2D"
-    "Vector3d" = "Vector3D"
+    "Color3d" = "Color3D"
     "Color4d" = "Color4D"
+    "Texture_Flags" = "Texture_Flag"
     "Post_Process_Steps" = "Post_Process_Step_Flag"
     "Importer_Flags" = "Importer_Flag"
     "Component" = "Component_Flag"
+    "Vector2d" = "Vector2D"
+    "Vector3d" = "Vector3D"
+    "Default_Log_Stream" = "Default_Log_Stream_Flag"
 }
 
 bit_setify = {
+    "Texture_Flag" = "Texture_Flags"
     "Post_Process_Step_Flag" = "Post_Process_Step_Flags"
     "Importer_Flag" = "Importer_Flags"
     "Component_Flag" = "Component_Flags"
+    "Default_Log_Stream_Flag" = "Default_Log_Stream_Flags"
 }
 
 procedure_type_overrides = {

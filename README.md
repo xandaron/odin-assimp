@@ -47,6 +47,8 @@ cd odin-assimp
 ./build-lib.sh
 ```
 
+> **Note**: Bindgen isn't perfect so some manual cleanup is required to make the generated bindings useful. I have tried to minimize the amount required as much as possible with cleanup.py and bindgen.json.
+
 ## Supported 3D Formats
 
 Assimp supports numerous file formats including (but not limited to):

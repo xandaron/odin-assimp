@@ -48,20 +48,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-import "core:c"
-
-_ :: c
-
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
 
 HINTMAXTEXTURELEN :: 9
 
@@ -116,7 +102,7 @@ Texture :: struct {
 	* buffer of size mWidth containing the compressed texture
 	* data. Good luck, have fun!
 	*/
-	pcData: ^Texel,
+	pcData: ^[]Texel,
 
 	/** Texture original filename
 	*

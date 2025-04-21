@@ -44,20 +44,11 @@ returned by ASSIMP: aiMesh, aiFace and aiBone data structures.
 */
 package assimp
 
+
 import "core:c"
 
 _ :: c
 
-import zlib "vendor:zlib"
-
-_ :: zlib
-
-when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
-}
 
 AI_MAX_NUMBER_OF_TEXTURECOORDS :: 0x8
 AI_MAX_BONE_WEIGHTS :: 0x7fffffff
