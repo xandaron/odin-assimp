@@ -589,5 +589,4 @@ Post_Process_Step_Flag :: enum c.int {
 	GenBoundingBoxes,
 }
 
-Post_Process_Step_Flags :: distinct bit_set[Post_Process_Step_Flag; c.int]
-
+Post_Process_Step_Flags :: distinct bit_set[Post_Process_Step_Flag;c.int]

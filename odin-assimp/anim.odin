@@ -72,10 +72,10 @@ Anim_Interpolation :: enum c.int {
 /** A time-value pair specifying a certain 3D vector for the given time. */
 Vector_Key :: struct {
 	/** The time of this key */
-	mTime: f64,
+	mTime:          f64,
 
 	/** The value of this key */
-	mValue: Vector3D,
+	mValue:         Vector3D,
 
 	/** The interpolation setting of this key */
 	mInterpolation: Anim_Interpolation,
@@ -86,10 +86,10 @@ Vector_Key :: struct {
 *  Rotations are expressed with quaternions. */
 Quat_Key :: struct {
 	/** The time of this key */
-	mTime: f64,
+	mTime:          f64,
 
 	/** The value of this key */
-	mValue: Quaternion,
+	mValue:         Quaternion,
 
 	/** The interpolation setting of this key */
 	mInterpolation: Anim_Interpolation,
@@ -99,7 +99,7 @@ Quat_Key :: struct {
 /** Binds a anim-mesh to a specific point in time. */
 Mesh_Key :: struct {
 	/** The time of this key */
-	mTime: f64,
+	mTime:  f64,
 
 	/** Index into the aiMesh::mAnimMeshes array of the
 	*  mesh corresponding to the #aiMeshAnim hosting this
@@ -112,14 +112,14 @@ Mesh_Key :: struct {
 /** Binds a morph anim mesh to a specific point in time. */
 Mesh_Morph_Key :: struct {
 	/** The time of this key */
-	mTime: f64,
+	mTime:                f64,
 
 	/** The values and weights at the time of this key
 	*   - mValues: index of attachment mesh to apply weight at the same position in mWeights
 	*   - mWeights: weight to apply to the blend shape index at the same position in mValues
 	*/
-	mValues: [^]u32,
-	mWeights: [^]f64,
+	mValues:              [^]u32,
+	mWeights:             [^]f64,
 
 	/** The number of values and weights */
 	mNumValuesAndWeights: u32,
@@ -131,20 +131,20 @@ Mesh_Morph_Key :: struct {
 *  aiNodeAnim::mPostState.*/
 Anim_Behaviour :: enum c.int {
 	/** The value from the default node transformation is taken*/
-	DEFAULT = 0,
+	DEFAULT  = 0,
 
 	/** The nearest key value is used without interpolation */
 	CONSTANT = 1,
 
 	/** The value of the nearest two keys is linearly
 	*  extrapolated for the current time value.*/
-	LINEAR = 2,
+	LINEAR   = 2,
 
 	/** The animation is repeated.
 	*
 	*  If the animation key go from n to m and the current
 	*  time is t, use the value at (t-n) % (|m-n|).*/
-	REPEAT = 3,
+	REPEAT   = 3,
 }
 
 // ---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ Anim_Behaviour :: enum c.int {
 Node_Anim :: struct {
 	/** The name of the node affected by this animation. The node
 	*  must exist and it must be unique.*/
-	mNodeName: String,
+	mNodeName:        String,
 
 	/** The number of position keys */
 	mNumPositionKeys: u32,
@@ -175,7 +175,7 @@ Node_Anim :: struct {
 	*
 	* If there are position keys, there will also be at least one
 	* scaling and one rotation key.*/
-	mPositionKeys: [^]Vector_Key,
+	mPositionKeys:    [^]Vector_Key,
 
 	/** The number of rotation keys */
 	mNumRotationKeys: u32,
@@ -186,31 +186,31 @@ Node_Anim :: struct {
 	*
 	* If there are rotation keys, there will also be at least one
 	* scaling and one position key. */
-	mRotationKeys: [^]Quat_Key,
+	mRotationKeys:    [^]Quat_Key,
 
 	/** The number of scaling keys */
-	mNumScalingKeys: u32,
+	mNumScalingKeys:  u32,
 
 	/** The scaling keys of this animation channel. Scalings are
 	*  specified as 3D vector. The array is mNumScalingKeys in size.
 	*
 	* If there are scaling keys, there will also be at least one
 	* position and one rotation key.*/
-	mScalingKeys: [^]Vector_Key,
+	mScalingKeys:     [^]Vector_Key,
 
 	/** Defines how the animation behaves before the first
 	*  key is encountered.
 	*
 	*  The default value is aiAnimBehaviour_DEFAULT (the original
 	*  transformation matrix of the affected node is used).*/
-	mPreState: Anim_Behaviour,
+	mPreState:        Anim_Behaviour,
 
 	/** Defines how the animation behaves after the last
 	*  key was processed.
 	*
 	*  The default value is aiAnimBehaviour_DEFAULT (the original
 	*  transformation matrix of the affected node is taken).*/
-	mPostState: Anim_Behaviour,
+	mPostState:       Anim_Behaviour,
 }
 
 // ---------------------------------------------------------------------------
@@ -224,13 +224,13 @@ Mesh_Anim :: struct {
 	*  animated meshes need to be named (not necessarily uniquely,
 	*  the name can basically serve as wild-card to select a group
 	*  of meshes with similar animation setup)*/
-	mName: String,
+	mName:    String,
 
 	/** Size of the #mKeys array. Must be 1, at least. */
 	mNumKeys: u32,
 
 	/** Key frames of the animation. May not be nullptr. */
-	mKeys: [^]Mesh_Key,
+	mKeys:    [^]Mesh_Key,
 }
 
 // ---------------------------------------------------------------------------
@@ -240,13 +240,13 @@ Mesh_Morph_Anim :: struct {
 	*  animated meshes need to be named (not necessarily uniquely,
 	*  the name can basically serve as wildcard to select a group
 	*  of meshes with similar animation setup)*/
-	mName: String,
+	mName:    String,
 
 	/** Size of the #mKeys array. Must be 1, at least. */
 	mNumKeys: u32,
 
 	/** Key frames of the animation. May not be nullptr. */
-	mKeys: [^]Mesh_Morph_Key,
+	mKeys:    [^]Mesh_Morph_Key,
 }
 
 // ---------------------------------------------------------------------------
@@ -256,29 +256,29 @@ Animation :: struct {
 	/** The name of the animation. If the modeling package this data was
 	*  exported from does support only a single animation channel, this
 	*  name is usually empty (length is zero). */
-	mName: String,
+	mName:                 String,
 
 	/** Duration of the animation in ticks.  */
-	mDuration: f64,
+	mDuration:             f64,
 
 	/** Ticks per second. 0 if not specified in the imported file */
-	mTicksPerSecond: f64,
+	mTicksPerSecond:       f64,
 
 	/** The number of bone animation channels. Each channel affects
 	*  a single node. */
-	mNumChannels: u32,
+	mNumChannels:          u32,
 
 	/** The node animation channels. Each channel affects a single node.
 	*  The array is mNumChannels in size. */
-	mChannels: [^]^Node_Anim,
+	mChannels:             [^]^Node_Anim,
 
 	/** The number of mesh animation channels. Each channel affects
 	*  a single mesh and defines vertex-based animation. */
-	mNumMeshChannels: u32,
+	mNumMeshChannels:      u32,
 
 	/** The mesh animation channels. Each channel affects a single mesh.
 	*  The array is mNumMeshChannels in size. */
-	mMeshChannels: [^]^Mesh_Anim,
+	mMeshChannels:         [^]^Mesh_Anim,
 
 	/** The number of mesh animation channels. Each channel affects
 	*  a single mesh and defines morphing animation. */
@@ -286,6 +286,5 @@ Animation :: struct {
 
 	/** The morph mesh animation channels. Each channel affects a single mesh.
 	*  The array is mNumMorphMeshChannels in size. */
-	mMorphMeshChannels: ^^Mesh_Morph_Anim,
+	mMorphMeshChannels:    ^^Mesh_Morph_Anim,
 }
-

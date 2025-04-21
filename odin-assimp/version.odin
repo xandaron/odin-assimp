@@ -50,10 +50,9 @@ import zlib "vendor:zlib"
 _ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
+	foreign import lib "libassimp.lib"
+} else {
+	foreign import lib "libassimp.a"
 }
 
 ASSIMP_CFLAGS_DEBUG :: 0x4
@@ -64,7 +63,7 @@ ASSIMP_CFLAGS_SHARED :: 0x1
 ASSIMP_CFLAGS_SINGLETHREADED :: 0x10
 
 
-@(default_calling_convention="c", link_prefix="ai")
+@(default_calling_convention = "c", link_prefix = "ai")
 foreign lib {
 	// ---------------------------------------------------------------------------
 	/** @brief Returns a string with legal copyright and licensing information

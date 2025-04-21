@@ -49,7 +49,6 @@ import "core:c"
 _ :: c
 
 AI_MAXLEN :: 1024
-
 Int32 :: i32
 Uint32 :: u32
 
@@ -107,7 +106,7 @@ String :: struct {
 	length: Uint32,
 
 	/** String buffer. Size limit is AI_MAXLEN */
-	data: [1024]u8,
+	data:   [1024]u8,
 }
 
 // ----------------------------------------------------------------------------------
@@ -116,15 +115,15 @@ String :: struct {
 */
 Return :: enum c.int {
 	/** Indicates that a function was successful */
-	aiReturn_SUCCESS = 0,
+	aiReturn_SUCCESS      = 0,
 
 	/** Indicates that a function failed */
-	aiReturn_FAILURE = -1,
+	aiReturn_FAILURE      = -1,
 
 	/** Indicates that not enough memory was available
 	* to perform the requested operation
 	*/
-	aiReturn_OUTOFMEMORY = -3,
+	aiReturn_OUTOFMEMORY  = -3,
 
 	/** @cond never
 	*  Force 32-bit size enum
@@ -138,13 +137,13 @@ Return :: enum c.int {
 */
 Origin :: enum c.int {
 	/** Beginning of the file */
-	aiOrigin_SET = 0,
+	aiOrigin_SET                 = 0,
 
 	/** Current position of the file pointer */
-	aiOrigin_CUR = 1,
+	aiOrigin_CUR                 = 1,
 
 	/** End of the file, offsets must be negative */
-	aiOrigin_END = 2,
+	aiOrigin_END                 = 2,
 
 	/**  @cond never
 	*   Force 32-bit size enum
@@ -159,13 +158,13 @@ Origin :: enum c.int {
 */
 Default_Log_Stream_Flag :: enum c.int {
 	/** Stream the log to a file */
-	FILE = 0,
+	FILE     = 0,
 
 	/** Stream the log to std::cout */
-	STDOUT = 1,
+	STDOUT   = 1,
 
 	/** Stream the log to std::cerr */
-	STDERR = 2,
+	STDERR   = 2,
 
 	/** MSVC only: Stream the log the the debugger
 	* (this relies on OutputDebugString from the Win32 SDK)
@@ -173,9 +172,9 @@ Default_Log_Stream_Flag :: enum c.int {
 	DEBUGGER = 3,
 }
 
-Default_Log_Stream_Flags :: distinct bit_set[Default_Log_Stream_Flag; c.int]
+Default_Log_Stream_Flags :: distinct bit_set[Default_Log_Stream_Flag;c.int]
 
-AI_DLS_ENFORCE_ENUM_SIZE :: Default_Log_Stream_Flags { .FILE, .STDOUT, .STDERR, .DEBUGGER }
+AI_DLS_ENFORCE_ENUM_SIZE :: Default_Log_Stream_Flags{.FILE, .STDOUT, .STDERR, .DEBUGGER}
 
 // ----------------------------------------------------------------------------------
 /** Stores the memory requirements for different components (e.g. meshes, materials,
@@ -184,28 +183,28 @@ AI_DLS_ENFORCE_ENUM_SIZE :: Default_Log_Stream_Flags { .FILE, .STDOUT, .STDERR, 
 */
 Memory_Info :: struct {
 	/** Storage allocated for texture data */
-	textures: u32,
+	textures:   u32,
 
 	/** Storage allocated for material data  */
-	materials: u32,
+	materials:  u32,
 
 	/** Storage allocated for mesh data */
-	meshes: u32,
+	meshes:     u32,
 
 	/** Storage allocated for node data */
-	nodes: u32,
+	nodes:      u32,
 
 	/** Storage allocated for animation data */
 	animations: u32,
 
 	/** Storage allocated for camera data */
-	cameras: u32,
+	cameras:    u32,
 
 	/** Storage allocated for light data */
-	lights: u32,
+	lights:     u32,
 
 	/** Total storage allocated for the full import. */
-	total: u32,
+	total:      u32,
 }
 
 /**
@@ -215,4 +214,3 @@ Buffer :: struct {
 	data: cstring, ///< Begin poiner
 	end:  cstring, ///< End pointer
 }
-

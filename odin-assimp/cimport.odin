@@ -49,17 +49,16 @@ import zlib "vendor:zlib"
 _ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
+	foreign import lib "libassimp.lib"
+} else {
+	foreign import lib "libassimp.a"
 }
 
 AI_TRUE :: 1
 AI_FALSE :: 0
 
 
-Log_Stream_Callback :: proc "c" (cstring, cstring)
+Log_Stream_Callback :: proc "c" (_: cstring, _: cstring)
 
 // --------------------------------------------------------------------------------
 /** C-API: Represents a log stream. A log stream receives all log messages and
@@ -73,7 +72,7 @@ Log_Stream :: struct {
 	callback: Log_Stream_Callback,
 
 	/** user data to be passed to the callback */
-	user: cstring,
+	user:     cstring,
 }
 
 // --------------------------------------------------------------------------------
@@ -94,7 +93,7 @@ Property_Store :: struct {
 /** Our own C boolean type */
 Bool :: i32
 
-@(default_calling_convention="c", link_prefix="ai")
+@(default_calling_convention = "c", link_prefix = "ai")
 foreign lib {
 	// --------------------------------------------------------------------------------
 	/** Reads the given file and returns its content.

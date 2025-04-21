@@ -85,33 +85,36 @@ struct_field_overrides = {
 
     "Material.mProperties" = "[^]"
 
-    "Face.mIndices" = "^[]u32"
+    "Face.mIndices" = "[^]"
 
-    "Bone.mWeights" = "^[]Vertex_Weight"
+    "Bone.mWeights" = "[^]"
 
-    "Anim_Mesh.mVertices" = "^[]Vector3D"
-    "Anim_Mesh.mNormals" = "^[]Vector3D"
-    "Anim_Mesh.mTangents" = "^[]Vector3D"
-    "Anim_Mesh.mBitangents" = "^[]Vector3D"
+    "Anim_Mesh.mVertices" = "[^]"
+    "Anim_Mesh.mNormals" = "[^]"
+    "Anim_Mesh.mTangents" = "[^]"
+    "Anim_Mesh.mBitangents" = "[^]"
 
-    "Mesh.mVertices" = "^[]Vector3D"
-    "Mesh.mNormals" = "^[]Vector3D"
-    "Mesh.mTangents" = "^[]Vector3D"
-    "Mesh.mBitangents" = "^[]Vector3D"
-    "Mesh.mFaces" = "^[]Face"
+    "Mesh.mPrimitiveTypes" = "Primitive_Type_Flags"
+    "Mesh.mVertices" = "[^]"
+    "Mesh.mNormals" = "[^]"
+    "Mesh.mTangents" = "[^]"
+    "Mesh.mBitangents" = "[^]"
+    "Mesh.mColors" = "[^]"
+    "Mesh.mTextureCoords" = "[^]"
+    "Mesh.mFaces" = "[^]Face"
     "Mesh.mBones" = "[^]"
     "Mesh.mAnimMeshes" = "[^]"
     "Mesh.mTextureCoordsNames" = "[^]"
 
-    "Skeleton_Bone.mWeights" = "^[]Vertex_Weight"
+    "Skeleton_Bone.mWeights" = "[^]"
 
     "Skeleton.mBones" = "[^]"
 
-    "Metadata.mKeys" = "^[]String"
-    "Metadata.mValues" = "^[]Metadata_Entry"
+    "Metadata.mKeys" = "[^]"
+    "Metadata.mValues" = "[^]"
 
     "Node.mChildren" = "[^]"
-    "Node.mMeshes" = "^[]u32"
+    "Node.mMeshes" = "[^]"
 
     "Scene.mMeshes" = "[^]"
     "Scene.mMaterials" = "[^]"
@@ -121,7 +124,7 @@ struct_field_overrides = {
     "Scene.mCameras" = "[^]"
     "Scene.mSkeletons" = "[^]"
 
-    "Texture.pcData" = "^[]Texel"
+    "Texture.pcData" = "[^]"
 
     "Importer_Desc.mFlags" = "Importer_Flags"
 }
@@ -136,6 +139,7 @@ rename_types = {
     "Vector2d" = "Vector2D"
     "Vector3d" = "Vector3D"
     "Default_Log_Stream" = "Default_Log_Stream_Flag"
+    "Primitive_Type" = "Primitive_Type_Flag"
 }
 
 bit_setify = {
@@ -144,6 +148,7 @@ bit_setify = {
     "Importer_Flag" = "Importer_Flags"
     "Component_Flag" = "Component_Flags"
     "Default_Log_Stream_Flag" = "Default_Log_Stream_Flags"
+    "Primitive_Type_Flag" = "Primitive_Type_Flags"
 }
 
 procedure_type_overrides = {

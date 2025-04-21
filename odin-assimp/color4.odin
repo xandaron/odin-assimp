@@ -47,4 +47,3 @@ package assimp
 Color4D :: struct {
 	r, g, b, a: f32,
 }
-

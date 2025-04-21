@@ -53,10 +53,9 @@ import zlib "vendor:zlib"
 _ :: zlib
 
 when ODIN_OS == .Windows {
-    foreign import lib "libassimp.lib"
-}
-else {
-    foreign import lib "libassimp.a"
+	foreign import lib "libassimp.lib"
+} else {
+	foreign import lib "libassimp.a"
 }
 
 
@@ -65,11 +64,11 @@ else {
 Importer_Flag :: enum c.int {
 	/** Indicates that there is a textual encoding of the
 	*  file format; and that it is supported.*/
-	SupportTextFlavour = 0,
+	SupportTextFlavour       = 0,
 
 	/** Indicates that there is a binary encoding of the
 	*  file format; and that it is supported.*/
-	SupportBinaryFlavour = 1,
+	SupportBinaryFlavour     = 1,
 
 	/** Indicates that there is a compressed encoding of the
 	*  file format; and that it is supported.*/
@@ -79,16 +78,16 @@ Importer_Flag :: enum c.int {
 	* subset of the file format. This happens commonly for
 	* declarative or procedural formats which cannot easily
 	* be mapped to #aiScene */
-	LimitedSupport = 3,
+	LimitedSupport           = 3,
 
 	/** Indicates that the importer is highly experimental and
 	* should be used with care. This only happens for trunk
 	* (i.e. SVN) versions, experimental code is not included
 	* in releases. */
-	Experimental = 4,
+	Experimental             = 4,
 }
 
-Importer_Flags :: distinct bit_set[Importer_Flag; c.int]
+Importer_Flags :: distinct bit_set[Importer_Flag;c.int]
 
 /** Meta information about a particular importer. Importers need to fill
 *  this structure, but they can freely decide how talkative they are.
@@ -100,26 +99,26 @@ Importer_Flags :: distinct bit_set[Importer_Flag; c.int]
 *  characteristics. */
 Importer_Desc :: struct {
 	/** Full name of the importer (i.e. Blender3D importer)*/
-	mName: cstring,
+	mName:           cstring,
 
 	/** Original author (left blank if unknown or whole assimp team) */
-	mAuthor: cstring,
+	mAuthor:         cstring,
 
 	/** Current maintainer, left blank if the author maintains */
-	mMaintainer: cstring,
+	mMaintainer:     cstring,
 
 	/** Implementation comments, i.e. unimplemented features*/
-	mComments: cstring,
+	mComments:       cstring,
 
 	/** These flags indicate some characteristics common to many
 	importers. */
-	mFlags: Importer_Flags,
+	mFlags:          Importer_Flags,
 
 	/** Minimum format version that can be loaded im major.minor format,
 	both are set to 0 if there is either no version scheme
 	or if the loader doesn't care. */
-	mMinMajor: u32,
-	mMinMinor: u32,
+	mMinMajor:       u32,
+	mMinMinor:       u32,
 
 	/** Maximum format version that can be loaded im major.minor format,
 	both are set to 0 if there is either no version scheme
@@ -127,8 +126,8 @@ Importer_Desc :: struct {
 	forward-compatible to potential future format versions should
 	indicate  zero, otherwise they should specify the current
 	maximum version.*/
-	mMaxMajor: u32,
-	mMaxMinor: u32,
+	mMaxMajor:       u32,
+	mMaxMinor:       u32,
 
 	/** List of file extensions this importer can handle.
 	List entries are separated by space characters.
@@ -145,7 +144,7 @@ Importer_Desc :: struct {
 	mFileExtensions: cstring,
 }
 
-@(default_calling_convention="c", link_prefix="ai")
+@(default_calling_convention = "c", link_prefix = "ai")
 foreign lib {
 	/** \brief  Returns the Importer description for a given extension.
 	

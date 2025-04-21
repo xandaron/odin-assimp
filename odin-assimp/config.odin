@@ -175,42 +175,41 @@ Component_Flag :: enum c.int {
 
 	/** ALL color sets
 	* Use aiComponent_COLORn(N) to specify the N'th set */
-	COLORS = 3,
+	COLORS                  = 3,
 
 	/** ALL texture UV sets
 	* aiComponent_TEXCOORDn(N) to specify the N'th set  */
-	TEXCOORDS = 4,
+	TEXCOORDS               = 4,
 
 	/** Removes all bone weights from all meshes.
 	* The scenegraph nodes corresponding to the bones are NOT removed.
 	* use the #aiProcess_OptimizeGraph step to do this */
-	BONEWEIGHTS = 5,
+	BONEWEIGHTS             = 5,
 
 	/** Removes all node animations (aiScene::mAnimations).
 	* The corresponding scenegraph nodes are NOT removed.
 	* use the #aiProcess_OptimizeGraph step to do this */
-	ANIMATIONS = 6,
+	ANIMATIONS              = 6,
 
 	/** Removes all embedded textures (aiScene::mTextures) */
-	TEXTURES = 7,
+	TEXTURES                = 7,
 
 	/** Removes all light sources (aiScene::mLights).
 	* The corresponding scenegraph nodes are NOT removed.
 	* use the #aiProcess_OptimizeGraph step to do this */
-	LIGHTS = 8,
+	LIGHTS                  = 8,
 
 	/** Removes all cameras (aiScene::mCameras).
 	* The corresponding scenegraph nodes are NOT removed.
 	* use the #aiProcess_OptimizeGraph step to do this */
-	CAMERAS = 9,
+	CAMERAS                 = 9,
 
 	/** Removes all meshes (aiScene::mMeshes). */
-	MESHES = 10,
+	MESHES                  = 10,
 
 	/** Removes all materials. One default material will
 	* be generated, so aiScene::mNumMaterials will be 1. */
-	MATERIALS = 11,
+	MATERIALS               = 11,
 }
 
-Component_Flags :: distinct bit_set[Component_Flag; c.int]
-
+Component_Flags :: distinct bit_set[Component_Flag;c.int]

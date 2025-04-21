@@ -82,14 +82,14 @@ Texture :: struct {
 	* like JPEG. In this case mWidth specifies the size of the
 	* memory area pcData is pointing to, in bytes.
 	*/
-	mWidth: u32,
+	mWidth:        u32,
 
 	/** Height of the texture, in pixels
 	*
 	* If this value is zero, pcData points to an compressed texture
 	* in any format (e.g. JPEG).
 	*/
-	mHeight: u32,
+	mHeight:       u32,
 	achFormatHint: [9]u8, // 8 for string + 1 for terminator.
 
 	/** Data of the texture.
@@ -102,12 +102,11 @@ Texture :: struct {
 	* buffer of size mWidth containing the compressed texture
 	* data. Good luck, have fun!
 	*/
-	pcData: ^[]Texel,
+	pcData:        [^]Texel,
 
 	/** Texture original filename
 	*
 	* Used to get the texture reference
 	*/
-	mFilename: String,
+	mFilename:     String,
 }
-
