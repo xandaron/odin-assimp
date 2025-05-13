@@ -411,7 +411,7 @@ Mesh :: struct {
 	* colors per vertex. nullptr if not present. Each array is
 	* mNumVertices in size if present.
 	*/
-	mColors: [^][8]Color4D,
+	mColors: [8][^]Color4D,
 
 	/**
 	* @brief Vertex texture coordinates, also known as UV channels.
@@ -420,7 +420,7 @@ Mesh :: struct {
 	* vertex. Used and unused (nullptr) channels may go in any order.
 	* The array is mNumVertices in size.
 	*/
-	mTextureCoords: [^][8]Vector3D,
+	mTextureCoords: [8][^]Vector3D,
 
 	/**
 	* @brief Specifies the number of components for a given UV channel.
