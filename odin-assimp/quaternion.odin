@@ -43,6 +43,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package assimp
 
 
+
+import zlib "vendor:zlib"
+
+_ :: zlib
+
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
+
 Quaternion :: struct {
 	w, x, y, z: Real,
 }
+

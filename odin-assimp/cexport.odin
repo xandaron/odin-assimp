@@ -43,17 +43,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
+
+_ :: c
 
 import zlib "vendor:zlib"
 
 _ :: zlib
 
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
-	foreign import lib "libassimp.lib"
-} else {
-	foreign import lib "libassimp.a"
+    foreign import lib "libassimp.lib"
 }
-
+else {
+    foreign import lib "libassimp.a"
+}
 
 // --------------------------------------------------------------------------------
 /**
@@ -67,11 +72,11 @@ Export_Format_Desc :: struct {
 	/// a short string ID to uniquely identify the export format. Use this ID string to
 	/// specify which file format you want to export to when calling #aiExportScene().
 	/// Example: "dae" or "obj"
-	id:            cstring,
+	id: cstring,
 
 	/// A short description of the file format to present to users. Useful if you want
 	/// to allow the user to select an export format.
-	description:   cstring,
+	description: cstring,
 
 	/// Recommended file extension for the exported file in lower case.
 	fileExtension: cstring,
@@ -118,7 +123,7 @@ Export_Data_Blob :: struct {
 	next: ^Export_Data_Blob,
 }
 
-@(default_calling_convention = "c", link_prefix = "ai")
+@(default_calling_convention="c", link_prefix="ai")
 foreign lib {
 	// --------------------------------------------------------------------------------
 	/** Returns the number of export file formats available in the current Assimp build.

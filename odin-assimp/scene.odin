@@ -43,13 +43,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
 
-AI_SCENE_FLAGS_NON_VERBOSE_FORMAT :: 0x8
-AI_SCENE_FLAGS_VALIDATION_WARNING :: 0x4
-AI_SCENE_FLAGS_VALIDATED :: 0x2
-AI_SCENE_FLAGS_INCOMPLETE :: 0x1
-AI_SCENE_FLAGS_TERRAIN :: 0x10
+_ :: c
 
+import zlib "vendor:zlib"
+
+_ :: zlib
+
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
 
 // -------------------------------------------------------------------------------
 /**
@@ -84,35 +93,47 @@ Node :: struct {
 	* surrounded by @verbatim <> @endverbatim e.g.
 	*  @verbatim<DummyRootNode> @endverbatim.
 	*/
-	mName:           String,
+	mName: String,
 
 	/** The transformation relative to the node's parent. */
 	mTransformation: Matrix4x4,
 
 	/** Parent node. nullptr if this node is the root node. */
-	mParent:         ^Node,
+	mParent: ^Node,
 
 	/** The number of child nodes of this node. */
-	mNumChildren:    u32,
+	mNumChildren: u32,
 
 	/** The child nodes of this node. nullptr if mNumChildren is 0. */
-	mChildren:       [^]^Node,
+	mChildren: [^]^Node,
 
 	/** The number of meshes of this node. */
-	mNumMeshes:      u32,
+	mNumMeshes: u32,
 
 	/** The meshes of this node. Each entry is an index into the
 	* mesh list of the #aiScene.
 	*/
-	mMeshes:         [^]u32,
+	mMeshes: [^]u32,
 
 	/** Metadata associated with this node or nullptr if there is no metadata.
 	*  Whether any metadata is generated depends on the source file format. See the
 	* @link importer_notes @endlink page for more information on every source file
 	* format. Importers that don't document any metadata don't write any.
 	*/
-	mMetaData:       ^Metadata,
+	mMetaData: ^Metadata,
 }
+
+AI_SCENE_FLAGS_INCOMPLETE   :: 0
+
+AI_SCENE_FLAGS_VALIDATED    :: 0
+
+AI_SCENE_FLAGS_VALIDATION_WARNING   :: 0
+
+AI_SCENE_FLAGS_NON_VERBOSE_FORMAT   :: 0
+
+AI_SCENE_FLAGS_TERRAIN :: 0
+
+AI_SCENE_FLAGS_ALLOW_SHARED :: 0
 
 // -------------------------------------------------------------------------------
 /** The root structure of the imported data.
@@ -129,7 +150,7 @@ Scene :: struct {
 	* want to reject all scenes with the AI_SCENE_FLAGS_INCOMPLETE
 	* bit set.
 	*/
-	mFlags:         u32,
+	mFlags: u32,
 
 	/** The root node of the hierarchy.
 	*
@@ -138,10 +159,10 @@ Scene :: struct {
 	* Presence of further nodes depends on the format and content
 	* of the imported file.
 	*/
-	mRootNode:      ^Node,
+	mRootNode: ^Node,
 
 	/** The number of meshes in the scene. */
-	mNumMeshes:     u32,
+	mNumMeshes: u32,
 
 	/** The array of meshes.
 	*
@@ -150,10 +171,10 @@ Scene :: struct {
 	* AI_SCENE_FLAGS_INCOMPLETE flag is not set there will always
 	* be at least ONE material.
 	*/
-	mMeshes:        [^]^Mesh,
+	mMeshes: [^]^Mesh,
 
 	/** The number of materials in the scene. */
-	mNumMaterials:  u32,
+	mNumMaterials: u32,
 
 	/** The array of materials.
 	*
@@ -162,7 +183,7 @@ Scene :: struct {
 	* AI_SCENE_FLAGS_INCOMPLETE flag is not set there will always
 	* be at least ONE material.
 	*/
-	mMaterials:     [^]^Material,
+	mMaterials: [^]^Material,
 
 	/** The number of animations in the scene. */
 	mNumAnimations: u32,
@@ -172,10 +193,10 @@ Scene :: struct {
 	* All animations imported from the given file are listed here.
 	* The array is mNumAnimations in size.
 	*/
-	mAnimations:    [^]^Animation,
+	mAnimations: [^]^Animation,
 
 	/** The number of textures embedded into the file */
-	mNumTextures:   u32,
+	mNumTextures: u32,
 
 	/** The array of embedded textures.
 	*
@@ -183,24 +204,24 @@ Scene :: struct {
 	* An example is Quake's MDL format (which is also used by
 	* some GameStudio versions)
 	*/
-	mTextures:      [^]^Texture,
+	mTextures: [^]^Texture,
 
 	/** The number of light sources in the scene. Light sources
 	* are fully optional, in most cases this attribute will be 0
 	*/
-	mNumLights:     u32,
+	mNumLights: u32,
 
 	/** The array of light sources.
 	*
 	* All light sources imported from the given file are
 	* listed here. The array is mNumLights in size.
 	*/
-	mLights:        [^]^Light,
+	mLights: [^]^Light,
 
 	/** The number of cameras in the scene. Cameras
 	* are fully optional, in most cases this attribute will be 0
 	*/
-	mNumCameras:    u32,
+	mNumCameras: u32,
 
 	/** The array of cameras.
 	*
@@ -209,7 +230,7 @@ Scene :: struct {
 	* array (if existing) is the default camera view into
 	* the scene.
 	*/
-	mCameras:       [^]^Camera,
+	mCameras: [^]^Camera,
 
 	/**
 	*  @brief  The global metadata assigned to the scene itself.
@@ -218,20 +239,21 @@ Scene :: struct {
 	*  unit-conversions, versions, vendors or other model-specific data. This
 	*  can be used to store format-specific metadata as well.
 	*/
-	mMetaData:      ^Metadata,
+	mMetaData: ^Metadata,
 
 	/** The name of the scene itself.
 	*/
-	mName:          String,
+	mName: String,
 
 	/**
 	*
 	*/
-	mNumSkeletons:  u32,
+	mNumSkeletons: u32,
 
 	/**
 	*
 	*/
-	mSkeletons:     [^]^Skeleton,
-	mPrivate:       cstring,
+	mSkeletons: [^]^Skeleton,
+	mPrivate: cstring,
 }
+

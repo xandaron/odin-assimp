@@ -43,11 +43,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-
 import "core:c"
 
 _ :: c
 
+import zlib "vendor:zlib"
+
+_ :: zlib
+
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
 
 // -----------------------------------------------------------------------------------
 /** @enum  aiPostProcessSteps
@@ -589,4 +600,12 @@ Post_Process_Step_Flag :: enum c.int {
 	GenBoundingBoxes,
 }
 
-Post_Process_Step_Flags :: distinct bit_set[Post_Process_Step_Flag;c.int]
+Post_Process_Step_Flags :: distinct bit_set[Post_Process_Step_Flag; c.int]
+
+// aiProcess_ConvertToLeftHanded :: Process_Make_Left_Handed | Process_Flip_Uvs | Process_Flip_Winding_Order | 0
+
+// aiProcessPreset_TargetRealtime_Fast :: Process_Calc_Tangent_Space | Process_Gen_Normals | Process_Join_Identical_Vertices | Process_Triangulate | Process_Gen_Uvcoords | Process_Sort_By_Ptype | 0
+
+// aiProcessPreset_TargetRealtime_Quality :: Process_Calc_Tangent_Space | Process_Gen_Smooth_Normals | Process_Join_Identical_Vertices | Process_Improve_Cache_Locality | Process_Limit_Bone_Weights | Process_Remove_Redundant_Materials | Process_Split_Large_Meshes | Process_Triangulate | Process_Gen_Uvcoords | Process_Sort_By_Ptype | Process_Find_Degenerates | Process_Find_Invalid_Data | 0
+
+// aiProcessPreset_TargetRealtime_MaxQuality :: aiProcessPreset_TargetRealtime_Quality | Process_Find_Instances | Process_Validate_Data_Structure | Process_Optimize_Meshes | 0

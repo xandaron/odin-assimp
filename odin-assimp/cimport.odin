@@ -43,22 +43,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
+
+_ :: c
 
 import zlib "vendor:zlib"
 
 _ :: zlib
 
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
-	foreign import lib "libassimp.lib"
-} else {
-	foreign import lib "libassimp.a"
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
 }
 
-AI_TRUE :: 1
-AI_FALSE :: 0
-
-
-Log_Stream_Callback :: proc "c" (_: cstring, _: cstring)
+Log_Stream_Callback :: proc "c" (cstring, cstring)
 
 // --------------------------------------------------------------------------------
 /** C-API: Represents a log stream. A log stream receives all log messages and
@@ -72,7 +74,7 @@ Log_Stream :: struct {
 	callback: Log_Stream_Callback,
 
 	/** user data to be passed to the callback */
-	user:     cstring,
+	user: cstring,
 }
 
 // --------------------------------------------------------------------------------
@@ -93,7 +95,10 @@ Property_Store :: struct {
 /** Our own C boolean type */
 Bool :: i32
 
-@(default_calling_convention = "c", link_prefix = "ai")
+AI_FALSE :: 0
+AI_TRUE :: 1
+
+@(default_calling_convention="c", link_prefix="ai")
 foreign lib {
 	// --------------------------------------------------------------------------------
 	/** Reads the given file and returns its content.
@@ -134,7 +139,7 @@ foreign lib {
 	* @return Pointer to the imported data or NULL if the import failed.
 	* @note Include <aiFileIO.h> for the definition of #aiFileIO.
 	*/
-	ImportFileEx :: proc(pFile: cstring, pFlags: u32, pFS: ^File_Io) -> ^Scene ---
+	ImportFileEx :: proc(pFile: cstring, pFlags: Post_Process_Step_Flags, pFS: ^File_Io) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Same as #aiImportFileEx, but adds an extra parameter containing importer settings.
@@ -152,7 +157,7 @@ foreign lib {
 	* @note Include <aiFileIO.h> for the definition of #aiFileIO.
 	* @see aiImportFileEx
 	*/
-	ImportFileExWithProperties :: proc(pFile: cstring, pFlags: u32, pFS: ^File_Io, pProps: ^Property_Store) -> ^Scene ---
+	ImportFileExWithProperties :: proc(pFile: cstring, pFlags: Post_Process_Step_Flags, pFS: ^File_Io, pProps: ^Property_Store) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Reads the given file from a given memory buffer,
@@ -186,7 +191,7 @@ foreign lib {
 	* a custom IOSystem to make Assimp find these files and use
 	* the regular aiImportFileEx()/aiImportFileExWithProperties() API.
 	*/
-	ImportFileFromMemory :: proc(pBuffer: cstring, pLength: u32, pFlags: u32, pHint: cstring) -> ^Scene ---
+	ImportFileFromMemory :: proc(pBuffer: cstring, pLength: u32, pFlags: Post_Process_Step_Flags, pHint: cstring) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Same as #aiImportFileFromMemory, but adds an extra parameter containing importer settings.
@@ -216,7 +221,7 @@ foreign lib {
 	* the regular aiImportFileEx()/aiImportFileExWithProperties() API.
 	* @see aiImportFileFromMemory
 	*/
-	ImportFileFromMemoryWithProperties :: proc(pBuffer: cstring, pLength: u32, pFlags: u32, pHint: cstring, pProps: ^Property_Store) -> ^Scene ---
+	ImportFileFromMemoryWithProperties :: proc(pBuffer: cstring, pLength: u32, pFlags: Post_Process_Step_Flags, pHint: cstring, pProps: ^Property_Store) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Apply post-processing to an already-imported scene.
@@ -233,7 +238,7 @@ foreign lib {
 	*   the #aiProcess_ValidateDataStructure flag is currently the only post processing step
 	*   which can actually cause the scene to be reset to NULL.
 	*/
-	ApplyPostProcessing :: proc(pScene: ^Scene, pFlags: u32) -> ^Scene ---
+	ApplyPostProcessing :: proc(pScene: ^Scene, pFlags: Post_Process_Step_Flags) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Get one of the predefine log streams. This is the quick'n'easy solution to

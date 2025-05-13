@@ -43,7 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-
 import "core:c"
 
 _ :: c
@@ -52,15 +51,17 @@ import zlib "vendor:zlib"
 
 _ :: zlib
 
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
-	foreign import lib "libassimp.lib"
-} else {
-	foreign import lib "libassimp.a"
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
 }
 
-
+// Name for default materials (2nd is used if meshes have UV coords)
 AI_DEFAULT_MATERIAL_NAME :: "DefaultMaterial"
-
 
 // ---------------------------------------------------------------------------
 /** @brief Defines how the Nth texture of a specific type is combined with
@@ -83,16 +84,16 @@ AI_DEFAULT_MATERIAL_NAME :: "DefaultMaterial"
 */
 Texture_Op :: enum c.int {
 	/** T = T1 * T2 */
-	Multiply  = 0,
+	Multiply = 0,
 
 	/** T = T1 + T2 */
-	Add       = 1,
+	Add = 1,
 
 	/** T = T1 - T2 */
-	Subtract  = 2,
+	Subtract = 2,
 
 	/** T = T1 / T2 */
-	Divide    = 3,
+	Divide = 3,
 
 	/** T = (T1 + T2) - (T1 * T2) */
 	SmoothAdd = 4,
@@ -109,17 +110,17 @@ Texture_Op :: enum c.int {
 Texture_Map_Mode :: enum c.int {
 	/** A texture coordinate u|v is translated to u%1|v%1
 	*/
-	Wrap   = 0,
+	Wrap = 0,
 
 	/** Texture coordinates outside [0...1]
 	*  are clamped to the nearest valid value.
 	*/
-	Clamp  = 1,
+	Clamp = 1,
 
 	/** If the texture coordinates for a pixel are outside [0...1]
 	*  the texture is not applied to that pixel
 	*/
-	Decal  = 3,
+	Decal = 3,
 
 	/** A texture coordinate u|v becomes u%1|v%1 if (u-(u%1))%2 is zero and
 	*  1-(u%1)|1-(v%1) otherwise
@@ -143,22 +144,22 @@ Texture_Mapping :: enum c.int {
 	*  the texture coordinates are to be taken from (remember,
 	*  meshes can have more than one UV channel).
 	*/
-	UV       = 0,
+	UV = 0,
 
 	/** Spherical mapping */
-	SPHERE   = 1,
+	SPHERE = 1,
 
 	/** Cylindrical mapping */
 	CYLINDER = 2,
 
 	/** Cubic mapping */
-	BOX      = 3,
+	BOX = 3,
 
 	/** Planar mapping */
-	PLANE    = 4,
+	PLANE = 4,
 
 	/** Undefined mapping. Have fun. */
-	OTHER    = 5,
+	OTHER = 5,
 }
 
 // ---------------------------------------------------------------------------
@@ -183,38 +184,38 @@ Texture_Type :: enum c.int {
 	*  (#aiMaterialProperty::mSemantic) for all material properties
 	*  *not* related to textures.
 	*/
-	NONE                    = 0,
+	NONE = 0,
 
 	/** The texture is combined with the result of the diffuse
 	*  lighting equation.
 	*  OR
 	*  PBR Specular/Glossiness
 	*/
-	DIFFUSE                 = 1,
+	DIFFUSE = 1,
 
 	/** The texture is combined with the result of the specular
 	*  lighting equation.
 	*  OR
 	*  PBR Specular/Glossiness
 	*/
-	SPECULAR                = 2,
+	SPECULAR = 2,
 
 	/** The texture is combined with the result of the ambient
 	*  lighting equation.
 	*/
-	AMBIENT                 = 3,
+	AMBIENT = 3,
 
 	/** The texture is added to the result of the lighting
 	*  calculation. It isn't influenced by incoming light.
 	*/
-	EMISSIVE                = 4,
+	EMISSIVE = 4,
 
 	/** The texture is a height map.
 	*
 	*  By convention, higher gray-scale values stand for
 	*  higher elevations from the base height.
 	*/
-	HEIGHT                  = 5,
+	HEIGHT = 5,
 
 	/** The texture is a (tangent space) normal-map.
 	*
@@ -222,7 +223,7 @@ Texture_Type :: enum c.int {
 	*  normal maps. Assimp does (intentionally) not
 	*  distinguish here.
 	*/
-	NORMALS                 = 6,
+	NORMALS = 6,
 
 	/** The texture defines the glossiness of the material.
 	*
@@ -231,21 +232,21 @@ Texture_Type :: enum c.int {
 	*  function defined to map the linear color values in the
 	*  texture to a suitable exponent. Have fun.
 	*/
-	SHININESS               = 7,
+	SHININESS = 7,
 
 	/** The texture defines per-pixel opacity.
 	*
 	*  Usually 'white' means opaque and 'black' means
 	*  'transparency'. Or quite the opposite. Have fun.
 	*/
-	OPACITY                 = 8,
+	OPACITY = 8,
 
 	/** Displacement texture
 	*
 	*  The exact purpose and format is application-dependent.
 	*  Higher color values stand for higher vertex displacements.
 	*/
-	DISPLACEMENT            = 9,
+	DISPLACEMENT = 9,
 
 	/** Lightmap texture (aka Ambient Occlusion)
 	*
@@ -254,14 +255,14 @@ Texture_Type :: enum c.int {
 	*  scaling value for the final color value of a pixel. Its
 	*  intensity is not affected by incoming light.
 	*/
-	LIGHTMAP                = 10,
+	LIGHTMAP = 10,
 
 	/** Reflection texture
 	*
 	* Contains the color of a perfect mirror reflection.
 	* Rarely used, almost never for real-time applications.
 	*/
-	REFLECTION              = 11,
+	REFLECTION = 11,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -269,7 +270,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	BASE_COLOR              = 12,
+	BASE_COLOR = 12,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -277,7 +278,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	NORMAL_CAMERA           = 13,
+	NORMAL_CAMERA = 13,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -285,7 +286,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	EMISSION_COLOR          = 14,
+	EMISSION_COLOR = 14,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -293,7 +294,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	METALNESS               = 15,
+	METALNESS = 15,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -301,7 +302,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	DIFFUSE_ROUGHNESS       = 16,
+	DIFFUSE_ROUGHNESS = 16,
 
 	/** PBR Materials
 	* PBR definitions from maya and other modelling packages now use this standard.
@@ -309,7 +310,7 @@ Texture_Type :: enum c.int {
 	* Support for this is in game engines like Godot, Unreal or Unity3D.
 	* Modelling packages which use this are very common now.
 	*/
-	AMBIENT_OCCLUSION       = 17,
+	AMBIENT_OCCLUSION = 17,
 
 	/** Unknown texture
 	*
@@ -317,42 +318,42 @@ Texture_Type :: enum c.int {
 	*  above is considered to be 'unknown'. It is still imported,
 	*  but is excluded from any further post-processing.
 	*/
-	UNKNOWN                 = 18,
+	UNKNOWN = 18,
 
 	/** Sheen
 	* Generally used to simulate textiles that are covered in a layer of microfibers
 	* eg velvet
 	* https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_sheen
 	*/
-	SHEEN                   = 19,
+	SHEEN = 19,
 
 	/** Clearcoat
 	* Simulates a layer of 'polish' or 'lacquer' layered on top of a PBR substrate
 	* https://autodesk.github.io/standard-surface/#closures/coating
 	* https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_clearcoat
 	*/
-	CLEARCOAT               = 20,
+	CLEARCOAT = 20,
 
 	/** Transmission
 	* Simulates transmission through the surface
 	* May include further information such as wall thickness
 	*/
-	TRANSMISSION            = 21,
+	TRANSMISSION = 21,
 
 	/**
 	* Maya material declarations
 	*/
-	MAYA_BASE               = 22,
+	MAYA_BASE = 22,
 
 	/**
 	* Maya material declarations
 	*/
-	MAYA_SPECULAR           = 23,
+	MAYA_SPECULAR = 23,
 
 	/**
 	* Maya material declarations
 	*/
-	MAYA_SPECULAR_COLOR     = 24,
+	MAYA_SPECULAR_COLOR = 24,
 
 	/**
 	* Maya material declarations
@@ -362,7 +363,7 @@ Texture_Type :: enum c.int {
 	/** Anisotropy
 	* Simulates a surface with directional properties
 	*/
-	ANISOTROPY              = 26,
+	ANISOTROPY = 26,
 
 	/**
 	* gltf material declarations
@@ -376,6 +377,8 @@ Texture_Type :: enum c.int {
 	*/
 	GLTF_METALLIC_ROUGHNESS = 27,
 }
+
+// AI_TEXTURE_TYPE_MAX :: Texture_Type_Gltf_Metallic_Roughness
 
 // ---------------------------------------------------------------------------
 /** @brief Defines all shading models supported by the library
@@ -396,39 +399,39 @@ Shading_Mode :: enum c.int {
 	/** Flat shading. Shading is done on per-face base,
 	*  diffuse only. Also known as 'faceted shading'.
 	*/
-	Flat         = 1,
+	Flat = 1,
 
 	/** Simple Gouraud shading.
 	*/
-	Gouraud      = 2,
+	Gouraud = 2,
 
 	/** Phong-Shading -
 	*/
-	Phong        = 3,
+	Phong = 3,
 
 	/** Phong-Blinn-Shading
 	*/
-	Blinn        = 4,
+	Blinn = 4,
 
 	/** Toon-Shading per pixel
 	*
 	*  Also known as 'comic' shader.
 	*/
-	Toon         = 5,
+	Toon = 5,
 
 	/** OrenNayar-Shading per pixel
 	*
 	*  Extension to standard Lambertian shading, taking the
 	*  roughness of the material into account
 	*/
-	OrenNayar    = 6,
+	OrenNayar = 6,
 
 	/** Minnaert-Shading per pixel
 	*
 	*  Extension to standard Lambertian shading, taking the
 	*  "darkness" of the material into account
 	*/
-	Minnaert     = 7,
+	Minnaert = 7,
 
 	/** CookTorrance-Shading per pixel
 	*
@@ -439,12 +442,12 @@ Shading_Mode :: enum c.int {
 	/** No shading at all. Constant light influence of 1.0.
 	* Also known as "Unlit"
 	*/
-	NoShading    = 9,
+	NoShading = 9,
 	Unlit        = 9, // Alias
 
 	/** Fresnel shading
 	*/
-	Fresnel      = 10,
+	Fresnel = 10,
 
 	/** Physically-Based Rendering (PBR) shading using
 	* Bidirectional scattering/reflectance distribution function (BSDF/BRDF)
@@ -457,7 +460,7 @@ Shading_Mode :: enum c.int {
 	* - If AI_MATKEY_GLOSSINESS_FACTOR is set, then a Specular/Glossiness is available
 	* Note that some PBR methods allow layering of techniques
 	*/
-	PBR_BRDF     = 11,
+	PBR_BRDF = 11,
 }
 
 // ---------------------------------------------------------------------------
@@ -475,7 +478,7 @@ Shading_Mode :: enum c.int {
 Texture_Flag :: enum c.int {
 	/** The texture's color values have to be inverted (component-wise 1-n)
 	*/
-	Invert      = 0,
+	Invert = 0,
 
 	/** Explicit request to the application to process the alpha channel
 	*  of the texture.
@@ -486,7 +489,7 @@ Texture_Flag :: enum c.int {
 	*  define this, it is left to the application to decide whether
 	*  the texture alpha channel - if any - is evaluated or not.
 	*/
-	UseAlpha    = 1,
+	UseAlpha = 1,
 
 	/** Explicit request to the application to ignore the alpha channel
 	*  of the texture.
@@ -496,7 +499,7 @@ Texture_Flag :: enum c.int {
 	IgnoreAlpha = 2,
 }
 
-Texture_Flags :: distinct bit_set[Texture_Flag;c.int]
+Texture_Flags :: distinct bit_set[Texture_Flag; c.int]
 
 // ---------------------------------------------------------------------------
 /**
@@ -522,7 +525,7 @@ Blend_Mode :: enum c.int {
 	*  SourceColor*SourceAlpha + DestColor*(1-SourceAlpha)
 	*  @endcode
 	*/
-	Default  = 0,
+	Default = 0,
 
 	/** Additive blending
 	*
@@ -556,7 +559,7 @@ Uvtransform :: struct {
 	*
 	*  The default value is (1|1).
 	*/
-	mScaling:     Vector2D,
+	mScaling: Vector2D,
 
 	/** Rotation - in counter-clockwise direction.
 	*
@@ -564,7 +567,7 @@ Uvtransform :: struct {
 	*  rotation center is 0.5f|0.5f. The default value
 	*  0.f.
 	*/
-	mRotation:    Real,
+	mRotation: Real,
 }
 
 //! @cond AI_DOX_INCLUDE_INTERNAL
@@ -579,7 +582,7 @@ Property_Type_Info :: enum c.int {
 	*  aiMaterial::Get()) to query properties stored in floating-point format.
 	*  The material system performs the type conversion automatically.
 	*/
-	Float   = 1,
+	Float = 1,
 
 	/** Array of double-precision (64 Bit) floats
 	*
@@ -587,14 +590,14 @@ Property_Type_Info :: enum c.int {
 	*  aiMaterial::Get()) to query properties stored in floating-point format.
 	*  The material system performs the type conversion automatically.
 	*/
-	Double  = 2,
+	Double = 2,
 
 	/** The material property is an aiString.
 	*
 	*  Arrays of strings aren't possible, aiGetMaterialString() (or the
 	*  C++-API aiMaterial::Get()) *must* be used to query a string property.
 	*/
-	String  = 3,
+	String = 3,
 
 	/** Array of (32 Bit) integers
 	*
@@ -606,7 +609,7 @@ Property_Type_Info :: enum c.int {
 
 	/** Simple binary buffer, content undefined. Not convertible to anything.
 	*/
-	Buffer  = 5,
+	Buffer = 5,
 }
 
 // ---------------------------------------------------------------------------
@@ -633,18 +636,18 @@ Material_Property :: struct {
 	/** Specifies the name of the property (key)
 	*  Keys are generally case insensitive.
 	*/
-	mKey:        String,
+	mKey: String,
 
 	/** Textures: Specifies their exact usage semantic.
 	* For non-texture properties, this member is always 0
 	* (or, better-said, #aiTextureType_NONE).
 	*/
-	mSemantic:   u32,
+	mSemantic: u32,
 
 	/** Textures: Specifies the index of the texture.
 	*  For non-texture properties, this member is always 0.
 	*/
-	mIndex:      u32,
+	mIndex: u32,
 
 	/** Size of the buffer mData is pointing to, in bytes.
 	*  This value may not be 0.
@@ -658,26 +661,40 @@ Material_Property :: struct {
 	* utilize proper type conversions.
 	* (It's probably a hacky solution, but it works.)
 	*/
-	mType:       Property_Type_Info,
+	mType: Property_Type_Info,
 
 	/** Binary buffer to hold the property's value.
 	* The size of the buffer is always mDataLength.
 	*/
-	mData:       cstring,
+	mData: cstring,
 }
 
 Material :: struct {
 	/** List of all material properties loaded. */
-	mProperties:    [^]^Material_Property,
+	mProperties: [^]^Material_Property,
 
 	/** Number of properties in the data base */
 	mNumProperties: u32,
 
 	/** Storage allocated */
-	mNumAllocated:  u32,
+	mNumAllocated: u32,
 }
 
-@(default_calling_convention = "c", link_prefix = "ai")
+// ---------------------------------------------------------------------------
+// Pure key names for all texture-related properties
+//! @cond MATS_DOC_FULL
+AI_MATKEY_TEXTURE_BASE       :: "$tex.file"
+AI_MATKEY_UVWSRC_BASE        :: "$tex.uvwsrc"
+AI_MATKEY_TEXOP_BASE         :: "$tex.op"
+AI_MATKEY_MAPPING_BASE       :: "$tex.mapping"
+AI_MATKEY_TEXBLEND_BASE      :: "$tex.blend"
+AI_MATKEY_MAPPINGMODE_U_BASE :: "$tex.mapmodeu"
+AI_MATKEY_MAPPINGMODE_V_BASE :: "$tex.mapmodev"
+AI_MATKEY_TEXMAP_AXIS_BASE   :: "$tex.mapaxis"
+AI_MATKEY_UVTRANSFORM_BASE   :: "$tex.uvtrafo"
+AI_MATKEY_TEXFLAGS_BASE      :: "$tex.flags"
+
+@(default_calling_convention="c", link_prefix="ai")
 foreign lib {
 	// -------------------------------------------------------------------------------
 	/**
@@ -795,5 +812,5 @@ foreign lib {
 	*  @note A texture can be easily queried using #aiGetMaterialTexture() */
 	// ---------------------------------------------------------------------------
 	GetMaterialTextureCount :: proc(pMat: ^Material, type: Texture_Type) -> u32 ---
-	GetMaterialTexture :: proc(mat: ^Material, type: Texture_Type, index: u32, path: ^String, mapping: ^Texture_Mapping, uvindex: ^u32, blend: ^Real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^u32) -> Return ---
+	GetMaterialTexture      :: proc(mat: ^Material, type: Texture_Type, index: u32, path: ^String, mapping: ^Texture_Mapping, uvindex: ^u32, blend: ^Real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^u32) -> Return ---
 }

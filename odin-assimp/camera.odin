@@ -43,6 +43,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
+
+_ :: c
+
+import zlib "vendor:zlib"
+
+_ :: zlib
+
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
 
 // ---------------------------------------------------------------------------
 /** Helper structure to describe a virtual camera.
@@ -94,14 +110,14 @@ Camera :: struct {
 	*  This node specifies the position of the camera in the scene
 	*  hierarchy and can be animated.
 	*/
-	mName:              String,
+	mName: String,
 
 	/** Position of the camera relative to the coordinate space
 	*  defined by the corresponding node.
 	*
 	*  The default value is 0|0|0.
 	*/
-	mPosition:          Vector3D,
+	mPosition: Vector3D,
 
 	/** 'Up' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -111,7 +127,7 @@ Camera :: struct {
 	*  The default value is 0|1|0. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp:                Vector3D,
+	mUp: Vector3D,
 
 	/** 'LookAt' - vector of the camera coordinate system relative to
 	*  the coordinate space defined by the corresponding node.
@@ -120,7 +136,7 @@ Camera :: struct {
 	*  The default value is 0|0|1. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mLookAt:            Vector3D,
+	mLookAt: Vector3D,
 
 	/** Horizontal field of view angle, in radians.
 	*
@@ -128,14 +144,14 @@ Camera :: struct {
 	*  line of the screen and the left or right border.
 	*  The default value is 1/4PI.
 	*/
-	mHorizontalFOV:     f32,
+	mHorizontalFOV: f32,
 
 	/** Distance of the near clipping plane from the camera.
 	*
 	* The value may not be 0.f (for arithmetic reasons to prevent
 	* a division through zero). The default value is 0.1f.
 	*/
-	mClipPlaneNear:     f32,
+	mClipPlaneNear: f32,
 
 	/** Distance of the far clipping plane from the camera.
 	*
@@ -145,7 +161,7 @@ Camera :: struct {
 	* large (between 1000-10000 should be ok) to avoid floating-point
 	* inaccuracies which could lead to z-fighting.
 	*/
-	mClipPlaneFar:      f32,
+	mClipPlaneFar: f32,
 
 	/** Screen aspect ratio.
 	*
@@ -154,7 +170,7 @@ Camera :: struct {
 	* 0 if the aspect ratio is not defined in the source file.
 	* 0 is also the default value.
 	*/
-	mAspect:            f32,
+	mAspect: f32,
 
 	/** Half horizontal orthographic width, in scene units.
 	*
@@ -167,3 +183,4 @@ Camera :: struct {
 	*/
 	mOrthographicWidth: f32,
 }
+

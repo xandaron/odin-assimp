@@ -43,11 +43,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
-
 import "core:c"
 
 _ :: c
 
+import zlib "vendor:zlib"
+
+_ :: zlib
+
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
 
 // ---------------------------------------------------------------------------
 /** Enumerates all supported types of light sources.
@@ -63,25 +74,25 @@ Light_Source_Type :: enum c.int {
 	//! A point light source has a well-defined position
 	//! in space but no direction - it emits light in all
 	//! directions. A normal bulb is a point light.
-	POINT       = 2,
+	POINT = 2,
 
 	//! A spot light source emits light in a specific
 	//! angle. It has a position and a direction it is pointing to.
 	//! A good example for a spot light is a light spot in
 	//! sport arenas.
-	SPOT        = 3,
+	SPOT = 3,
 
 	//! The generic light level of the world, including the bounces
 	//! of all other light sources.
 	//! Typically, there's at most one ambient light in a scene.
 	//! This light type doesn't have a valid position, direction, or
 	//! other properties, just a color.
-	AMBIENT     = 4,
+	AMBIENT = 4,
 
 	//! An area light is a rectangle with predefined size that uniformly
 	//! emits light from one of its sides. The position is center of the
 	//! rectangle and direction is its normal vector.
-	AREA        = 5,
+	AREA = 5,
 }
 
 // ---------------------------------------------------------------------------
@@ -104,20 +115,20 @@ Light :: struct {
 	*  This node specifies the position of the light in the scene
 	*  hierarchy and can be animated.
 	*/
-	mName:                 String,
+	mName: String,
 
 	/** The type of the light source.
 	*
 	* aiLightSource_UNDEFINED is not a valid value for this member.
 	*/
-	mType:                 Light_Source_Type,
+	mType: Light_Source_Type,
 
 	/** Position of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
 	*
 	*  The position is undefined for directional lights.
 	*/
-	mPosition:             Vector3D,
+	mPosition: Vector3D,
 
 	/** Direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -125,7 +136,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mDirection:            Vector3D,
+	mDirection: Vector3D,
 
 	/** Up direction of the light source in space. Relative to the
 	*  transformation of the node corresponding to the light.
@@ -133,7 +144,7 @@ Light :: struct {
 	*  The direction is undefined for point lights. The vector
 	*  may be normalized, but it needn't.
 	*/
-	mUp:                   Vector3D,
+	mUp: Vector3D,
 
 	/** Constant light attenuation factor.
 	*
@@ -145,7 +156,7 @@ Light :: struct {
 	*  This member corresponds to the att0 variable in the equation.
 	*  Naturally undefined for directional lights.
 	*/
-	mAttenuationConstant:  f32,
+	mAttenuationConstant: f32,
 
 	/** Linear light attenuation factor.
 	*
@@ -157,7 +168,7 @@ Light :: struct {
 	*  This member corresponds to the att1 variable in the equation.
 	*  Naturally undefined for directional lights.
 	*/
-	mAttenuationLinear:    f32,
+	mAttenuationLinear: f32,
 
 	/** Quadratic light attenuation factor.
 	*
@@ -177,7 +188,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the diffuse shading term.
 	*/
-	mColorDiffuse:         Color3D,
+	mColorDiffuse: Color3D,
 
 	/** Specular color of the light source
 	*
@@ -185,7 +196,7 @@ Light :: struct {
 	*  material color to obtain the final color that contributes
 	*  to the specular shading term.
 	*/
-	mColorSpecular:        Color3D,
+	mColorSpecular: Color3D,
 
 	/** Ambient color of the light source
 	*
@@ -195,7 +206,7 @@ Light :: struct {
 	*  this value it, is just a remaining of the fixed-function pipeline
 	*  that is still supported by quite many file formats.
 	*/
-	mColorAmbient:         Color3D,
+	mColorAmbient: Color3D,
 
 	/** Inner angle of a spot light's light cone.
 	*
@@ -203,7 +214,7 @@ Light :: struct {
 	*  angle. The angle is given in radians. It is 2PI for point
 	*  lights and undefined for directional lights.
 	*/
-	mAngleInnerCone:       f32,
+	mAngleInnerCone: f32,
 
 	/** Outer angle of a spot light's light cone.
 	*
@@ -215,8 +226,9 @@ Light :: struct {
 	*  interpolation between the inner and the outer cone of the
 	*  spot light.
 	*/
-	mAngleOuterCone:       f32,
+	mAngleOuterCone: f32,
 
 	/** Size of area light source. */
-	mSize:                 Vector2D,
+	mSize: Vector2D,
 }
+

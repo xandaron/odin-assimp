@@ -44,6 +44,11 @@ clang_include_paths = [
     "./build/include/"
 ]
 
+type_overrides = {
+    "Matrix3x3" = "matrix[3, 3]f32"
+    "Matrix4x4" = "matrix[4, 4]f32"
+}
+
 // A lot of these likely have nothing to do with the files were generating bindings for but I can't be bothered to figure out which do and don't matter.
 clang_defines = {
 //    "BUILD_SHARED_LIBS" = "OFF" Don't define macros that should be off. I thought you defined it the same way CMake does but that seems to be a misunderstanding on my end.
@@ -64,7 +69,7 @@ clang_defines = {
     "ASSIMP_INJECT_DEBUG_POSTFIX" = "ON"
 //    "ASSIMP_IGNORE_GIT_HASH" = "OFF"
     "ASSIMP_BUILD_ZLIB" = "ON"
-    "SWIG" = "1" // I'm not really sure what this is but setting it's required in-order to generate bindings properly.
+    "SWIG" = "1" // I'm not really sure what this is but it's required in-order to generate bindings properly.
 }
 
 struct_field_overrides = {
@@ -153,6 +158,11 @@ bit_setify = {
 
 procedure_type_overrides = {
 	"ImportFile.pFlags" = "Post_Process_Step_Flags"
+	"ImportFileEx.pFlags" = "Post_Process_Step_Flags"
+	"ImportFileExWithProperties.pFlags" = "Post_Process_Step_Flags"
+	"ImportFileFromMemory.pFlags" = "Post_Process_Step_Flags"
+	"ImportFileFromMemoryWithProperties.pFlags" = "Post_Process_Step_Flags"
+	"ApplyPostProcessing.pFlags" = "Post_Process_Step_Flags"
 }
 
 debug_dump_json_ast = false

@@ -48,14 +48,30 @@ import "core:c"
 
 _ :: c
 
+import zlib "vendor:zlib"
 
-AI_MAX_NUMBER_OF_COLOR_SETS :: 0x8
-AI_MAX_BONE_WEIGHTS :: 0x7fffffff
-AI_MAX_NUMBER_OF_TEXTURECOORDS :: 0x8
-AI_MAX_FACES :: 0x7fffffff
-AI_MAX_FACE_INDICES :: 0x7fff
-AI_MAX_VERTICES :: 0x7fffffff
+_ :: zlib
 
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
+}
+
+AI_MAX_FACE_INDICES :: 0
+
+AI_MAX_BONE_WEIGHTS :: 0
+
+AI_MAX_VERTICES :: 0
+
+AI_MAX_FACES :: 0
+
+AI_MAX_NUMBER_OF_COLOR_SETS :: 0
+
+AI_MAX_NUMBER_OF_TEXTURECOORDS :: 0
 
 // ---------------------------------------------------------------------------
 /**
@@ -86,7 +102,7 @@ Face :: struct {
 	mNumIndices: u32,
 
 	//! Pointer to the indices array. Size of the array is given in numIndices.
-	mIndices:    [^]u32,
+	mIndices: [^]u32,
 }
 
 // ---------------------------------------------------------------------------
@@ -98,11 +114,8 @@ Vertex_Weight :: struct {
 
 	//! The strength of the influence in the range (0...1).
 	//! The influence from all bones at one vertex amounts to 1.
-	mWeight:   Real,
+	mWeight: Real,
 }
-
-// Forward declare aiNode (pointer use only)
-
 
 // ---------------------------------------------------------------------------
 /** @brief A single bone of a mesh.
@@ -116,30 +129,30 @@ Bone :: struct {
 	/**
 	* The name of the bone.
 	*/
-	mName:         String,
+	mName: String,
 
 	/**
 	* The number of vertices affected by this bone.
 	* The maximum value for this member is #AI_MAX_BONE_WEIGHTS.
 	*/
-	mNumWeights:   u32,
+	mNumWeights: u32,
 
 	/**
 	* The bone armature node - used for skeleton conversion
 	* you must enable aiProcess_PopulateArmatureData to populate this
 	*/
-	mArmature:     ^Node,
+	mArmature: ^Node,
 
 	/**
 	* The bone node in the scene - used for skeleton conversion
 	* you must enable aiProcess_PopulateArmatureData to populate this
 	*/
-	mNode:         ^Node,
+	mNode: ^Node,
 
 	/**
 	* The influence weights of this bone, by vertex index.
 	*/
-	mWeights:      [^]Vertex_Weight,
+	mWeights: [^]Vertex_Weight,
 
 	/**
 	* Matrix that transforms from mesh space to bone space in bind pose.
@@ -171,7 +184,7 @@ Primitive_Type_Flag :: enum c.int {
 	* This is just a single vertex in the virtual world,
 	* #aiFace contains just one index for such a primitive.
 	*/
-	POINT            = 0,
+	POINT = 0,
 
 	/**
 	* @brief A line primitive.
@@ -179,14 +192,14 @@ Primitive_Type_Flag :: enum c.int {
 	* This is a line defined through a start and an end position.
 	* #aiFace contains exactly two indices for such a primitive.
 	*/
-	LINE             = 1,
+	LINE = 1,
 
 	/**
 	* @brief A triangular primitive.
 	*
 	* A triangle consists of three indices.
 	*/
-	TRIANGLE         = 2,
+	TRIANGLE = 2,
 
 	/**
 	* @brief A higher-level polygon with more than 3 edges.
@@ -196,7 +209,7 @@ Primitive_Type_Flag :: enum c.int {
 	* is provided for your convenience, it splits all polygons in
 	* triangles (which are much easier to handle).
 	*/
-	POLYGON          = 3,
+	POLYGON = 3,
 
 	/**
 	* @brief A flag to determine whether this triangles only mesh is NGON encoded.
@@ -217,7 +230,7 @@ Primitive_Type_Flag :: enum c.int {
 	NGONEncodingFlag = 4,
 }
 
-Primitive_Type_Flags :: distinct bit_set[Primitive_Type_Flag;c.int]
+Primitive_Type_Flags :: distinct bit_set[Primitive_Type_Flag; c.int]
 
 // ---------------------------------------------------------------------------
 /** @brief An AnimMesh is an attachment to an #aiMesh stores per-vertex
@@ -232,7 +245,7 @@ Primitive_Type_Flags :: distinct bit_set[Primitive_Type_Flag;c.int]
 */
 Anim_Mesh :: struct {
 	/**Anim Mesh name */
-	mName:          String,
+	mName: String,
 
 	/** Replacement for aiMesh::mVertices. If this array is non-nullptr,
 	*  it *must* contain mNumVertices entries. The corresponding
@@ -240,19 +253,19 @@ Anim_Mesh :: struct {
 	*  meshes may neither add or nor remove vertex components (if
 	*  a replacement array is nullptr and the corresponding source
 	*  array is not, the source data is taken instead)*/
-	mVertices:      [^]Vector3D,
+	mVertices: [^]Vector3D,
 
 	/** Replacement for aiMesh::mNormals.  */
-	mNormals:       [^]Vector3D,
+	mNormals: [^]Vector3D,
 
 	/** Replacement for aiMesh::mTangents. */
-	mTangents:      [^]Vector3D,
+	mTangents: [^]Vector3D,
 
 	/** Replacement for aiMesh::mBitangents. */
-	mBitangents:    [^]Vector3D,
+	mBitangents: [^]Vector3D,
 
 	/** Replacement for aiMesh::mColors */
-	mColors:        ^[8]Color4D,
+	mColors: ^[8]Color4D,
 
 	/** Replacement for aiMesh::mTextureCoords */
 	mTextureCoords: ^[8]Vector3D,
@@ -265,12 +278,12 @@ Anim_Mesh :: struct {
 	* of the member arrays accessible even if the aiMesh is not known, e.g.
 	* from language bindings.
 	*/
-	mNumVertices:   u32,
+	mNumVertices: u32,
 
 	/**
 	* Weight of the AnimMesh.
 	*/
-	mWeight:        f32,
+	mWeight: f32,
 }
 
 // ---------------------------------------------------------------------------
@@ -278,16 +291,16 @@ Anim_Mesh :: struct {
 */
 Morphing_Method :: enum c.int {
 	/** Morphing method to be determined */
-	UNKNOWN          = 0,
+	UNKNOWN = 0,
 
 	/** Interpolation between morph targets */
-	VERTEX_BLEND     = 1,
+	VERTEX_BLEND = 1,
 
 	/** Normalized morphing between morph targets  */
 	MORPH_NORMALIZED = 2,
 
 	/** Relative morphing between morph targets  */
-	MORPH_RELATIVE   = 3,
+	MORPH_RELATIVE = 3,
 }
 
 // ---------------------------------------------------------------------------
@@ -316,21 +329,21 @@ Mesh :: struct {
 	* The "SortByPrimitiveType"-Step can be used to make sure the
 	* output meshes consist of one primitive type each.
 	*/
-	mPrimitiveTypes:     Primitive_Type_Flags,
+	mPrimitiveTypes: Primitive_Type_Flags,
 
 	/**
 	* The number of vertices in this mesh.
 	* This is also the size of all of the per-vertex data arrays.
 	* The maximum value for this member is #AI_MAX_VERTICES.
 	*/
-	mNumVertices:        u32,
+	mNumVertices: u32,
 
 	/**
 	* The number of primitives (triangles, polygons, lines) in this  mesh.
 	* This is also the size of the mFaces array.
 	* The maximum value for this member is #AI_MAX_FACES.
 	*/
-	mNumFaces:           u32,
+	mNumFaces: u32,
 
 	/**
 	* @brief Vertex positions.
@@ -338,7 +351,7 @@ Mesh :: struct {
 	* This array is always present in a mesh. The array is
 	* mNumVertices in size.
 	*/
-	mVertices:           [^]Vector3D,
+	mVertices: [^]Vector3D,
 
 	/**
 	* @brief Vertex normals.
@@ -362,7 +375,7 @@ Mesh :: struct {
 	* However, this needn't apply for normals that have been taken
 	* directly from the model file.
 	*/
-	mNormals:            [^]Vector3D,
+	mNormals: [^]Vector3D,
 
 	/**
 	* @brief Vertex tangents.
@@ -378,7 +391,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also
 	* contains bitangents.
 	*/
-	mTangents:           [^]Vector3D,
+	mTangents: [^]Vector3D,
 
 	/**
 	* @brief Vertex bitangents.
@@ -389,7 +402,7 @@ Mesh :: struct {
 	* @note If the mesh contains tangents, it automatically also contains
 	* bitangents.
 	*/
-	mBitangents:         [^]Vector3D,
+	mBitangents: [^]Vector3D,
 
 	/**
 	* @brief Vertex color sets.
@@ -398,7 +411,7 @@ Mesh :: struct {
 	* colors per vertex. nullptr if not present. Each array is
 	* mNumVertices in size if present.
 	*/
-	mColors:             [^][8]Color4D,
+	mColors: [^][8]Color4D,
 
 	/**
 	* @brief Vertex texture coordinates, also known as UV channels.
@@ -407,7 +420,7 @@ Mesh :: struct {
 	* vertex. Used and unused (nullptr) channels may go in any order.
 	* The array is mNumVertices in size.
 	*/
-	mTextureCoords:      [^][8]Vector3D,
+	mTextureCoords: [^][8]Vector3D,
 
 	/**
 	* @brief Specifies the number of components for a given UV channel.
@@ -418,7 +431,7 @@ Mesh :: struct {
 	* If the value is 1 for a given channel, p.y is set to 0.0f, too.
 	* @note 4D coordinates are not supported
 	*/
-	mNumUVComponents:    [8]u32,
+	mNumUVComponents: [8]u32,
 
 	/**
 	* @brief The faces the mesh is constructed from.
@@ -428,12 +441,12 @@ Mesh :: struct {
 	*  in mNumFaces. If the #AI_SCENE_FLAGS_NON_VERBOSE_FORMAT
 	* is NOT set each face references an unique set of vertices.
 	*/
-	mFaces:              [^]Face,
+	mFaces: [^]Face,
 
 	/**
 	* The number of bones this mesh contains. Can be 0, in which case the mBones array is nullptr.
 	*/
-	mNumBones:           u32,
+	mNumBones: u32,
 
 	/**
 	* @brief The bones of this mesh.
@@ -441,7 +454,7 @@ Mesh :: struct {
 	* A bone consists of a name by which it can be found in the
 	* frame hierarchy and a set of vertex weights.
 	*/
-	mBones:              [^]^Bone,
+	mBones: [^]^Bone,
 
 	/**
 	* @brief The material used by this mesh.
@@ -450,7 +463,7 @@ Mesh :: struct {
 	* multiple materials, the import splits up the mesh. Use this value
 	* as index into the scene's material list.
 	*/
-	mMaterialIndex:      u32,
+	mMaterialIndex: u32,
 
 	/**
 	*  Name of the mesh. Meshes can be named, but this is not a
@@ -464,7 +477,7 @@ Mesh :: struct {
 	*      partitioning.
 	*   - Vertex animations refer to meshes by their names.
 	*/
-	mName:               String,
+	mName: String,
 
 	/**
 	* The number of attachment meshes.
@@ -472,7 +485,7 @@ Mesh :: struct {
 	* - Collada
 	* - gltf
 	*/
-	mNumAnimMeshes:      u32,
+	mNumAnimMeshes: u32,
 
 	/**
 	* Attachment meshes for this mesh, for vertex-based animation.
@@ -482,18 +495,18 @@ Mesh :: struct {
 	* - Collada
 	* - gltf
 	*/
-	mAnimMeshes:         [^]^Anim_Mesh,
+	mAnimMeshes: [^]^Anim_Mesh,
 
 	/**
 	*  Method of morphing when anim-meshes are specified.
 	*  @see aiMorphingMethod to learn more about the provided morphing targets.
 	*/
-	mMethod:             Morphing_Method,
+	mMethod: Morphing_Method,
 
 	/**
 	*  The bounding box.
 	*/
-	mAABB:               Aabb,
+	mAABB: Aabb,
 
 	/**
 	* Vertex UV stream names. Pointer to array of size AI_MAX_NUMBER_OF_TEXTURECOORDS
@@ -518,24 +531,24 @@ Mesh :: struct {
 */
 Skeleton_Bone :: struct {
 	/// The parent bone index, is -1 one if this bone represents the root bone.
-	mParent:       i32,
+	mParent: i32,
 
 	/// @brief The bone armature node - used for skeleton conversion
 	/// you must enable aiProcess_PopulateArmatureData to populate this
-	mArmature:     ^Node,
+	mArmature: ^Node,
 
 	/// @brief The bone node in the scene - used for skeleton conversion
 	/// you must enable aiProcess_PopulateArmatureData to populate this
-	mNode:         ^Node,
+	mNode: ^Node,
 
 	/// @brief The number of weights
-	mNumnWeights:  u32,
+	mNumnWeights: u32,
 
 	/// The mesh index, which will get influenced by the weight.
-	mMeshId:       ^Mesh,
+	mMeshId: ^Mesh,
 
 	/// The influence weights of this bone, by vertex index.
-	mWeights:      [^]Vertex_Weight,
+	mWeights: [^]Vertex_Weight,
 
 	/** Matrix that transforms from bone space to mesh space in bind pose.
 	*
@@ -551,7 +564,7 @@ Skeleton_Bone :: struct {
 	mOffsetMatrix: Matrix4x4,
 
 	/// Matrix that transforms the locale bone in bind pose.
-	mLocalMatrix:  Matrix4x4,
+	mLocalMatrix: Matrix4x4,
 }
 
 /**
@@ -572,7 +585,7 @@ Skeleton :: struct {
 	/**
 	*  @brief The name of the skeleton instance.
 	*/
-	mName:     String,
+	mName: String,
 
 	/**
 	*  @brief  The number of bones in the skeleton.
@@ -582,5 +595,6 @@ Skeleton :: struct {
 	/**
 	*  @brief The bone instance in the skeleton.
 	*/
-	mBones:    [^]^Skeleton_Bone,
+	mBones: [^]^Skeleton_Bone,
 }
+

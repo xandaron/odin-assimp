@@ -43,23 +43,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
 
-// aiFile callbacks
-File_Write_Proc :: proc "c" (_: ^File, _: cstring, _: uint, _: uint) -> uint
+_ :: c
 
-File_Read_Proc :: proc "c" (_: ^File, _: cstring, _: uint, _: uint) -> uint
+import zlib "vendor:zlib"
 
-File_Tell_Proc :: proc "c" (_: ^File) -> uint
+_ :: zlib
 
-File_Flush_Proc :: proc "c" (_: ^File)
-
-File_Seek :: proc "c" (_: ^File, _: uint, _: Origin) -> Return
-
-// aiFileIO callbacks
-File_Open_Proc :: struct {
+// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// @(extra_linker_flags="")
+when ODIN_OS == .Windows {
+    foreign import lib "libassimp.lib"
+}
+else {
+    foreign import lib "libassimp.a"
 }
 
-File_Close_Proc :: proc "c" (_: ^File_Io, _: ^File)
+// aiFile callbacks
+File_Write_Proc :: proc "c" (^File, cstring, uint, uint) -> uint
+
+File_Read_Proc :: proc "c" (^File, cstring, uint, uint) -> uint
+
+File_Tell_Proc :: proc "c" (^File) -> uint
+
+File_Flush_Proc :: proc "c" (^File)
+
+File_Seek :: proc "c" (^File, uint, Origin) -> Return
+
+// aiFileIO callbacks
+File_Open_Proc :: struct {}
+
+File_Close_Proc :: proc "c" (^File_Io, ^File)
 
 // Represents user-defined data
 User_Data :: cstring
@@ -74,14 +89,14 @@ User_Data :: cstring
 File_Io :: struct {
 	/** Function used to open a new file
 	*/
-	OpenProc:  File_Open_Proc,
+	OpenProc: File_Open_Proc,
 
 	/** Function used to close an existing file
 	*/
 	CloseProc: File_Close_Proc,
 
 	/** User-defined, opaque data */
-	UserData:  User_Data,
+	UserData: User_Data,
 }
 
 // ----------------------------------------------------------------------------------
@@ -96,15 +111,15 @@ File_Io :: struct {
 *  such as ZIP archives or memory locations. */
 File :: struct {
 	/** Callback to read from a file */
-	ReadProc:     File_Read_Proc,
+	ReadProc: File_Read_Proc,
 
 	/** Callback to write to a file */
-	WriteProc:    File_Write_Proc,
+	WriteProc: File_Write_Proc,
 
 	/** Callback to retrieve the current position of
 	*  the file cursor (ftell())
 	*/
-	TellProc:     File_Tell_Proc,
+	TellProc: File_Tell_Proc,
 
 	/** Callback to retrieve the size of the file,
 	*  in bytes
@@ -114,13 +129,14 @@ File :: struct {
 	/** Callback to set the current position
 	* of the file cursor (fseek())
 	*/
-	SeekProc:     File_Seek,
+	SeekProc: File_Seek,
 
 	/** Callback to flush the file contents
 	*/
-	FlushProc:    File_Flush_Proc,
+	FlushProc: File_Flush_Proc,
 
 	/** User-defined, opaque data
 	*/
-	UserData:     User_Data,
+	UserData: User_Data,
 }
+
