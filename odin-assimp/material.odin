@@ -642,17 +642,17 @@ Material_Property :: struct {
 	* For non-texture properties, this member is always 0
 	* (or, better-said, #aiTextureType_NONE).
 	*/
-	mSemantic: u32,
+	mSemantic: c.uint,
 
 	/** Textures: Specifies the index of the texture.
 	*  For non-texture properties, this member is always 0.
 	*/
-	mIndex: u32,
+	mIndex: c.uint,
 
 	/** Size of the buffer mData is pointing to, in bytes.
 	*  This value may not be 0.
 	*/
-	mDataLength: u32,
+	mDataLength: c.uint,
 
 	/** Type information for the property.
 	*
@@ -674,10 +674,10 @@ Material :: struct {
 	mProperties: [^]^Material_Property,
 
 	/** Number of properties in the data base */
-	mNumProperties: u32,
+	mNumProperties: c.uint,
 
 	/** Storage allocated */
-	mNumAllocated: u32,
+	mNumAllocated: c.uint,
 }
 
 // ---------------------------------------------------------------------------
@@ -718,7 +718,7 @@ foreign lib {
 	* @param pPropOut Pointer to receive a pointer to a valid aiMaterialProperty
 	*        structure or NULL if the key has not been found. */
 	// ---------------------------------------------------------------------------
-	GetMaterialProperty :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pPropOut: ^^Material_Property) -> Return ---
+	GetMaterialProperty :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pPropOut: ^^Material_Property) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve an array of float values with a specific key
@@ -746,7 +746,7 @@ foreign lib {
 	* @return Specifies whether the key has been found. If not, the output
 	*   arrays remains unmodified and pMax is set to 0.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialFloatArray :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Real, pMax: ^u32) -> Return ---
+	GetMaterialFloatArray :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^Real, pMax: ^c.uint) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a single float property with a specific key from the material.
@@ -767,42 +767,42 @@ foreign lib {
 	* @return Specifies whether the key has been found. If not, the output
 	*   float remains unmodified.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialFloat :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Real) -> Return ---
+	GetMaterialFloat :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^Real) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve an array of integer values with a specific key
 	*  from a material
 	*
 	* See the sample for aiGetMaterialFloatArray for more information.*/
-	GetMaterialIntegerArray :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^i32, pMax: ^u32) -> Return ---
+	GetMaterialIntegerArray :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^c.int, pMax: ^c.uint) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve an integer property with a specific key from a material
 	*
 	* See the sample for aiGetMaterialFloat for more information.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialInteger :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^i32) -> Return ---
+	GetMaterialInteger :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^c.int) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a color value from the material property table
 	*
 	* See the sample for aiGetMaterialFloat for more information*/
 	// ---------------------------------------------------------------------------
-	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Color4D) -> Return ---
+	GetMaterialColor :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^Color4D) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a aiUVTransform value from the material property table
 	*
 	* See the sample for aiGetMaterialFloat for more information*/
 	// ---------------------------------------------------------------------------
-	GetMaterialUVTransform :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^Uvtransform) -> Return ---
+	GetMaterialUVTransform :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^Uvtransform) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Retrieve a string from the material property table
 	*
 	* See the sample for aiGetMaterialFloat for more information.*/
 	// ---------------------------------------------------------------------------
-	GetMaterialString :: proc(pMat: ^Material, pKey: cstring, type: u32, index: u32, pOut: ^String) -> Return ---
+	GetMaterialString :: proc(pMat: ^Material, pKey: cstring, type: c.uint, index: c.uint, pOut: ^String) -> Return ---
 
 	// ---------------------------------------------------------------------------
 	/** Get the number of textures for a particular texture type.
@@ -811,6 +811,6 @@ foreign lib {
 	*  @return Number of textures for this type.
 	*  @note A texture can be easily queried using #aiGetMaterialTexture() */
 	// ---------------------------------------------------------------------------
-	GetMaterialTextureCount :: proc(pMat: ^Material, type: Texture_Type) -> u32 ---
-	GetMaterialTexture      :: proc(mat: ^Material, type: Texture_Type, index: u32, path: ^String, mapping: ^Texture_Mapping, uvindex: ^u32, blend: ^Real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^u32) -> Return ---
+	GetMaterialTextureCount :: proc(pMat: ^Material, type: Texture_Type) -> c.uint ---
+	GetMaterialTexture      :: proc(mat: ^Material, type: Texture_Type, index: c.uint, path: ^String, mapping: ^Texture_Mapping, uvindex: ^c.uint, blend: ^Real, op: ^Texture_Op, mapmode: ^Texture_Map_Mode, flags: ^c.uint) -> Return ---
 }

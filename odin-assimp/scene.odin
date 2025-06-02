@@ -102,18 +102,18 @@ Node :: struct {
 	mParent: ^Node,
 
 	/** The number of child nodes of this node. */
-	mNumChildren: u32,
+	mNumChildren: c.uint,
 
 	/** The child nodes of this node. nullptr if mNumChildren is 0. */
 	mChildren: [^]^Node,
 
 	/** The number of meshes of this node. */
-	mNumMeshes: u32,
+	mNumMeshes: c.uint,
 
 	/** The meshes of this node. Each entry is an index into the
 	* mesh list of the #aiScene.
 	*/
-	mMeshes: [^]u32,
+	mMeshes: [^]c.uint,
 
 	/** Metadata associated with this node or nullptr if there is no metadata.
 	*  Whether any metadata is generated depends on the source file format. See the
@@ -150,7 +150,7 @@ Scene :: struct {
 	* want to reject all scenes with the AI_SCENE_FLAGS_INCOMPLETE
 	* bit set.
 	*/
-	mFlags: u32,
+	mFlags: c.uint,
 
 	/** The root node of the hierarchy.
 	*
@@ -162,7 +162,7 @@ Scene :: struct {
 	mRootNode: ^Node,
 
 	/** The number of meshes in the scene. */
-	mNumMeshes: u32,
+	mNumMeshes: c.uint,
 
 	/** The array of meshes.
 	*
@@ -174,7 +174,7 @@ Scene :: struct {
 	mMeshes: [^]^Mesh,
 
 	/** The number of materials in the scene. */
-	mNumMaterials: u32,
+	mNumMaterials: c.uint,
 
 	/** The array of materials.
 	*
@@ -186,7 +186,7 @@ Scene :: struct {
 	mMaterials: [^]^Material,
 
 	/** The number of animations in the scene. */
-	mNumAnimations: u32,
+	mNumAnimations: c.uint,
 
 	/** The array of animations.
 	*
@@ -196,7 +196,7 @@ Scene :: struct {
 	mAnimations: [^]^Animation,
 
 	/** The number of textures embedded into the file */
-	mNumTextures: u32,
+	mNumTextures: c.uint,
 
 	/** The array of embedded textures.
 	*
@@ -209,7 +209,7 @@ Scene :: struct {
 	/** The number of light sources in the scene. Light sources
 	* are fully optional, in most cases this attribute will be 0
 	*/
-	mNumLights: u32,
+	mNumLights: c.uint,
 
 	/** The array of light sources.
 	*
@@ -221,7 +221,7 @@ Scene :: struct {
 	/** The number of cameras in the scene. Cameras
 	* are fully optional, in most cases this attribute will be 0
 	*/
-	mNumCameras: u32,
+	mNumCameras: c.uint,
 
 	/** The array of cameras.
 	*
@@ -248,7 +248,7 @@ Scene :: struct {
 	/**
 	*
 	*/
-	mNumSkeletons: u32,
+	mNumSkeletons: c.uint,
 
 	/**
 	*

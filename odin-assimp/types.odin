@@ -119,7 +119,7 @@ String :: struct {
 	length: Uint32,
 
 	/** String buffer. Size limit is AI_MAXLEN */
-	data: [1024]u8,
+	data: [1024]c.char,
 }
 
 // ----------------------------------------------------------------------------------
@@ -207,28 +207,28 @@ AI_DLS_ENFORCE_ENUM_SIZE :: Default_Log_Stream_Flags { .FILE, .STDOUT, .STDERR, 
 */
 Memory_Info :: struct {
 	/** Storage allocated for texture data */
-	textures: u32,
+	textures: c.uint,
 
 	/** Storage allocated for material data  */
-	materials: u32,
+	materials: c.uint,
 
 	/** Storage allocated for mesh data */
-	meshes: u32,
+	meshes: c.uint,
 
 	/** Storage allocated for node data */
-	nodes: u32,
+	nodes: c.uint,
 
 	/** Storage allocated for animation data */
-	animations: u32,
+	animations: c.uint,
 
 	/** Storage allocated for camera data */
-	cameras: u32,
+	cameras: c.uint,
 
 	/** Storage allocated for light data */
-	lights: u32,
+	lights: c.uint,
 
 	/** Total storage allocated for the full import. */
-	total: u32,
+	total: c.uint,
 }
 
 /**

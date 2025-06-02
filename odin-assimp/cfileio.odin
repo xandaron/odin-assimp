@@ -61,15 +61,15 @@ else {
 }
 
 // aiFile callbacks
-File_Write_Proc :: proc "c" (^File, cstring, uint, uint) -> uint
+File_Write_Proc :: proc "c" (^File, cstring, c.size_t, c.size_t) -> c.size_t
 
-File_Read_Proc :: proc "c" (^File, cstring, uint, uint) -> uint
+File_Read_Proc :: proc "c" (^File, cstring, c.size_t, c.size_t) -> c.size_t
 
-File_Tell_Proc :: proc "c" (^File) -> uint
+File_Tell_Proc :: proc "c" (^File) -> c.size_t
 
 File_Flush_Proc :: proc "c" (^File)
 
-File_Seek :: proc "c" (^File, uint, Origin) -> Return
+File_Seek :: proc "c" (^File, c.size_t, Origin) -> Return
 
 // aiFileIO callbacks
 File_Open_Proc :: struct {}

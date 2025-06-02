@@ -94,7 +94,7 @@ Export_Format_Desc :: struct {
 */
 Export_Data_Blob :: struct {
 	/// Size of the data in bytes
-	size: uint,
+	size: c.size_t,
 
 	/// The data.
 	data: rawptr,
@@ -129,7 +129,7 @@ foreign lib {
 	/** Returns the number of export file formats available in the current Assimp build.
 	* Use aiGetExportFormatDescription() to retrieve infos of a specific export format.
 	*/
-	GetExportFormatCount :: proc() -> uint ---
+	GetExportFormatCount :: proc() -> c.size_t ---
 
 	// --------------------------------------------------------------------------------
 	/** Returns a description of the nth export file format. Use #aiGetExportFormatCount()
@@ -139,7 +139,7 @@ foreign lib {
 	*    0 to #aiGetExportFormatCount()
 	* @return A description of that specific export format. NULL if pIndex is out of range.
 	*/
-	GetExportFormatDescription :: proc(pIndex: uint) -> ^Export_Format_Desc ---
+	GetExportFormatDescription :: proc(pIndex: c.size_t) -> ^Export_Format_Desc ---
 
 	// --------------------------------------------------------------------------------
 	/** Release a description of the nth export file format. Must be returned by
@@ -202,7 +202,7 @@ foreign lib {
 	* @note Use aiCopyScene() to get a modifiable copy of a previously
 	*   imported scene.
 	*/
-	ExportScene :: proc(pScene: ^Scene, pFormatId: cstring, pFileName: cstring, pPreprocessing: u32) -> Return ---
+	ExportScene :: proc(pScene: ^Scene, pFormatId: cstring, pFileName: cstring, pPreprocessing: c.uint) -> Return ---
 
 	// --------------------------------------------------------------------------------
 	/** Exports the given scene to a chosen file format using custom IO logic supplied by you.
@@ -219,7 +219,7 @@ foreign lib {
 	* @note Use aiCopyScene() to get a modifiable copy of a previously
 	*   imported scene.
 	*/
-	ExportSceneEx :: proc(pScene: ^Scene, pFormatId: cstring, pFileName: cstring, pIO: ^File_Io, pPreprocessing: u32) -> Return ---
+	ExportSceneEx :: proc(pScene: ^Scene, pFormatId: cstring, pFileName: cstring, pIO: ^File_Io, pPreprocessing: c.uint) -> Return ---
 
 	// --------------------------------------------------------------------------------
 	/** Exports the given scene to a chosen file format. Returns the exported data as a binary blob which
@@ -231,7 +231,7 @@ foreign lib {
 	* @param pPreprocessing Please see the documentation for #aiExportScene
 	* @return the exported data or NULL in case of error
 	*/
-	ExportSceneToBlob :: proc(pScene: ^Scene, pFormatId: cstring, pPreprocessing: u32) -> ^Export_Data_Blob ---
+	ExportSceneToBlob :: proc(pScene: ^Scene, pFormatId: cstring, pPreprocessing: c.uint) -> ^Export_Data_Blob ---
 
 	// --------------------------------------------------------------------------------
 	/** Releases the memory associated with the given exported data. Use this function to free a data blob

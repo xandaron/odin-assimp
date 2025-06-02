@@ -44,7 +44,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package assimp
 
+import "core:c"
 
+_ :: c
 
 import zlib "vendor:zlib"
 
@@ -91,28 +93,28 @@ foreign lib {
 	*  @return Patch version of the Assimp runtime the application was
 	*    linked/built against
 	*/
-	GetVersionPatch :: proc() -> u32 ---
+	GetVersionPatch :: proc() -> c.uint ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Returns the current minor version number of Assimp.
 	*  @return Minor version of the Assimp runtime the application was
 	*    linked/built against
 	*/
-	GetVersionMinor :: proc() -> u32 ---
+	GetVersionMinor :: proc() -> c.uint ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Returns the current major version number of Assimp.
 	*  @return Major version of the Assimp runtime the application was
 	*    linked/built against
 	*/
-	GetVersionMajor :: proc() -> u32 ---
+	GetVersionMajor :: proc() -> c.uint ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Returns the repository revision of the Assimp runtime.
 	*  @return SVN Repository revision number of the Assimp runtime the
 	*          application was linked/built against.
 	*/
-	GetVersionRevision :: proc() -> u32 ---
+	GetVersionRevision :: proc() -> c.uint ---
 
 	// ---------------------------------------------------------------------------
 	/** @brief Returns the branch-name of the Assimp runtime.
@@ -124,5 +126,5 @@ foreign lib {
 	/** @brief Returns assimp's compile flags
 	*  @return Any bitwise combination of the ASSIMP_CFLAGS_xxx constants.
 	*/
-	GetCompileFlags :: proc() -> u32 ---
+	GetCompileFlags :: proc() -> c.uint ---
 }

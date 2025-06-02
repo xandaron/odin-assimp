@@ -68,9 +68,9 @@ ASSIMP_AI_REAL_TEXT_PRECISION :: 9
 
 Real :: f32
 
-Int :: i32
+Int :: c.int
 
-Uint :: u32
+Uint :: c.uint
 
 /* Useful constants */
 //////////////////////////////////////////////////////////////////////////

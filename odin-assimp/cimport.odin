@@ -89,11 +89,11 @@ Log_Stream :: struct {
 */
 // --------------------------------------------------------------------------------
 Property_Store :: struct {
-	sentinel: u8,
+	sentinel: c.char,
 }
 
 /** Our own C boolean type */
-Bool :: i32
+Bool :: c.int
 
 AI_FALSE :: 0
 AI_TRUE :: 1
@@ -191,7 +191,7 @@ foreign lib {
 	* a custom IOSystem to make Assimp find these files and use
 	* the regular aiImportFileEx()/aiImportFileExWithProperties() API.
 	*/
-	ImportFileFromMemory :: proc(pBuffer: cstring, pLength: u32, pFlags: Post_Process_Step_Flags, pHint: cstring) -> ^Scene ---
+	ImportFileFromMemory :: proc(pBuffer: cstring, pLength: c.uint, pFlags: Post_Process_Step_Flags, pHint: cstring) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Same as #aiImportFileFromMemory, but adds an extra parameter containing importer settings.
@@ -221,7 +221,7 @@ foreign lib {
 	* the regular aiImportFileEx()/aiImportFileExWithProperties() API.
 	* @see aiImportFileFromMemory
 	*/
-	ImportFileFromMemoryWithProperties :: proc(pBuffer: cstring, pLength: u32, pFlags: Post_Process_Step_Flags, pHint: cstring, pProps: ^Property_Store) -> ^Scene ---
+	ImportFileFromMemoryWithProperties :: proc(pBuffer: cstring, pLength: c.uint, pFlags: Post_Process_Step_Flags, pHint: cstring, pProps: ^Property_Store) -> ^Scene ---
 
 	// --------------------------------------------------------------------------------
 	/** Apply post-processing to an already-imported scene.
@@ -380,7 +380,7 @@ foreign lib {
 	*   public properties are defined in the config.h header file (AI_CONFIG_XXX).
 	* @param value New value for the property
 	*/
-	SetImportPropertyInteger :: proc(store: ^Property_Store, szName: cstring, value: i32) ---
+	SetImportPropertyInteger :: proc(store: ^Property_Store, szName: cstring, value: c.int) ---
 
 	// --------------------------------------------------------------------------------
 	/** Set a floating-point property.
@@ -500,7 +500,7 @@ foreign lib {
 	/** Returns the number of import file formats available in the current Assimp build.
 	* Use aiGetImportFormatDescription() to retrieve infos of a specific import format.
 	*/
-	GetImportFormatCount :: proc() -> uint ---
+	GetImportFormatCount :: proc() -> c.size_t ---
 
 	// --------------------------------------------------------------------------------
 	/** Returns a description of the nth import file format. Use #aiGetImportFormatCount()
@@ -509,7 +509,7 @@ foreign lib {
 	*    0 to #aiGetImportFormatCount()
 	* @return A description of that specific import format. NULL if pIndex is out of range.
 	*/
-	GetImportFormatDescription :: proc(pIndex: uint) -> ^Importer_Desc ---
+	GetImportFormatDescription :: proc(pIndex: c.size_t) -> ^Importer_Desc ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 2D vectors are equal.
@@ -518,7 +518,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector2AreEqual :: proc(a: ^Vector2D, b: ^Vector2D) -> i32 ---
+	Vector2AreEqual :: proc(a: ^Vector2D, b: ^Vector2D) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 2D vectors are equal using epsilon.
@@ -528,7 +528,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector2AreEqualEpsilon :: proc(a: ^Vector2D, b: ^Vector2D, epsilon: f32) -> i32 ---
+	Vector2AreEqualEpsilon :: proc(a: ^Vector2D, b: ^Vector2D, epsilon: f32) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Add 2D vectors.
@@ -613,7 +613,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector3AreEqual :: proc(a: ^Vector3D, b: ^Vector3D) -> i32 ---
+	Vector3AreEqual :: proc(a: ^Vector3D, b: ^Vector3D) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 3D vectors are equal using epsilon.
@@ -623,7 +623,7 @@ foreign lib {
 	*  @return 1 if the vectors are equal
 	*  @return 0 if the vectors are not equal
 	*/
-	Vector3AreEqualEpsilon :: proc(a: ^Vector3D, b: ^Vector3D, epsilon: f32) -> i32 ---
+	Vector3AreEqualEpsilon :: proc(a: ^Vector3D, b: ^Vector3D, epsilon: f32) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if vector \p a is less than vector \p b.
@@ -633,7 +633,7 @@ foreign lib {
 	*  @return 1 if \p a is less than \p b
 	*  @return 0 if \p a is equal or greater than \p b
 	*/
-	Vector3LessThan :: proc(a: ^Vector3D, b: ^Vector3D) -> i32 ---
+	Vector3LessThan :: proc(a: ^Vector3D, b: ^Vector3D) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Add 3D vectors.
@@ -754,7 +754,7 @@ foreign lib {
 	*  @return 1 if the matrices are equal
 	*  @return 0 if the matrices are not equal
 	*/
-	Matrix3AreEqual :: proc(a: ^Matrix3x3, b: ^Matrix3x3) -> i32 ---
+	Matrix3AreEqual :: proc(a: ^Matrix3x3, b: ^Matrix3x3) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 3x3 matrices are equal.
@@ -764,7 +764,7 @@ foreign lib {
 	*  @return 1 if the matrices are equal
 	*  @return 0 if the matrices are not equal
 	*/
-	Matrix3AreEqualEpsilon :: proc(a: ^Matrix3x3, b: ^Matrix3x3, epsilon: f32) -> i32 ---
+	Matrix3AreEqualEpsilon :: proc(a: ^Matrix3x3, b: ^Matrix3x3, epsilon: f32) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Invert a 3x3 matrix.
@@ -838,7 +838,7 @@ foreign lib {
 	*  @return 1 if the matrices are equal
 	*  @return 0 if the matrices are not equal
 	*/
-	Matrix4AreEqual :: proc(a: ^Matrix4x4, b: ^Matrix4x4) -> i32 ---
+	Matrix4AreEqual :: proc(a: ^Matrix4x4, b: ^Matrix4x4) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if 4x4 matrices are equal.
@@ -848,7 +848,7 @@ foreign lib {
 	*  @return 1 if the matrices are equal
 	*  @return 0 if the matrices are not equal
 	*/
-	Matrix4AreEqualEpsilon :: proc(a: ^Matrix4x4, b: ^Matrix4x4, epsilon: f32) -> i32 ---
+	Matrix4AreEqualEpsilon :: proc(a: ^Matrix4x4, b: ^Matrix4x4, epsilon: f32) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Invert a 4x4 matrix.
@@ -869,7 +869,7 @@ foreign lib {
 	*  @return 1 if \p mat is an identity matrix.
 	*  @return 0 if \p mat is not an identity matrix.
 	*/
-	Matrix4IsIdentity :: proc(mat: ^Matrix4x4) -> i32 ---
+	Matrix4IsIdentity :: proc(mat: ^Matrix4x4) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Decompose a transformation matrix into its scaling,
@@ -997,7 +997,7 @@ foreign lib {
 	*  @return 1 if the quaternions are equal
 	*  @return 0 if the quaternions are not equal
 	*/
-	QuaternionAreEqual :: proc(a: ^Quaternion, b: ^Quaternion) -> i32 ---
+	QuaternionAreEqual :: proc(a: ^Quaternion, b: ^Quaternion) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Check if quaternions are equal using epsilon.
@@ -1007,7 +1007,7 @@ foreign lib {
 	*  @return 1 if the quaternions are equal
 	*  @return 0 if the quaternions are not equal
 	*/
-	QuaternionAreEqualEpsilon :: proc(a: ^Quaternion, b: ^Quaternion, epsilon: f32) -> i32 ---
+	QuaternionAreEqualEpsilon :: proc(a: ^Quaternion, b: ^Quaternion, epsilon: f32) -> c.int ---
 
 	// --------------------------------------------------------------------------------
 	/** Normalize a quaternion.

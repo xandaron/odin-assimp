@@ -118,8 +118,8 @@ Importer_Desc :: struct {
 	/** Minimum format version that can be loaded im major.minor format,
 	both are set to 0 if there is either no version scheme
 	or if the loader doesn't care. */
-	mMinMajor: u32,
-	mMinMinor: u32,
+	mMinMajor: c.uint,
+	mMinMinor: c.uint,
 
 	/** Maximum format version that can be loaded im major.minor format,
 	both are set to 0 if there is either no version scheme
@@ -127,8 +127,8 @@ Importer_Desc :: struct {
 	forward-compatible to potential future format versions should
 	indicate  zero, otherwise they should specify the current
 	maximum version.*/
-	mMaxMajor: u32,
-	mMaxMinor: u32,
+	mMaxMajor: c.uint,
+	mMaxMinor: c.uint,
 
 	/** List of file extensions this importer can handle.
 	List entries are separated by space characters.

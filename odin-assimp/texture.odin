@@ -71,7 +71,7 @@ else {
 *  Used by aiTexture.
 */
 Texel :: struct {
-	b, g, r, a: u8,
+	b, g, r, a: c.uchar,
 }
 
 HINTMAXTEXTURELEN :: 9
@@ -97,15 +97,15 @@ Texture :: struct {
 	* like JPEG. In this case mWidth specifies the size of the
 	* memory area pcData is pointing to, in bytes.
 	*/
-	mWidth: u32,
+	mWidth: c.uint,
 
 	/** Height of the texture, in pixels
 	*
 	* If this value is zero, pcData points to an compressed texture
 	* in any format (e.g. JPEG).
 	*/
-	mHeight: u32,
-	achFormatHint: [9]u8, // 8 for string + 1 for terminator.
+	mHeight: c.uint,
+	achFormatHint: [9]c.char, // 8 for string + 1 for terminator.
 
 	/** Data of the texture.
 	*

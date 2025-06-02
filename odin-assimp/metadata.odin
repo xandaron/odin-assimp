@@ -100,7 +100,7 @@ Metadata_Entry :: struct {
 // -------------------------------------------------------------------------------
 Metadata :: struct {
 	/** Length of the mKeys and mValues arrays, respectively */
-	mNumProperties: u32,
+	mNumProperties: c.uint,
 
 	/** Arrays of keys, may not be NULL. Entries in this array may not be NULL as well. */
 	mKeys: [^]String,
