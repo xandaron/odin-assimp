@@ -24,7 +24,8 @@ inputs = [
     "./assimp/include/assimp/vector2.h"
     "./assimp/include/assimp/vector3.h"
     "./assimp/include/assimp/version.h"
-    "./build/include/assimp/config.h"
+    "./build/windows/include/assimp/config.h"
+    "./build/linux/include/assimp/config.h"
 ]
 
 remove_type_prefix = "ai"
@@ -41,7 +42,8 @@ force_ada_case_types = true
 
 clang_include_paths = [
     "./assimp/include/"
-    "./build/include/"
+    "./build/windows/include/"
+    "./build/linux/include/"
 ]
 
 type_overrides = {
