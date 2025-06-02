@@ -27,7 +27,7 @@ cmake --build build
 
 if not exist ".\odin-assimp" mkdir ".\odin-assimp"
 
-move /y .\build\lib\Debug\assimp-vc143-mt.lib .\odin-assimp\libassimp-windows.lib
+move /y .\build\lib\Debug\assimp-vc143-mt.lib .\odin-assimp\libassimp.lib
 copy /y .\assimp\LICENSE .\odin-assimp\LICENSE
 
 where /Q bindgen.exe
@@ -36,27 +36,5 @@ if %ERRORLEVEL% == 0 (
 ) else (
     echo ERROR: bindgen.exe not found in PATH. Please ensure it's installed correctly.
     echo You can run bindgen manually with: bindgen .
-    exit /b 1
-)
-
-set PYTHON_CMD=
-
-REM Try python command first (most common on Windows)
-where /Q python.exe
-if %ERRORLEVEL% == 0 (
-    set PYTHON_CMD=python
-) else (
-    REM Try python3 command if python doesn't exist
-    where /Q python3.exe
-    if %ERRORLEVEL% == 0 (
-        set PYTHON_CMD=python3
-    )
-)
-
-REM If we found a valid Python command, use it
-if "!PYTHON_CMD!" NEQ "" (
-    !PYTHON_CMD! cleanup.py
-) else (
-    echo ERROR: No Python installation found in PATH.
     exit /b 1
 )
