@@ -47,8 +47,11 @@ clang_include_paths = [
 ]
 
 type_overrides = {
-    "Matrix3x3" = "matrix[3, 3]f32"
-    "Matrix4x4" = "matrix[4, 4]f32"
+    "Matrix3x3" = "matrix[3, 3]Real"
+    "Matrix4x4" = "matrix[4, 4]Real"
+
+    "Vector2D" = "[2]Real"
+    "Vector3D" = "[3]Real"
 }
 
 // A lot of these likely have nothing to do with the files were generating bindings for but I can't be bothered to figure out which do and don't matter.

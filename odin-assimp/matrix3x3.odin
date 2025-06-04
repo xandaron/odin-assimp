@@ -58,5 +58,5 @@ else {
     foreign import lib "system:assimp"
 }
 
-Matrix3x3 :: matrix[3, 3]f32
+Matrix3x3 :: matrix[3, 3]Real
 

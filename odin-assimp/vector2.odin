@@ -58,7 +58,5 @@ else {
     foreign import lib "system:assimp"
 }
 
-Vector2D :: struct {
-	x, y: Real,
-}
+Vector2D :: [2]Real
 

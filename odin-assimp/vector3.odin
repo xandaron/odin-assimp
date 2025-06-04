@@ -58,7 +58,5 @@ else {
     foreign import lib "system:assimp"
 }
 
-Vector3D :: struct {
-	x, y, z: Real,
-}
+Vector3D :: [3]Real
 
