@@ -57,7 +57,5 @@ else {
     foreign import lib "system:assimp"
 }
 
-Quaternion :: struct {
-	w, x, y, z: Real,
-}
+Quaternion :: quaternion128
 
