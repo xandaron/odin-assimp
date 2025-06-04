@@ -89,6 +89,7 @@ struct_field_overrides = {
     "Animation.mChannels" = "[^]"
     "Animation.mMeshChannels" = "[^]"
     "Animation.MorphMeshChannels" = "[^]"
+    "Animation.mMorphMeshChannels" = "[^]"
 
     "Material.mProperties" = "[^]"
 

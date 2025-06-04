@@ -297,6 +297,6 @@ Animation :: struct {
 
 	/** The morph mesh animation channels. Each channel affects a single mesh.
 	*  The array is mNumMorphMeshChannels in size. */
-	mMorphMeshChannels: ^^Mesh_Morph_Anim,
+	mMorphMeshChannels: [^]^Mesh_Morph_Anim,
 }
 
