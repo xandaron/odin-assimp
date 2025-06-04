@@ -24,7 +24,7 @@ if "%VSCMD_ARG_TGT_ARCH%" neq "x64" (
 SET SOURCE_DIR=./assimp
 
 SET BINARIES_DIR="./build/windows"
-cmake ./assimp -A x64 -S %SOURCE_DIR% -B %BINARIES_DIR%
+cmake ./assimp -A x64 -S %SOURCE_DIR% -B %BINARIES_DIR% -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF
 cmake --build %BINARIES_DIR% --config debug
 cmake --build %BINARIES_DIR% --config release
 

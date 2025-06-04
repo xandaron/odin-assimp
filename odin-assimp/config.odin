@@ -67,15 +67,10 @@ _ :: zlib
 // I need to figue out this linker flag out as the compiler will complain that libz is missing
 // @(extra_linker_flags="")
 when ODIN_OS == .Windows {
-    when ODIN_DEBUG {
-        foreign import lib "libassimp_debug.lib"
-    }
-    else {
-        foreign import lib "libassimp_release.lib"
-    }
+    foreign import lib "libassimp.lib"
 }
 else {
-    foreign import lib "system:libassimp.so"
+    foreign import lib "system:assimp"
 }
 
 AI_CONFIG_GLOB_MEASURE_TIME :: "GLOB_MEASURE_TIME"

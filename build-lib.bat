@@ -24,8 +24,7 @@ if "%VSCMD_ARG_TGT_ARCH%" neq "x64" (
 SET SOURCE_DIR=./assimp
 
 SET BINARIES_DIR="./build/windows"
-cmake ./assimp -A x64 -S %SOURCE_DIR% -B %BINARIES_DIR%
-cmake --build %BINARIES_DIR% --config debug
+cmake ./assimp -A x64 -S %SOURCE_DIR% -B %BINARIES_DIR% -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF -DASSIMP_INSTALL=OFF -DASSIMP_INSTALL_PDB=OFF -DUSE_STATIC_CRT=ON
 cmake --build %BINARIES_DIR% --config release
 
 @REM REM I'm pretty sure we actually want ASSIMP_BUILD_ZLIB to be OFF but doing so causes the build to fail. Seems CMake requires zlib to be available for compilation.
@@ -34,6 +33,5 @@ cmake --build %BINARIES_DIR% --config release
 
 if not exist ".\odin-assimp" mkdir ".\odin-assimp"
 
-move /y .\build\windows\lib\Debug\assimp-vc143-mtd.lib .\odin-assimp\libassimp_debug.lib
-move /y .\build\windows\lib\Release\assimp-vc143-mt.lib .\odin-assimp\libassimp_release.lib
+move /y .\build\windows\lib\Release\assimp-vc143-mt.lib .\odin-assimp\libassimp.lib
 copy /y .\assimp\LICENSE .\odin-assimp\LICENSE
