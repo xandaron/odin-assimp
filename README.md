@@ -7,12 +7,17 @@ Odin bindings for the Open Asset Import Library (Assimp), allowing you to import
 This project provides Odin bindings to the [Assimp](https://github.com/assimp/assimp) library, which is a popular C++ library that loads various 3D file formats into a shared, in-memory format. Assimp supports more than 40 file formats for import and a growing selection of file formats for export.
 
 With these bindings, you can:
+
 - Load 3D models from multiple formats (FBX, OBJ, GLTF, etc.)
 - Access mesh data, materials, textures, and animations
 - Apply various post-processing steps to optimize your 3D models
 - Export models to different formats
 
-## Dependencies
+## Building
+
+### Dependencies
+
+To build the binding yourself you will need to following:
 
 - [Odin](https://odin-lang.org/) compiler
 - C/C++ compiler (GCC, MSVC, Clang)
@@ -20,8 +25,6 @@ With these bindings, you can:
 - [bindgen](https://github.com/karl-zylinski/odin-c-bindgen) (Make sure to add the executable to your PATH)
 
 > **NOTE**: VS build tools is the recomended build tool for windows. It's required for the odin compiler and comes with a C/C++ compiler and CMake (You might need to add the CMake component).
-
-## Building
 
 ### Build Assimp Library
 
@@ -36,9 +39,6 @@ cd odin-assimp
 # Windows:
 ./build-binding.bat
 
-# Linux:
-./build-binding.sh
-
 # To just build libassimp
 # Windows:
 ./build-lib.bat
@@ -47,7 +47,7 @@ cd odin-assimp
 ./build-lib.sh
 ```
 
-> **Note**: Bindgen isn't perfect so some manual cleanup is required to make the generated bindings useful. I have tried to minimize the amount required as much as possible with cleanup.py and bindgen.json.
+On linux you'll need to add assimp to your system yourself as the binding assumes that assimp is available system wide.
 
 ## Supported 3D Formats
 
@@ -63,16 +63,6 @@ Assimp supports numerous file formats including (but not limited to):
 - PLY (.ply)
 
 For a complete list, refer to the [Assimp documentation](https://github.com/assimp/assimp/blob/master/doc/Fileformats.md).
-
-## Post-Processing Options
-
-The bindings support all Assimp post-processing flags, allowing you to:
-
-- Triangulate polygons
-- Generate normals and tangents
-- Join identical vertices
-- Optimize meshes for vertex cache locality
-- And many more
 
 ## License
 
