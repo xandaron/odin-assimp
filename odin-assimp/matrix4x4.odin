@@ -49,9 +49,7 @@ package assimp
 
 import zlib "vendor:zlib"
 
-_ :: zlib
-
-// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// I need to figue out this linker flag out as the compiler will complain that zlib is missing
 // @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
@@ -60,5 +58,10 @@ else {
     foreign import lib "system:assimp"
 }
 
-Matrix4x4 :: matrix[4, 4]Real
+Matrix4x4 :: struct {
+	a1, a2, a3, a4: Real,
+	b1, b2, b3, b4: Real,
+	c1, c2, c3, c4: Real,
+	d1, d2, d3, d4: Real,
+}
 

@@ -47,17 +47,12 @@ clang_include_paths = [
 ]
 
 type_overrides = {
-    "Quaternion" = "quaternion128"
-
-    "Matrix3x3" = "matrix[3, 3]Real"
-    "Matrix4x4" = "matrix[4, 4]Real"
-
     "Vector2D" = "[2]Real"
     "Vector3D" = "[3]Real"
 }
 
 clang_defines = {
-    "ASSIMP_BUILD_ZLIB" = "ON"
+    "DUSE_STATIC_CRT" = "ON"
     "SWIG" = "1" // I'm not really sure what this is but it's required in-order to generate bindings properly.
 }
 

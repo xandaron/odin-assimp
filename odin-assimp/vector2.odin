@@ -47,9 +47,7 @@ package assimp
 
 import zlib "vendor:zlib"
 
-_ :: zlib
-
-// I need to figue out this linker flag out as the compiler will complain that libz is missing
+// I need to figue out this linker flag out as the compiler will complain that zlib is missing
 // @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
@@ -58,5 +56,7 @@ else {
     foreign import lib "system:assimp"
 }
 
-Vector2D :: [2]Real
+Vector2D :: struct {
+	x, y: Real,
+}
 
