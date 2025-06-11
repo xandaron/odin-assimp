@@ -30,6 +30,8 @@ inputs = [
 
 remove_type_prefix = "ai"
 
+remove_macro_prefix = "AI_"
+
 remove_function_prefix = "ai"
 
 imports_file = "import.odin"
@@ -119,7 +121,7 @@ struct_field_overrides = {
     "Importer_Desc.mFlags" = "Importer_Flags"
 }
 
-rename_types = {
+rename = {
     "Color3d" = "Color3D"
     "Color4d" = "Color4D"
     "Texture_Flags" = "Texture_Flag"

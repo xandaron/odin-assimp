@@ -47,10 +47,9 @@ import "core:c"
 
 _ :: c
 
+@(require)
 import zlib "vendor:zlib"
 
-// I need to figue out this linker flag out as the compiler will complain that zlib is missing
-// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
 }
@@ -62,7 +61,7 @@ Int32 :: i32
 
 Uint32 :: u32
 
-AI_MAXLEN :: 1024
+MAXLEN :: 1024
 
 // ----------------------------------------------------------------------------------
 /** Represents a plane in a three-dimensional, euclidean space
@@ -143,9 +142,9 @@ Return :: enum c.int {
 }
 
 // just for backwards compatibility, don't use these constants anymore
-// AI_SUCCESS :: Return_Success
-// AI_FAILURE :: Return_Failure
-// AI_OUTOFMEMORY :: Return_Outofmemory
+// SUCCESS :: Return_Success
+// FAILURE :: Return_Failure
+// OUTOFMEMORY :: Return_Outofmemory
 
 // ----------------------------------------------------------------------------------
 /** Seek origins (for the virtual file system API).

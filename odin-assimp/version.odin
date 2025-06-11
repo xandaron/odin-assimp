@@ -48,10 +48,9 @@ import "core:c"
 
 _ :: c
 
+@(require)
 import zlib "vendor:zlib"
 
-// I need to figue out this linker flag out as the compiler will complain that zlib is missing
-// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
 }
@@ -60,22 +59,22 @@ else {
 }
 
 //! Assimp was compiled as a shared object (Windows: DLL)
-ASSIMP_CFLAGS_SHARED  :: 0
+ASSIMP_CFLAGS_SHARED  :: 0x1
 
 //! Assimp was compiled against STLport
-ASSIMP_CFLAGS_STLPORT :: 0
+ASSIMP_CFLAGS_STLPORT :: 0x2
 
 //! Assimp was compiled as a debug build
-ASSIMP_CFLAGS_DEBUG   :: 0
+ASSIMP_CFLAGS_DEBUG   :: 0x4
 
 //! Assimp was compiled with ASSIMP_BUILD_BOOST_WORKAROUND defined
-ASSIMP_CFLAGS_NOBOOST           :: 0
+ASSIMP_CFLAGS_NOBOOST           :: 0x8
 
 //! Assimp was compiled with ASSIMP_BUILD_SINGLETHREADED defined
-ASSIMP_CFLAGS_SINGLETHREADED    :: 0
+ASSIMP_CFLAGS_SINGLETHREADED    :: 0x10
 
 //! Assimp was compiled with ASSIMP_BUILD_SINGLETHREADED defined
-ASSIMP_CFLAGS_DOUBLE_SUPPORT :: 0
+ASSIMP_CFLAGS_DOUBLE_SUPPORT :: 0x20
 
 @(default_calling_convention="c", link_prefix="ai")
 foreign lib {

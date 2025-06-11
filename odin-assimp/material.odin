@@ -47,10 +47,9 @@ import "core:c"
 
 _ :: c
 
+@(require)
 import zlib "vendor:zlib"
 
-// I need to figue out this linker flag out as the compiler will complain that zlib is missing
-// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
 }
@@ -59,7 +58,7 @@ else {
 }
 
 // Name for default materials (2nd is used if meshes have UV coords)
-AI_DEFAULT_MATERIAL_NAME :: "DefaultMaterial"
+DEFAULT_MATERIAL_NAME :: "DefaultMaterial"
 
 // ---------------------------------------------------------------------------
 /** @brief Defines how the Nth texture of a specific type is combined with
@@ -376,7 +375,7 @@ Texture_Type :: enum c.int {
 	GLTF_METALLIC_ROUGHNESS = 27,
 }
 
-// AI_TEXTURE_TYPE_MAX :: Texture_Type_Gltf_Metallic_Roughness
+// TEXTURE_TYPE_MAX :: Texture_Type_Gltf_Metallic_Roughness
 
 // ---------------------------------------------------------------------------
 /** @brief Defines all shading models supported by the library

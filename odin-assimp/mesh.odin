@@ -48,10 +48,9 @@ import "core:c"
 
 _ :: c
 
+@(require)
 import zlib "vendor:zlib"
 
-// I need to figue out this linker flag out as the compiler will complain that zlib is missing
-// @(extra_linker_flags="")
 when ODIN_OS == .Windows {
     foreign import lib "libassimp.lib"
 }
@@ -59,17 +58,17 @@ else {
     foreign import lib "system:assimp"
 }
 
-AI_MAX_FACE_INDICES :: 0
+MAX_FACE_INDICES :: 0x7fff
 
-AI_MAX_BONE_WEIGHTS :: 0
+MAX_BONE_WEIGHTS :: 0x7fffffff
 
-AI_MAX_VERTICES :: 0
+MAX_VERTICES :: 0x7fffffff
 
-AI_MAX_FACES :: 0
+MAX_FACES :: 0x7fffffff
 
-AI_MAX_NUMBER_OF_COLOR_SETS :: 0
+MAX_NUMBER_OF_COLOR_SETS :: 0x8
 
-AI_MAX_NUMBER_OF_TEXTURECOORDS :: 0
+MAX_NUMBER_OF_TEXTURECOORDS :: 0x8
 
 // ---------------------------------------------------------------------------
 /**
