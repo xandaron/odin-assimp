@@ -36,18 +36,13 @@ git clone https://github.com/your-username/odin-assimp.git
 cd odin-assimp
 
 # To build libassimp and update the bindings
-# Windows:
 ./build-binding.bat
 
 # To just build libassimp
-# Windows:
 ./build-lib.bat
-
-#Linux:
-./build-lib.sh
 ```
 
-On linux you'll need to add assimp to your system yourself as the binding assumes that assimp is available system wide.
+On linux please install assimp using your package manager.
 
 ## Supported 3D Formats
 
