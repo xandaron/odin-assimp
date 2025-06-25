@@ -49,8 +49,8 @@ clang_include_paths = [
 ]
 
 type_overrides = {
-    "Vector2D" = "[2]Real"
-    "Vector3D" = "[3]Real"
+    "aiVector2D" = "[2]Real"
+    "aiVector3D" = "[3]Real"
 }
 
 clang_defines = {
@@ -59,97 +59,99 @@ clang_defines = {
 }
 
 struct_field_overrides = {
-    "Mesh_Morph_Key.mValues" = "[^]"
-    "Mesh_Morph_Key.mWeights" = "[^]"
+    "aiMeshMorphKey.mValues" = "[^]"
+    "aiMeshMorphKey.mWeights" = "[^]"
 
-    "Node_Anim.mPositionKeys" = "[^]"
-    "Node_Anim.mRotationKeys" = "[^]"
-    "Node_Anim.mScalingKeys" = "[^]"
+    "aiNodeAnim.mPositionKeys" = "[^]"
+    "aiNodeAnim.mRotationKeys" = "[^]"
+    "aiNodeAnim.mScalingKeys" = "[^]"
 
-    "Mesh_Anim.mKeys" = "[^]"
+    "aiMeshAnim.mKeys" = "[^]"
 
-    "Mesh_Morph_Anim.mKeys" = "[^]"
+    "aiMeshMorphAnim.mKeys" = "[^]"
 
-    "Animation.mChannels" = "[^]"
-    "Animation.mMeshChannels" = "[^]"
-    "Animation.MorphMeshChannels" = "[^]"
-    "Animation.mMorphMeshChannels" = "[^]"
+    "aiAnimation.mChannels" = "[^]"
+    "aiAnimation.mMeshChannels" = "[^]"
+    "aiAnimation.MorphMeshChannels" = "[^]"
+    "aiAnimation.mMorphMeshChannels" = "[^]"
 
-    "Material.mProperties" = "[^]"
+    "aiMaterial.mProperties" = "[^]"
 
-    "Face.mIndices" = "[^]"
+    "aiFace.mIndices" = "[^]"
 
-    "Bone.mWeights" = "[^]"
+    "aiBone.mWeights" = "[^]"
 
-    "Anim_Mesh.mVertices" = "[^]"
-    "Anim_Mesh.mNormals" = "[^]"
-    "Anim_Mesh.mTangents" = "[^]"
-    "Anim_Mesh.mBitangents" = "[^]"
+    "aiAnimMesh.mVertices" = "[^]"
+    "aiAnimMesh.mNormals" = "[^]"
+    "aiAnimMesh.mTangents" = "[^]"
+    "aiAnimMesh.mBitangents" = "[^]"
+    "aiAnimMesh.mColors" = "[^]"
+    "aiAnimMesh.mTextureCoords" = "[^]"
 
-    "Mesh.mPrimitiveTypes" = "Primitive_Type_Flags"
-    "Mesh.mVertices" = "[^]"
-    "Mesh.mNormals" = "[^]"
-    "Mesh.mTangents" = "[^]"
-    "Mesh.mBitangents" = "[^]"
-    "Mesh.mColors" = "[8][^]Color4D"
-    "Mesh.mTextureCoords" = "[8][^]Vector3D"
-    "Mesh.mFaces" = "[^]"
-    "Mesh.mBones" = "[^]"
-    "Mesh.mAnimMeshes" = "[^]"
-    "Mesh.mTextureCoordsNames" = "[^]"
+    "aiMesh.mPrimitiveTypes" = "Primitive_Type_Flags"
+    "aiMesh.mVertices" = "[^]"
+    "aiMesh.mNormals" = "[^]"
+    "aiMesh.mTangents" = "[^]"
+    "aiMesh.mBitangents" = "[^]"
+    "aiMesh.mColors" = "[8][^]Color4D"
+    "aiMesh.mTextureCoords" = "[8][^]Vector3D"
+    "aiMesh.mFaces" = "[^]"
+    "aiMesh.mBones" = "[^]"
+    "aiMesh.mAnimMeshes" = "[^]"
+    "aiMesh.mTextureCoordsNames" = "[^]"
 
-    "Skeleton_Bone.mWeights" = "[^]"
+    "aiSkeletonBone.mWeights" = "[^]"
 
-    "Skeleton.mBones" = "[^]"
+    "aiSkeleton.mBones" = "[^]"
 
-    "Metadata.mKeys" = "[^]"
-    "Metadata.mValues" = "[^]"
+    "aiMetadata.mKeys" = "[^]"
+    "aiMetadata.mValues" = "[^]"
 
-    "Node.mChildren" = "[^]"
-    "Node.mMeshes" = "[^]"
+    "aiNode.mChildren" = "[^]"
+    "aiNode.mMeshes" = "[^]"
 
-    "Scene.mMeshes" = "[^]"
-    "Scene.mMaterials" = "[^]"
-    "Scene.mAnimations" = "[^]"
-    "Scene.mTextures" = "[^]"
-    "Scene.mLights" = "[^]"
-    "Scene.mCameras" = "[^]"
-    "Scene.mSkeletons" = "[^]"
+    "aiScene.mMeshes" = "[^]"
+    "aiScene.mMaterials" = "[^]"
+    "aiScene.mAnimations" = "[^]"
+    "aiScene.mTextures" = "[^]"
+    "aiScene.mLights" = "[^]"
+    "aiScene.mCameras" = "[^]"
+    "aiScene.mSkeletons" = "[^]"
 
-    "Texture.pcData" = "[^]"
+    "aiTexture.pcData" = "[^]"
 
-    "Importer_Desc.mFlags" = "Importer_Flags"
+    "aiImporterDesc.mFlags" = "Importer_Flags"
 }
 
 rename = {
-    "Color3d" = "Color3D"
-    "Color4d" = "Color4D"
-    "Texture_Flags" = "Texture_Flag"
-    "Post_Process_Steps" = "Post_Process_Step_Flag"
-    "Importer_Flags" = "Importer_Flag"
-    "Component" = "Component_Flag"
-    "Vector2d" = "Vector2D"
-    "Vector3d" = "Vector3D"
-    "Default_Log_Stream" = "Default_Log_Stream_Flag"
-    "Primitive_Type" = "Primitive_Type_Flag"
+    "aiColor3D" = "Color3D"
+    "aiColor4D" = "Color4D"
+    "aiTextureFlags" = "Texture_Flag"
+    "aiPostProcessSteps" = "Post_Process_Step_Flag"
+    "aiImporterFlags" = "Importer_Flag"
+    "aiComponent" = "Component_Flag"
+    "aiVector2D" = "Vector2D"
+    "aiVector3D" = "Vector3D"
+    "aiDefaultLogStream" = "Default_Log_Stream_Flag"
+    "aiPrimitiveType" = "Primitive_Type_Flag"
 }
 
 bit_setify = {
-    "Texture_Flag" = "Texture_Flags"
-    "Post_Process_Step_Flag" = "Post_Process_Step_Flags"
-    "Importer_Flag" = "Importer_Flags"
-    "Component_Flag" = "Component_Flags"
-    "Default_Log_Stream_Flag" = "Default_Log_Stream_Flags"
-    "Primitive_Type_Flag" = "Primitive_Type_Flags"
+    "aiTextureFlags" = "Texture_Flags"
+    "aiPostProcessSteps" = "Post_Process_Step_Flags"
+    "aiImporterFlags" = "Importer_Flags"
+    "aiComponent" = "Component_Flags"
+    "aiDefaultLogStream" = "Default_Log_Stream_Flags"
+    "aiPrimitiveType" = "Primitive_Type_Flags"
 }
 
 procedure_type_overrides = {
-	"ImportFile.pFlags" = "Post_Process_Step_Flags"
-	"ImportFileEx.pFlags" = "Post_Process_Step_Flags"
-	"ImportFileExWithProperties.pFlags" = "Post_Process_Step_Flags"
-	"ImportFileFromMemory.pFlags" = "Post_Process_Step_Flags"
-	"ImportFileFromMemoryWithProperties.pFlags" = "Post_Process_Step_Flags"
-	"ApplyPostProcessing.pFlags" = "Post_Process_Step_Flags"
+	"aiImportFile.pFlags" = "Post_Process_Step_Flags"
+	"aiImportFileEx.pFlags" = "Post_Process_Step_Flags"
+	"aiImportFileExWithProperties.pFlags" = "Post_Process_Step_Flags"
+	"aiImportFileFromMemory.pFlags" = "Post_Process_Step_Flags"
+	"aiImportFileFromMemoryWithProperties.pFlags" = "Post_Process_Step_Flags"
+	"aiApplyPostProcessing.pFlags" = "Post_Process_Step_Flags"
 }
 
 debug_dump_json_ast = false
