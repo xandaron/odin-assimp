@@ -35,14 +35,16 @@ First, you need to build the Assimp library using the provided build scripts:
 git clone https://github.com/your-username/odin-assimp.git
 cd odin-assimp
 
-# To build libassimp and update the bindings
-./build-binding.bat
-
 # To just build libassimp
+# Windows
 ./build-lib.bat
+# Linux
+./build-lib.sh
+# Alternitively
+sudo apt install libassimp-dev
 ```
 
-On linux please install assimp using your package manager.
+> **NOTE**: The Linux build script should create a system link to the .so file making it available system-wide.
 
 ## Supported 3D Formats
 
