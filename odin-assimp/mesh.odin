@@ -262,10 +262,10 @@ Anim_Mesh :: struct {
 	mBitangents: [^]Vector3D,
 
 	/** Replacement for aiMesh::mColors */
-	mColors: ^[8]Color4D,
+	mColors: [8][^]Color4D,
 
 	/** Replacement for aiMesh::mTextureCoords */
-	mTextureCoords: ^[8]Vector3D,
+	mTextureCoords: [8][^]Vector3D,
 
 	/** The number of vertices in the aiAnimMesh, and thus the length of all
 	* the member arrays.

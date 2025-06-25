@@ -138,7 +138,7 @@ Return :: enum c.int {
 	/** @cond never
 	*  Force 32-bit size enum
 	*/
-	_AI_ENFORCE_ENUM_SIZE = 2147483647,
+	AI_ENFORCE_ENUM_SIZE = 2147483647,
 }
 
 // just for backwards compatibility, don't use these constants anymore
@@ -163,7 +163,7 @@ Origin :: enum c.int {
 	/**  @cond never
 	*   Force 32-bit size enum
 	*/
-	_AI_ORIGIN_ENFORCE_ENUM_SIZE = 2147483647,
+	AI_ORIGIN_ENFORCE_ENUM_SIZE = 2147483647,
 }
 
 // ----------------------------------------------------------------------------------
