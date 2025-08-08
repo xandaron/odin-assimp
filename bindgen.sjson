@@ -154,4 +154,25 @@ procedure_type_overrides = {
 	"aiApplyPostProcessing.pFlags" = "Post_Process_Step_Flags"
 }
 
-debug_dump_json_ast = false
+remove_macro = [
+    "SIZE_MAX",
+    "WONT_RETURN",
+    "WONT_RETURN_SUFFIX",
+    "ai_epsilon",
+    "NO_EXCEPT",
+    "DEPRECATED",
+    "Int",
+    "Uint",
+    "SUCCESS",
+    "FAILURE",
+    "OUTOFMEMORY",
+    "DLS_FILE",
+    "DLS_STDOUT",
+    "DLS_STDERR",
+    "DLS_DEBUGGER",
+    "aiProcess_ConvertToLeftHanded",
+    "aiProcessPreset_TargetRealtime_Fast",
+    "aiProcessPreset_TargetRealtime_Quality",
+    "aiProcessPreset_TargetRealtime_MaxQuality",
+    "TEXTURE_TYPE_MAX"
+]
